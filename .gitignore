@@ -1,0 +1,11 @@
+# Agent configuration & local caches (keep local, do not push to GitHub)
+.agents/
+AGENTS.md
+graphify-out/
+.taste-skill/
+
+# Environment & OS files
+.env
+.env.*
+!.env.example
+.DS_Store
