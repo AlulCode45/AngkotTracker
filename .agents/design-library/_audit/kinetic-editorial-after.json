@@ -1,0 +1,194 @@
+{
+  "url": "http://127.0.0.1:54390/preview.html",
+  "viewportWidth": 1280,
+  "passedAll": true,
+  "metrics": {
+    "decorativeBadges": 0,
+    "statusBadges": 0,
+    "filledInInitialViewport": 1,
+    "maxFilledPerScreen": 1,
+    "filledFullPage": 2,
+    "outlineInInitialViewport": 1,
+    "outlineFullPage": 2,
+    "ghostFullPage": 8,
+    "uniqueBorderRadii": 1,
+    "uniqueBorderWidths": 2,
+    "uniqueFontSizes": 9,
+    "uniqueFontWeights": 3,
+    "staticShadows": 0,
+    "maxNestedContainers": 0,
+    "alternatingSectionBgs": 2
+  },
+  "checks": {
+    "decorativeBadges": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "maxFilledPerScreen": {
+      "actual": 1,
+      "limit": 1,
+      "status": "LULUS"
+    },
+    "outlineFullPage": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueBorderRadii": {
+      "actual": 1,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueBorderWidths": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueFontWeights": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "maxNestedContainers": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "staticShadows": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "alternatingSectionBgs": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    }
+  },
+  "details": {
+    "decorativeBadgeNodes": [],
+    "statusBadgeNodes": [],
+    "filledBtns": [
+      {
+        "selector": "a#hero-cta.btn.btn-primary",
+        "text": "Jadwalkan Diskusi Proyek",
+        "top": 623,
+        "bottom": 669
+      },
+      {
+        "selector": "button#inquiry-submit.btn.btn-primary",
+        "text": "Kirim Ringkasan Proyek",
+        "top": 3113,
+        "bottom": 3159
+      }
+    ],
+    "outlineBtns": [
+      {
+        "selector": "button#theme-toggle.btn.btn-outline",
+        "text": "Mode Obsidian",
+        "top": 19,
+        "bottom": 65
+      },
+      {
+        "selector": "button#marquee-toggle.btn.btn-darkroom-outline",
+        "text": "Jeda Gerakan",
+        "top": 2152,
+        "bottom": 2198
+      }
+    ],
+    "ghostBtns": [
+      {
+        "selector": "button.filter-tab",
+        "text": "Semua (4)",
+        "top": 1093,
+        "bottom": 1137
+      },
+      {
+        "selector": "button.filter-tab",
+        "text": "Ruang Publik (2)",
+        "top": 1093,
+        "bottom": 1137
+      },
+      {
+        "selector": "button.filter-tab",
+        "text": "Ruang Budaya (2)",
+        "top": 1093,
+        "bottom": 1137
+      },
+      {
+        "selector": "button.archive-row",
+        "text": "01 / 04\n                Balai Baca Cikap",
+        "top": 1171,
+        "bottom": 1238
+      },
+      {
+        "selector": "button.archive-row",
+        "text": "02 / 04\n                Paviliun Tenun P",
+        "top": 1239,
+        "bottom": 1307
+      },
+      {
+        "selector": "button.archive-row",
+        "text": "03 / 04\n                Studio Gerabah K",
+        "top": 1308,
+        "bottom": 1375
+      },
+      {
+        "selector": "button.archive-row",
+        "text": "04 / 04\n                Plaza Teduh Kota",
+        "top": 1376,
+        "bottom": 1444
+      },
+      {
+        "selector": "button#dev-toggle-footer.btn.btn-ghost",
+        "text": "Panel Pengembang",
+        "top": 3272,
+        "bottom": 3316
+      }
+    ],
+    "borderRadiiValues": [
+      "2px"
+    ],
+    "borderWidthValues": [
+      "1px",
+      "2px"
+    ],
+    "fontSizeValues": [
+      "14px",
+      "16px",
+      "18px",
+      "18.72px",
+      "24px",
+      "37.6px",
+      "44px",
+      "52px",
+      "104px"
+    ],
+    "fontWeightValues": [
+      "400",
+      "500",
+      "700"
+    ],
+    "staticShadowNodes": [],
+    "nestedOffenders": [],
+    "sectionBgs": [
+      {
+        "selector": "section#hero.hero-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "selector": "section#arsip-karya.editorial-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "selector": "section#ruang-gelap.darkroom-section",
+        "bg": "rgb(17, 17, 16)"
+      },
+      {
+        "selector": "section#diskusi-proyek.editorial-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      }
+    ]
+  }
+}

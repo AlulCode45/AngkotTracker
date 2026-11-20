@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KUTUB RAYA // DROP 07 — Katalog Sablon &amp; Bundel (Contoh neo-brutalist-pop)</title>
+  <meta name="description" content="Rilis koleksi streetwear dan zine risograph KUTUB RAYA Drop 07 Bandung (data contoh): penukar colorway langsung, pembuat bundel diskon 10%, dan ticker edisi.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700&amp;family=Archivo:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Syne Fallback';
+      src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Arial');
+      font-weight: 500 700;
+      size-adjust: 120%;
+      ascent-override: 92%;
+      descent-override: 24%;
+      line-gap-override: 0%;
+    }
+
+    @font-face {
+      font-family: 'Archivo Fallback';
+      src: local('Arial'), local('Helvetica Neue');
+      font-weight: 400 700;
+      size-adjust: 102%;
+      ascent-override: 95%;
+      descent-override: 24%;
+      line-gap-override: 0%;
+    }
+
+    :root {
+      --bg-canvas: #F7F7F2;
+      --bg-surface: #FFFFFF;
+      --bg-acid: #D4FF33;
+      --fg-on-acid: #0A0A0A;
+      --text-primary: #0A0A0A;
+      --text-secondary: #262626;
+      --text-muted: #404040;
+      --border-strong: #0A0A0A;
+      --accent-primary: #1D4ED8;
+      --accent-primary-hover: #1E40AF;
+      --accent-on-primary: #FFFFFF;
+      --accent-pop: #BE185D;
+      --focus-ring: #BE185D;
+      --skip-bg: #D4FF33;
+      --skip-fg: #0A0A0A;
+      --status-success-bg: #DCFCE7;
+      --status-success-fg: #14532D;
+      --status-danger-bg: #FEE2E2;
+      --status-danger-fg: #991B1B;
+
+      --font-display: 'Syne', 'Syne Fallback', system-ui, sans-serif;
+      --font-sans: 'Archivo', 'Archivo Fallback', system-ui, -apple-system, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --shadow-sticker: 4px 4px 0 var(--border-strong);
+      --shadow-brutal: 6px 6px 0 var(--border-strong);
+    }
+
+    html[data-theme="dark"] {
+      --bg-canvas: #0A0A0A;
+      --bg-surface: #171717;
+      --bg-acid: #D4FF33;
+      --fg-on-acid: #0A0A0A;
+      --text-primary: #F7F7F2;
+      --text-secondary: #D4D4D4;
+      --text-muted: #A3A3A3;
+      --border-strong: #D4FF33;
+      --accent-primary: #D4FF33;
+      --accent-primary-hover: #BEF264;
+      --accent-on-primary: #0A0A0A;
+      --accent-pop: #F472B6;
+      --focus-ring: #F472B6;
+      --status-success-bg: #143322;
+      --status-success-fg: #BBF7D0;
+      --status-danger-bg: #451212;
+      --status-danger-fg: #FECACA;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      border-radius: 0;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, strong, th {
+      font-weight: 700;
+    }
+
+    h1, h2 {
+      font-family: var(--font-display);
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    h3 {
+      font-family: var(--font-sans);
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -120px;
+      z-index: 250;
+      background: var(--skip-bg);
+      color: var(--skip-fg);
+      font-weight: 700;
+      padding: 10px 16px;
+      border: 3px solid var(--border-strong);
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    .brutal-bar {
+      height: 4px;
+      width: 100%;
+      background: var(--accent-primary);
+      transform-origin: left center;
+      animation: pressSlide 360ms steps(6) both;
+    }
+
+    html[data-complexity="lite"] .brutal-bar {
+      animation: none;
+    }
+
+    @keyframes pressSlide {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 28px;
+      }
+    }
+
+    /* Header */
+    .site-header {
+      border-bottom: 3px solid var(--border-strong);
+      padding: 16px 0;
+    }
+
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-mark {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-sub {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .header-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 700;
+      padding: 8px 4px;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-primary);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Buttons (strictly 2px & 3px borders, 0px radius) */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 10px 20px;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 75ms linear, background-color 75ms linear;
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: var(--accent-on-primary);
+      border: 3px solid var(--border-strong);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-primary-hover);
+      transform: translate(-2px, -2px);
+    }
+
+    .btn-primary:active {
+      transform: translate(3px, 3px);
+    }
+
+    .btn-outline {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: 3px solid var(--border-strong);
+    }
+
+    .btn-outline:hover {
+      color: var(--accent-primary);
+      transform: translate(-2px, -2px);
+    }
+
+    .btn-lime-outline {
+      background: transparent;
+      color: #0A0A0A;
+      border: 2px solid #0A0A0A;
+    }
+
+    .btn-lime-outline:hover {
+      transform: translate(-2px, -2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-primary);
+      border: 0;
+      border-bottom: 2px solid transparent;
+      padding: 8px 0;
+      min-height: 44px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .btn-ghost:hover {
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+    }
+
+    .inline-link {
+      color: var(--text-primary);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+
+    /* Decorative Drop Sticker (Allowed 1 of max 2) & Dynamic Status */
+    .sticker-cutout {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      background: var(--bg-acid);
+      color: var(--fg-on-acid);
+      border: 3px solid var(--border-strong);
+      box-shadow: var(--shadow-sticker);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .status-readout {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border: 2px solid var(--border-strong);
+      font-size: 0.875rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+    }
+
+    .status-readout[data-active="true"] {
+      background: var(--status-success-bg);
+      color: var(--status-success-fg);
+    }
+
+    /* Sections */
+    .hero-section {
+      padding: 48px 0 64px;
+      border-bottom: 3px solid var(--border-strong);
+    }
+
+    @media (min-width: 1024px) {
+      .hero-section {
+        padding: 64px 0 80px;
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 48px;
+      }
+    }
+
+    .hero-title {
+      font-size: clamp(2.15rem, 4.9vw, 3.85rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .hero-lead {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      max-width: 54ch;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Brutal Frame (Strictly max 5 static shadows total) */
+    .brutal-box {
+      background: var(--bg-surface);
+      border: 3px solid var(--border-strong);
+      box-shadow: var(--shadow-brutal);
+      padding: 24px;
+    }
+
+    .option-fieldset {
+      border: 0;
+      padding: 0;
+      margin: 20px 0 0;
+    }
+
+    .option-legend {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 640px) {
+      .swatch-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .swatch-choice {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 52px;
+      padding: 8px 12px;
+      border: 2px solid var(--border-strong);
+      cursor: pointer;
+    }
+
+    .swatch-choice:has(input:checked) {
+      background: var(--bg-acid);
+      color: #0A0A0A;
+    }
+
+    .overlay-input {
+      appearance: none;
+      -webkit-appearance: none;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .choice-text {
+      position: relative;
+      z-index: 1;
+      font-size: 0.875rem;
+      font-weight: 700;
+    }
+
+    /* Catalog + Bundle Builder */
+    .page-section {
+      padding: 56px 0;
+      border-bottom: 3px solid var(--border-strong);
+    }
+
+    @media (min-width: 768px) {
+      .page-section {
+        padding: 72px 0;
+      }
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-lead {
+      color: var(--text-secondary);
+      max-width: 60ch;
+      margin-bottom: 28px;
+    }
+
+    .tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      border-bottom: 2px solid var(--border-strong);
+      margin-bottom: 28px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      padding: 10px 4px;
+      min-height: 44px;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+    }
+
+    .bundle-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+      .bundle-layout {
+        grid-template-columns: 1.3fr 0.7fr;
+        gap: 40px;
+      }
+    }
+
+    .catalog-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 2px solid var(--border-strong);
+    }
+
+    .catalog-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 18px 0;
+      border-bottom: 2px solid var(--border-strong);
+      align-items: center;
+    }
+
+    .bundle-check-label {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 8px 14px;
+      border: 2px solid var(--border-strong);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 700;
+    }
+
+    .bundle-check-label:has(input:checked) {
+      background: var(--bg-acid);
+      color: #0A0A0A;
+    }
+
+    .price-big {
+      font-family: var(--font-sans);
+      font-size: 2rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      margin: 12px 0 6px;
+    }
+
+    /* Acid Lime Ticker Band (1 alternating band = 2 transitions) */
+    .acid-band {
+      background: var(--bg-acid);
+      color: #0A0A0A;
+      border-bottom: 3px solid var(--border-strong);
+      padding: 36px 0;
+      overflow-x: clip;
+    }
+
+    .ticker-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .ticker-viewport {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      gap: 40px;
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: #0A0A0A;
+      animation: tickerSlide 20s linear infinite;
+    }
+
+    .ticker-viewport:hover .ticker-track,
+    .ticker-viewport:focus-within .ticker-track,
+    .ticker-track.is-paused {
+      animation-play-state: paused;
+    }
+
+    html[data-complexity="lite"] .ticker-track {
+      animation: none;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 12px 28px;
+    }
+
+    @keyframes tickerSlide {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Challenge + Pre-order Form */
+    .challenge-strip {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 2px dashed var(--border-strong);
+    }
+
+    .form-wrap {
+      max-width: 600px;
+    }
+
+    .field-group {
+      margin-bottom: 20px;
+    }
+
+    .field-label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .field-hint {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      border: 3px solid var(--border-strong);
+    }
+
+    .form-input[aria-invalid="true"] {
+      border-color: var(--status-danger-fg);
+      background: var(--status-danger-bg);
+    }
+
+    .field-error {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--status-danger-fg);
+    }
+
+    .error-summary {
+      padding: 16px;
+      margin-bottom: 20px;
+      border: 3px solid var(--status-danger-fg);
+      background: var(--status-danger-bg);
+      color: var(--status-danger-fg);
+    }
+
+    .error-summary a {
+      color: var(--status-danger-fg);
+      font-weight: 700;
+    }
+
+    .success-banner {
+      margin-top: 16px;
+      padding: 16px;
+      border: 3px solid var(--status-success-fg);
+      background: var(--status-success-bg);
+      color: var(--status-success-fg);
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .site-footer {
+      padding: 32px 0 48px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dev-drawer {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 300;
+      width: min(360px, calc(100vw - 32px));
+      background: var(--bg-surface);
+      border: 3px solid var(--border-strong);
+      padding: 20px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .ticker-track {
+        animation: none !important;
+        animation-play-state: paused !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+  <div class="brutal-bar" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#drop-studio" class="brand-mark">
+        KUTUB RAYA // 07
+        <span class="brand-sub">Kolektif Streetwear &amp; Zine · Jl. Cihapit No. 19, Bandung (Data Contoh)</span>
+      </a>
+      <nav class="header-nav" aria-label="Navigasi utama">
+        <a href="#bundel-katalog" class="nav-link">Katalog Bundel</a>
+        <a href="#tantangan" class="nav-link">Uji Sablon</a>
+        <a href="#preorder-section" class="nav-link">Pre-Order</a>
+        <button type="button" id="theme-toggle" class="btn btn-outline" aria-pressed="false">Mode Zine Gelap</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- HERO: Bold Brutalist Print Plate + Live Colorway Switcher -->
+    <section id="drop-studio" class="hero-section" aria-labelledby="hero-heading">
+      <div class="container hero-grid">
+        <div>
+          <span id="edition-sticker" class="sticker-cutout">DROP 07 // TERBATAS 50 UNIT</span>
+          <h1 id="hero-heading" class="hero-title">Cetak Kasar. Edisi Sekali Jalan.</h1>
+          <p class="hero-lead">
+            Sablon tangan plastisol padat di atas katun sisir 280 gsm buatan pabrik Majalaya. Tidak dicetak ulang setelah kuota rilisan ketujuh terpenuhi.
+          </p>
+          <div class="hero-actions">
+            <a href="#bundel-katalog" id="hero-cta" class="btn btn-primary">Rakit Bundel Drop 07</a>
+            <a href="#preorder-section" class="inline-link">Langsung ke antrean pre-order</a>
+          </div>
+        </div>
+
+        <div id="print-plate" class="brutal-box">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 12px;">
+            <strong id="plate-label">Jaket Kerja KTR-07 · Hitam Aspal + Lime</strong>
+            <span style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--text-muted); white-space: nowrap;">SKU KTR-J07</span>
+          </div>
+
+          <svg viewBox="0 0 360 190" width="100%" style="height: auto; display: block;" role="img" aria-label="Pratinjau vektor jaket lapangan KUTUB RAYA yang berubah warna kain dan tinta sablonnya">
+            <rect x="2" y="2" width="356" height="186" fill="var(--bg-canvas)" stroke="var(--border-strong)" stroke-width="2"></rect>
+            <!-- Jacket Silhouette -->
+            <polygon id="jacket-body" points="118,32 162,22 198,22 242,32 288,78 264,110 240,86 240,168 120,168 120,86 96,110 72,78" fill="#171717" stroke="var(--border-strong)" stroke-width="3" stroke-linejoin="miter"></polygon>
+            <!-- Back Screenprint Motif -->
+            <rect id="jacket-ink" x="148" y="64" width="64" height="54" fill="#D4FF33" stroke="#0A0A0A" stroke-width="2"></rect>
+            <line id="jacket-line" x1="158" y1="91" x2="202" y2="91" stroke="#0A0A0A" stroke-width="4"></line>
+          </svg>
+
+          <fieldset class="option-fieldset">
+            <legend class="option-legend">Pilih Kombinasi Kain &amp; Tinta Sablon</legend>
+            <div class="swatch-grid">
+              <label class="swatch-choice">
+                <input type="radio" class="overlay-input" name="colorway" value="aspal-lime" checked>
+                <span class="choice-text">Aspal + Lime</span>
+              </label>
+              <label class="swatch-choice">
+                <input type="radio" class="overlay-input" name="colorway" value="kanvas-kobalt">
+                <span class="choice-text">Kanvas + Kobalt</span>
+              </label>
+              <label class="swatch-choice">
+                <input type="radio" class="overlay-input" name="colorway" value="beton-magenta">
+                <span class="choice-text">Beton + Magenta</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTION 1: Drop 07 Catalog + Deterministic 10% Bundle Builder -->
+    <section id="bundel-katalog" class="page-section" aria-labelledby="catalog-heading">
+      <div class="container">
+        <h2 id="catalog-heading" class="section-title">Katalog Drop 07 &amp; Pembuat Bundel</h2>
+        <p class="section-lead">Pilih minimal dua barang dari katalog untuk langsung mengaktifkan potongan harga bundel deterministik sebesar 10 persen.</p>
+
+        <div class="tab-bar" role="tablist" aria-label="Filter kategori barang Drop 07">
+          <button type="button" role="tab" class="tab-btn" data-cat="all" aria-selected="true">Semua (4)</button>
+          <button type="button" role="tab" class="tab-btn" data-cat="sandang" aria-selected="false">Sandang (2)</button>
+          <button type="button" role="tab" class="tab-btn" data-cat="cetak" aria-selected="false">Cetak &amp; Aksesori (2)</button>
+        </div>
+
+        <div class="bundle-layout">
+          <ul id="catalog-list" class="catalog-list">
+            <li class="catalog-row" data-cat="sandang">
+              <div>
+                <h3 style="margin-bottom: 4px;">Jaket Kerja Kanvas KTR-07</h3>
+                <p style="font-size: 0.875rem; color: var(--text-secondary);">Kanvas marsoto 12 oz, jahitan rantai tiga baris · <strong>Rp380.000</strong></p>
+              </div>
+              <label class="bundle-check-label">
+                <input type="checkbox" class="overlay-input" name="bundle-item" value="jaket" data-price="380000" data-name="Jaket KTR-07">
+                <span class="choice-text">Tambah ke Bundel</span>
+              </label>
+            </li>
+            <li class="catalog-row" data-cat="sandang">
+              <div>
+                <h3 style="margin-bottom: 4px;">Kaus Heavyweight 280 gsm</h3>
+                <p style="font-size: 0.875rem; color: var(--text-secondary);">Katun sisir pabrik Majalaya, sablon plastisol 2 lapis · <strong>Rp195.000</strong></p>
+              </div>
+              <label class="bundle-check-label">
+                <input type="checkbox" class="overlay-input" name="bundle-item" value="kaus" data-price="195000" data-name="Kaus 280 gsm">
+                <span class="choice-text">Tambah ke Bundel</span>
+              </label>
+            </li>
+            <li class="catalog-row" data-cat="cetak">
+              <div>
+                <h3 style="margin-bottom: 4px;">Zine Risograph Cihapit #07</h3>
+                <p style="font-size: 0.875rem; color: var(--text-secondary);">48 halaman kertas Bookpaper 90 gsm, 3 warna tinta kedelai · <strong>Rp85.000</strong></p>
+              </div>
+              <label class="bundle-check-label">
+                <input type="checkbox" class="overlay-input" name="bundle-item" value="zine" data-price="85000" data-name="Zine Risograph #07">
+                <span class="choice-text">Tambah ke Bundel</span>
+              </label>
+            </li>
+            <li class="catalog-row" data-cat="cetak">
+              <div>
+                <h3 style="margin-bottom: 4px;">Tas Belanja Kanvas Sablon</h3>
+                <p style="font-size: 0.875rem; color: var(--text-secondary);">Muat buku A4 &amp; piringan hitam 12 inci · <strong>Rp110.000</strong></p>
+              </div>
+              <label class="bundle-check-label">
+                <input type="checkbox" class="overlay-input" name="bundle-item" value="tas" data-price="110000" data-name="Tas Kanvas">
+                <span class="choice-text">Tambah ke Bundel</span>
+              </label>
+            </li>
+          </ul>
+
+          <div id="bundle-summary-panel" class="brutal-box" aria-live="polite">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+              <h3>Ringkasan Bundel</h3>
+              <span id="bundle-status" class="status-readout" data-status-badge="true" data-active="false">0 Item</span>
+            </div>
+            <p id="bundle-total" class="price-big">Rp0</p>
+            <p id="bundle-detail" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 18px;">
+              Centang 2 barang atau lebih untuk memotong harga total secara otomatis sebesar 10%.
+            </p>
+            <a href="#preorder-section" class="btn btn-outline" style="width: 100%;">Lanjut ke Antrean Pre-Order</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTION 2: Acid Lime Ticker Band (1 contrast band = 2 transitions) -->
+    <section id="ticker-rilis" class="acid-band" aria-label="Jadwal rilisan dan pengumuman stok">
+      <div class="container">
+        <div class="ticker-head">
+          <strong style="font-family: var(--font-mono); font-size: 0.875rem;">JADWAL CETAK &amp; RILIS TERBATAS BANDUNG</strong>
+          <button type="button" id="ticker-toggle" class="btn btn-lime-outline" aria-pressed="false">Jeda Ticker</button>
+        </div>
+        <div class="ticker-viewport">
+          <div id="ticker-track" class="ticker-track">
+            <span>BUKA ANTREAN: 22 NOV 2026 PUKUL 19.00 WIB</span>
+            <span>//</span>
+            <span>PENGAMBILAN LANGSUNG DI CIHAPIT TANPA ONGKIR</span>
+            <span>//</span>
+            <span>SABLON PLASTISOL 240 MESH</span>
+            <span>//</span>
+            <span>BUKA ANTREAN: 22 NOV 2026 PUKUL 19.00 WIB</span>
+            <span>//</span>
+            <span>PENGAMBILAN LANGSUNG DI CIHAPIT TANPA ONGKIR</span>
+            <span>//</span>
+            <span>SABLON PLASTISOL 240 MESH</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skill Mini-Challenge -->
+    <section id="tantangan" class="page-section" aria-labelledby="challenge-heading">
+      <div class="container">
+        <h2 id="challenge-heading" class="section-title">Uji Pengetahuan Sablon (Opsional)</h2>
+        <p class="section-lead">Tebak spesifikasi cetak koleksi Drop 07 untuk membuka kode gratis ongkir Jawa–Bali deterministik, atau lewati langsung ke formulir pemesanan.</p>
+
+        <div id="challenge-card" class="brutal-box" style="max-width: 720px;">
+          <fieldset class="option-fieldset" style="margin-top: 0;">
+            <legend class="option-legend">Jenis tinta dan kerapatan layar apa yang dipakai pada kaus KUTUB RAYA Drop 07?</legend>
+            <div class="swatch-grid">
+              <label class="swatch-choice">
+                <input type="radio" class="overlay-input" name="challenge-q" value="dtg-cair">
+                <span class="choice-text">Print Digital DTG</span>
+              </label>
+              <label class="swatch-choice">
+                <input type="radio" class="overlay-input" name="challenge-q" value="plastisol-240">
+                <span class="choice-text">Plastisol 240 Mesh</span>
+              </label>
+              <label class="swatch-choice">
+                <input type="radio" class="overlay-input" name="challenge-q" value="sublim-kertas">
+                <span class="choice-text">Sublimasi Poliester</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 20px;">
+            <button type="button" id="challenge-skip-btn" class="btn btn-outline">Lewati ke Form Pre-Order</button>
+            <span id="challenge-live" style="font-size: 0.875rem; font-weight: 500;" aria-live="polite">Pilih jawaban atau tekan tombol lewati.</span>
+          </div>
+
+          <div id="challenge-reward" class="challenge-strip" hidden>
+            <strong>Jawaban tepat! Kode Gratis Ongkir Terbuka:</strong>
+            <span id="challenge-code" style="font-family: var(--font-mono); font-weight: 700; margin-left: 8px;">KUTUB-ONGKIR10</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTION 3: Brutalist Single-Column Pre-Order Form -->
+    <section id="preorder-section" class="page-section" aria-labelledby="form-heading" style="border-bottom: 0;">
+      <div class="container">
+        <h2 id="form-heading" class="section-title">Formulir Antrean Pre-Order</h2>
+        <p class="section-lead">Masukkan identitas singkat untuk mencatat slot rilisan Drop 07. Simulasi ini tidak mengirim data keluar.</p>
+
+        <form id="preorder-form" class="brutal-box form-wrap" novalidate>
+          <div id="form-error-summary" class="error-summary" role="alert" tabindex="-1" hidden>
+            <strong>Perbaiki bagian berikut sebelum mengunci antrean:</strong>
+            <ul id="form-error-list" style="margin: 8px 0 0 20px; padding: 0;"></ul>
+          </div>
+
+          <div class="field-group">
+            <label for="po-name" class="field-label">Nama Pemesan</label>
+            <span class="field-hint">Contoh: Gilang Mahendra</span>
+            <input type="text" id="po-name" class="form-input" autocomplete="name" aria-describedby="err-po-name">
+            <p id="err-po-name" class="field-error" hidden></p>
+          </div>
+
+          <div class="field-group">
+            <label for="po-email" class="field-label">Alamat Surel Tagihan</label>
+            <span class="field-hint">Nomor antrean dan ringkasan ukuran dikirim ke surel ini.</span>
+            <input type="email" id="po-email" class="form-input" autocomplete="email" aria-describedby="err-po-email">
+            <p id="err-po-email" class="field-error" hidden></p>
+          </div>
+
+          <button type="submit" id="preorder-submit" class="btn btn-primary">Kunci Antrean Pre-Order</button>
+          <div id="po-success" class="success-banner" role="status" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="border-top: 3px solid var(--border-strong);">
+    <div class="container footer-inner">
+      <div>
+        <strong>KUTUB RAYA // DROP 07</strong> (Data Contoh · Arketipe <code>neo-brutalist-pop</code>)<br>
+        Studio Sablon &amp; Toko · Jl. Cihapit No. 19, Bandung
+      </div>
+      <div>
+        <button type="button" id="dev-toggle-footer" class="btn btn-ghost">Panel Pengembang</button>
+      </div>
+    </div>
+  </footer>
+
+  <aside id="dev-drawer" class="dev-drawer" role="dialog" aria-label="Panel Pengembang Arketipe" hidden>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <strong>Panel Pengembang (?dev=1)</strong>
+      <button type="button" id="dev-close-btn" class="btn btn-outline">Tutup</button>
+    </div>
+    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 12px;">
+      Arketipe: <code>neo-brutalist-pop</code> · Font: Syne + Archivo · 0px Tajam &amp; 5 Offset Shadow
+    </p>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button type="button" id="toggle-mode-btn" class="btn btn-outline">Mode: Lite</button>
+    </div>
+  </aside>
+
+  <script>
+    (() => {
+      // Colorway SVG Plate Switcher
+      const colorways = {
+        'aspal-lime': { label: 'Jaket Kerja KTR-07 · Hitam Aspal + Lime', fabric: '#171717', ink: '#D4FF33' },
+        'kanvas-kobalt': { label: 'Jaket Kerja KTR-07 · Krem Kanvas + Kobalt', fabric: '#E7E5D8', ink: '#1D4ED8' },
+        'beton-magenta': { label: 'Jaket Kerja KTR-07 · Abu Beton + Magenta', fabric: '#737373', ink: '#BE185D' }
+      };
+
+      document.querySelectorAll('input[name="colorway"]').forEach((r) => {
+        r.addEventListener('change', () => {
+          const c = colorways[r.value];
+          if (!c) return;
+          document.getElementById('plate-label').textContent = c.label;
+          document.getElementById('jacket-body').setAttribute('fill', c.fabric);
+          document.getElementById('jacket-ink').setAttribute('fill', c.ink);
+        });
+      });
+
+      // Catalog Filter + Bundle Calculator (10% discount for >= 2 items)
+      document.querySelectorAll('.tab-btn').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const cat = tab.getAttribute('data-cat');
+          document.querySelectorAll('.tab-btn').forEach((b) => b.setAttribute('aria-selected', b === tab ? 'true' : 'false'));
+          document.querySelectorAll('.catalog-row').forEach((row) => {
+            row.hidden = cat !== 'all' && row.getAttribute('data-cat') !== cat;
+          });
+        });
+      });
+
+      function updateBundle() {
+        const checked = [...document.querySelectorAll('input[name="bundle-item"]:checked')];
+        const count = checked.length;
+        const raw = checked.reduce((sum, el) => sum + Number(el.getAttribute('data-price') || 0), 0);
+        const hasDiscount = count >= 2;
+        const finalPrice = hasDiscount ? Math.round(raw * 0.9) : raw;
+
+        const statusEl = document.getElementById('bundle-status');
+        statusEl.textContent = hasDiscount ? `${count} Item · Hemat 10%` : `${count} Item`;
+        statusEl.setAttribute('data-active', hasDiscount ? 'true' : 'false');
+        document.getElementById('bundle-total').textContent = `Rp${finalPrice.toLocaleString('id-ID')}`;
+        document.getElementById('bundle-detail').textContent = hasDiscount
+          ? `Potongan bundel 10% aktif dari subtotal Rp${raw.toLocaleString('id-ID')}.`
+          : (count === 1 ? 'Pilih 1 barang lagi untuk mengaktifkan potongan bundel 10%.' : 'Centang 2 barang atau lebih untuk memotong harga total secara otomatis sebesar 10%.');
+      }
+
+      document.querySelectorAll('input[name="bundle-item"]').forEach((cb) => {
+        cb.addEventListener('change', updateBundle);
+      });
+
+      // Acid Lime Ticker Pause Control (WCAG 2.2.2)
+      const tickerBtn = document.getElementById('ticker-toggle');
+      const tickerTrack = document.getElementById('ticker-track');
+      tickerBtn.addEventListener('click', () => {
+        const paused = tickerTrack.classList.toggle('is-paused');
+        tickerBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        tickerBtn.textContent = paused ? 'Lanjutkan Ticker' : 'Jeda Ticker';
+      });
+
+      // Skill Mini-Challenge
+      document.querySelectorAll('input[name="challenge-q"]').forEach((r) => {
+        r.addEventListener('change', () => {
+          const reward = document.getElementById('challenge-reward');
+          const live = document.getElementById('challenge-live');
+          if (r.value === 'plastisol-240') {
+            reward.hidden = false;
+            live.textContent = 'Tepat! Kode gratis ongkir KUTUB-ONGKIR10 terbuka.';
+          } else {
+            reward.hidden = true;
+            live.textContent = 'Belum tepat — coba periksa kembali catatan ticker di atas.';
+          }
+        });
+      });
+
+      function skipChallenge() {
+        document.getElementById('challenge-live').textContent = 'Tantangan dilewati. Melompat ke formulir antrean pre-order.';
+        const target = document.getElementById('form-heading');
+        target.setAttribute('tabindex', '-1');
+        document.getElementById('preorder-section').scrollIntoView();
+        target.focus({ preventScroll: true });
+      }
+
+      document.getElementById('challenge-skip-btn').addEventListener('click', skipChallenge);
+      document.getElementById('challenge-card').addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') skipChallenge();
+      });
+
+      // Pre-Order Form Validation
+      document.getElementById('preorder-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameEl = document.getElementById('po-name');
+        const emailEl = document.getElementById('po-email');
+        const summary = document.getElementById('form-error-summary');
+        const list = document.getElementById('form-error-list');
+        const success = document.getElementById('po-success');
+
+        [nameEl, emailEl].forEach((el) => el.removeAttribute('aria-invalid'));
+        ['err-po-name', 'err-po-email'].forEach((id) => { document.getElementById(id).hidden = true; });
+        list.innerHTML = '';
+        summary.hidden = true;
+        success.hidden = true;
+
+        const errs = [];
+        if (!nameEl.value.trim()) errs.push({ id: 'po-name', err: 'err-po-name', msg: 'Isi nama pemesan terlebih dahulu.' });
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) errs.push({ id: 'po-email', err: 'err-po-email', msg: 'Masukkan alamat surel tagihan yang valid.' });
+
+        if (errs.length > 0) {
+          errs.forEach((it) => {
+            document.getElementById(it.id).setAttribute('aria-invalid', 'true');
+            const ep = document.getElementById(it.err);
+            ep.textContent = it.msg;
+            ep.hidden = false;
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#' + it.id;
+            a.textContent = it.msg;
+            li.appendChild(a);
+            list.appendChild(li);
+          });
+          summary.hidden = false;
+          summary.focus();
+          return;
+        }
+
+        success.textContent = `Slot antrean contoh Drop 07 dicatat untuk ${nameEl.value.trim()}.`;
+        success.hidden = false;
+      });
+
+      // Theme & Dev Drawer
+      const themeBtn = document.getElementById('theme-toggle');
+      themeBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        themeBtn.setAttribute('aria-pressed', isDark ? 'false' : 'true');
+        themeBtn.textContent = isDark ? 'Mode Zine Gelap' : 'Mode Kertas Cetak';
+      });
+
+      const drawer = document.getElementById('dev-drawer');
+      const setDrawer = (open) => { drawer.hidden = !open; };
+      if (new URLSearchParams(location.search).get('dev') === '1') setDrawer(true);
+      document.getElementById('dev-toggle-footer').addEventListener('click', () => setDrawer(drawer.hidden));
+      document.getElementById('dev-close-btn').addEventListener('click', () => {
+        setDrawer(false);
+        document.getElementById('dev-toggle-footer').focus();
+      });
+
+      const modeBtn = document.getElementById('toggle-mode-btn');
+      modeBtn.addEventListener('click', () => {
+        const nextFull = document.documentElement.getAttribute('data-complexity') !== 'full';
+        document.documentElement.setAttribute('data-complexity', nextFull ? 'full' : 'lite');
+        modeBtn.textContent = nextFull ? 'Mode: Full' : 'Mode: Lite';
+      });
+    })();
+  </script>
+</body>
+</html>

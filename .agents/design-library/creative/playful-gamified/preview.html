@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kopi &amp; Roti Tugu — Kartu Stempel &amp; Peracik Minuman (Contoh playful-gamified)</title>
+  <meta name="description" content="Kedai Kopi dan Roti Sourdough Tugu Yogyakarta (data contoh). Kumpulkan 8 stempel deterministik untuk 1 kopi gratis dan racik pesananmu langsung di layar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Bricolage Fallback';
+      src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Arial');
+      font-weight: 500 700;
+      size-adjust: 110%;
+      ascent-override: 95%;
+      descent-override: 24%;
+      line-gap-override: 0%;
+    }
+
+    @font-face {
+      font-family: 'DM Fallback';
+      src: local('Arial'), local('Helvetica Neue');
+      font-weight: 400 700;
+      size-adjust: 102%;
+      ascent-override: 94%;
+      descent-override: 24%;
+      line-gap-override: 0%;
+    }
+
+    :root {
+      --bg-canvas: #FFF8EB;
+      --bg-surface: #FFFFFF;
+      --bg-elevated: #FFFDF8;
+      --bg-sticker-honey: #FDE047;
+      --fg-sticker-honey: #1E140E;
+      --bg-sticker-mint: #D1FAE5;
+      --fg-sticker-mint: #14532D;
+      --text-primary: #1E140E;
+      --text-secondary: #4E3524;
+      --text-muted: #664833;
+      --border-subtle: #D6C3AC;
+      --border-strong: #2B1D14;
+      --accent-primary: #B9341E;
+      --accent-primary-hover: #962715;
+      --accent-on-primary: #FFFFFF;
+      --accent-secondary: #14532D;
+      --focus-ring: #1D4ED8;
+      --skip-bg: #FDE047;
+      --skip-fg: #1E140E;
+      --status-success-bg: #DCFCE7;
+      --status-success-fg: #14532D;
+      --status-warning-bg: #FEF3C7;
+      --status-warning-fg: #78350F;
+      --status-danger-bg: #FEE2E2;
+      --status-danger-fg: #991B1B;
+
+      --cup-coffee: #6F4E37;
+      --cup-matcha: #3F6212;
+      --cup-milk: #F5E6CA;
+      --cup-aren: #9A3412;
+
+      --font-display: 'Bricolage Grotesque', 'Bricolage Fallback', system-ui, -apple-system, sans-serif;
+      --font-sans: 'DM Sans', 'DM Fallback', system-ui, -apple-system, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --radius-control: 8px;
+      --radius-card: 16px;
+      --radius-pill: 999px;
+      --shadow-tactile: 4px 4px 0 var(--border-strong);
+
+      --duration-instant: 75ms;
+      --duration-fast: 150ms;
+      --duration-normal: 260ms;
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring-snappy: linear(
+        0, 0.453 7.8%, 0.803 16.1%, 1.008 24.9%, 1.084 33.3%,
+        1.053 44.6%, 1.007 58.2%, 0.996 72.2%, 1
+      );
+      --ease-spring-gentle: linear(
+        0, 0.28 8%, 0.68 18%, 0.95 29%, 1.04 41%, 1.02 58%, 1
+      );
+    }
+
+    html[data-theme="dark"] {
+      --bg-canvas: #1A120D;
+      --bg-surface: #261B14;
+      --bg-elevated: #30231B;
+      --bg-sticker-honey: #713F12;
+      --fg-sticker-honey: #FFF8EB;
+      --bg-sticker-mint: #143322;
+      --fg-sticker-mint: #BBF7D0;
+      --text-primary: #FFF8EB;
+      --text-secondary: #E5D3C0;
+      --text-muted: #C4A98E;
+      --border-subtle: #4D392B;
+      --border-strong: #D6C3AC;
+      --accent-primary: #FB923C;
+      --accent-primary-hover: #FDBA74;
+      --accent-on-primary: #1A120D;
+      --accent-secondary: #6EE7B7;
+      --focus-ring: #FDE047;
+      --skip-bg: #FDE047;
+      --skip-fg: #1A120D;
+      --status-success-bg: #143322;
+      --status-success-fg: #BBF7D0;
+      --status-warning-bg: #422006;
+      --status-warning-fg: #FDE68A;
+      --status-danger-bg: #451212;
+      --status-danger-fg: #FECACA;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, strong, th {
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 0;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -120px;
+      z-index: 200;
+      background: var(--skip-bg);
+      color: var(--skip-fg);
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: var(--radius-control);
+      border: 2px solid var(--border-strong);
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    /* Non-blocking top ink rail intro (disabled on Lite & reduced-motion) */
+    .intro-rail {
+      height: 4px;
+      width: 100%;
+      background: var(--accent-primary);
+      transform-origin: left center;
+      animation: introSweep 520ms var(--ease-out-expo) both;
+    }
+
+    html[data-complexity="lite"] .intro-rail {
+      animation: none;
+    }
+
+    @keyframes introSweep {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 24px;
+      }
+    }
+
+    /* Header */
+    .site-header {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
+    }
+
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.125rem;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-sub {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .header-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 8px 4px;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-primary);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 20px;
+      border-radius: var(--radius-control);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--duration-instant) var(--ease-out-quart), background-color var(--duration-fast) var(--ease-out-quart);
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: var(--accent-on-primary);
+      border: 2px solid var(--border-strong);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+
+    .btn-outline {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: 2px solid var(--border-strong);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-primary);
+      border: 0;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      padding: 8px 4px;
+      min-height: 44px;
+    }
+
+    .btn-ghost:hover {
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+    }
+
+    .inline-link {
+      color: var(--accent-primary);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+
+    .inline-link:hover {
+      color: var(--accent-primary-hover);
+    }
+
+    /* Stickers & Dynamic Status Badges */
+    .sticker-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      background: var(--bg-sticker-honey);
+      color: var(--fg-sticker-honey);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-tactile);
+      font-size: 0.875rem;
+      font-weight: 700;
+      transform: rotate(-1.5deg);
+      transition: transform var(--duration-fast) var(--ease-spring-snappy);
+    }
+
+    html[data-complexity="lite"] .sticker-badge {
+      transform: none;
+      transition: none;
+    }
+
+    @media (hover: hover) {
+      .sticker-badge:hover {
+        transform: rotate(0deg);
+      }
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-strong);
+      font-size: 0.875rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      background: var(--bg-canvas);
+      color: var(--text-secondary);
+    }
+
+    .status-pill[data-unlocked="true"] {
+      background: var(--status-success-bg);
+      color: var(--status-success-fg);
+    }
+
+    /* Sections */
+    .page-section {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    @media (min-width: 768px) {
+      .page-section {
+        padding: 64px 0;
+      }
+    }
+
+    .section-head {
+      max-width: 64ch;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: clamp(1.55rem, 2.8vw, 2.2rem);
+      line-height: 1.14;
+      letter-spacing: -0.015em;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Hero Signature Moment */
+    .hero-section {
+      padding: 48px 0 96px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    @media (min-width: 1024px) {
+      .hero-section {
+        padding: 72px 0 168px;
+      }
+    }
+
+    .page-section.builder-section {
+      padding-top: 120px;
+      padding-bottom: 88px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 48px;
+      }
+    }
+
+    .hero-title {
+      font-size: clamp(2.35rem, 5.2vw, 3.6rem);
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      margin-top: 20px;
+      margin-bottom: 16px;
+    }
+
+    .hero-lead {
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 56ch;
+      margin-bottom: 24px;
+    }
+
+    .mascot-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .mascot-svg {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+      transition: transform var(--duration-normal) var(--ease-spring-snappy);
+    }
+
+    .mascot-svg.is-bouncing {
+      transform: translateY(-6px) rotate(-4deg) scale(1.06);
+    }
+
+    .mascot-caption {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Tactile Surfaces (Max 4 static shadows) */
+    .tactile-panel {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-tactile);
+      padding: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .tactile-panel {
+        padding: 32px;
+      }
+    }
+
+    .form-panel {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      max-width: 580px;
+    }
+
+    @media (min-width: 768px) {
+      .form-panel {
+        padding: 32px;
+      }
+    }
+
+    /* Stamp Card Grid (Zero nested boxes) */
+    .card-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-family: var(--font-display);
+    }
+
+    .stamp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .stamp-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-height: 76px;
+      padding: 8px 4px;
+      border: 2px dashed var(--border-subtle);
+      border-radius: var(--radius-control);
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      transition: transform var(--duration-normal) var(--ease-spring-snappy), border-color var(--duration-fast) var(--ease-out-quart);
+    }
+
+    .stamp-slot[data-filled="true"] {
+      border-style: solid;
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+    }
+
+    .stamp-slot.just-stamped {
+      animation: stampPop 380ms var(--ease-spring-snappy);
+    }
+
+    @keyframes stampPop {
+      0% { transform: scale(0.84) rotate(-6deg); }
+      70% { transform: scale(1.06) rotate(2deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .voucher-strip {
+      padding-top: 16px;
+      border-top: 2px dashed var(--border-strong);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .voucher-code {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    .live-note {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    /* Interactive Customizer */
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    @media (min-width: 1024px) {
+      .builder-grid {
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 40px;
+      }
+    }
+
+    .option-fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0 0 24px;
+    }
+
+    .option-fieldset:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .option-legend {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .radio-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .radio-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .radio-choice {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 70px;
+      padding: 12px 14px;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      transition: border-color var(--duration-fast) var(--ease-out-quart), transform var(--duration-instant) var(--ease-out-quart);
+    }
+
+    .radio-choice:has(input:checked) {
+      border: 2px solid var(--border-strong);
+      background: var(--bg-canvas);
+    }
+
+    .radio-choice:hover {
+      border-color: var(--border-strong);
+    }
+
+    .radio-overlay-input {
+      appearance: none;
+      -webkit-appearance: none;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: transparent;
+      border: 0;
+      border-radius: var(--radius-control);
+      cursor: pointer;
+    }
+
+    .radio-title {
+      position: relative;
+      z-index: 1;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+    }
+
+    .radio-meta {
+      position: relative;
+      z-index: 1;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cup-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      padding-top: 12px;
+      text-align: center;
+    }
+
+    .cup-svg {
+      width: 196px;
+      height: 224px;
+      margin-bottom: 20px;
+    }
+
+    .price-figure {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      margin: 8px 0 4px;
+    }
+
+    .summary-divider {
+      width: 100%;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    /* Quiz + Badges */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+      .quiz-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+    }
+
+    .quiz-result-band {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px dashed var(--border-strong);
+    }
+
+    .award-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .award-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .award-name {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      margin-bottom: 4px;
+    }
+
+    .award-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* Structured Menu Rows & Collective Progress */
+    .tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      padding: 10px 4px;
+      min-height: 44px;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+    }
+
+    .menu-list {
+      list-style: none;
+      margin: 0 0 32px;
+      padding: 0;
+    }
+
+    .menu-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      align-items: baseline;
+    }
+
+    @media (min-width: 768px) {
+      .menu-row {
+        grid-template-columns: 1.5fr 2fr 0.7fr 0.7fr;
+        gap: 16px;
+      }
+    }
+
+    .menu-price {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (min-width: 768px) {
+      .menu-price {
+        text-align: right;
+      }
+    }
+
+    .collective-wrap {
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+      max-width: 680px;
+    }
+
+    .progress-track {
+      display: block;
+      width: 100%;
+      height: 14px;
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      margin: 12px 0 8px;
+    }
+
+    .progress-fill {
+      display: block;
+      height: 100%;
+      background: var(--accent-secondary);
+      width: 74.2%;
+      transition: width var(--duration-normal) var(--ease-out-expo);
+    }
+
+    /* Forms */
+    .field-group {
+      margin-bottom: 20px;
+    }
+
+    .field-label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .field-hint {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      color: var(--text-primary);
+      background: var(--bg-canvas);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-control);
+    }
+
+    .form-input[aria-invalid="true"] {
+      border-color: var(--status-danger-fg);
+      background: var(--status-danger-bg);
+    }
+
+    .field-error {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--status-danger-fg);
+    }
+
+    .consent-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .consent-check {
+      width: 24px;
+      height: 24px;
+      margin: 2px 0 0;
+      flex-shrink: 0;
+      accent-color: var(--accent-primary);
+    }
+
+    .error-summary {
+      padding: 16px;
+      margin-bottom: 20px;
+      border: 2px solid var(--status-danger-fg);
+      border-radius: var(--radius-control);
+      background: var(--status-danger-bg);
+      color: var(--status-danger-fg);
+    }
+
+    .error-summary a {
+      color: var(--status-danger-fg);
+      font-weight: 700;
+    }
+
+    .success-banner {
+      margin-top: 16px;
+      padding: 16px;
+      border: 2px solid var(--status-success-fg);
+      border-radius: var(--radius-control);
+      background: var(--status-success-bg);
+      color: var(--status-success-fg);
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .site-footer {
+      padding: 32px 0 48px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Dev Drawer */
+    .dev-drawer {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 300;
+      width: min(360px, calc(100vw - 32px));
+      background: var(--bg-elevated);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-card);
+      padding: 20px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+  <div class="intro-rail" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#hero" class="brand-link">
+        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="2" y="2" width="28" height="28" rx="8" fill="var(--bg-sticker-honey)" stroke="var(--border-strong)" stroke-width="2"></rect>
+          <circle cx="16" cy="17" r="7" fill="var(--accent-primary)" stroke="var(--border-strong)" stroke-width="2"></circle>
+          <path d="M16 10 Q18 17 16 24" stroke="var(--bg-canvas)" stroke-width="2" fill="none"></path>
+        </svg>
+        <span>
+          Kopi &amp; Roti Tugu
+          <span class="brand-sub">Jl. Margo Utomo No. 42, Yogyakarta (Data Contoh)</span>
+        </span>
+      </a>
+      <nav class="header-nav" aria-label="Navigasi utama">
+        <a href="#peracik" class="nav-link">Peracik</a>
+        <a href="#kuis-rasa" class="nav-link">Kuis Rasa</a>
+        <a href="#menu-harian" class="nav-link">Menu Harian</a>
+        <a href="#simpan-kartu" class="nav-link">Simpan Kartu</a>
+        <button type="button" id="theme-toggle" class="btn btn-outline" aria-pressed="false">Mode Gelap</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- HERO: Signature Moment (Stamp Card 8-Slot + Mascot Mas Biji) -->
+    <section id="hero" class="hero-section" aria-labelledby="hero-heading">
+      <div class="container hero-grid">
+        <div>
+          <span class="sticker-badge">Sangrai Senin &amp; Kamis</span>
+          <h1 id="hero-heading" class="hero-title">Delapan Cangkir, Satu Kopi Gratis di Tugu.</h1>
+          <p class="hero-lead">
+            Kumpulkan stempel deterministik langsung di browser tanpa perlu pasang aplikasi tambahan. Setiap 8 cap terbuka 1 voucher kopi ukuran reguler pilihanmu.
+          </p>
+
+          <div class="mascot-row">
+            <svg id="mascot-svg" class="mascot-svg" viewBox="0 0 72 72" role="img" aria-label="Ilustrasi maskot vektor Mas Biji, biji kopi bertopi kedai Tugu">
+              <path d="M22 18 Q26 10 22 4" stroke="var(--accent-primary)" stroke-width="2.5" stroke-linecap="round" fill="none"></path>
+              <path d="M36 16 Q40 8 36 2" stroke="var(--accent-primary)" stroke-width="2.5" stroke-linecap="round" fill="none"></path>
+              <ellipse cx="36" cy="40" rx="22" ry="26" fill="var(--bg-sticker-honey)" stroke="var(--border-strong)" stroke-width="2.5"></ellipse>
+              <path d="M18 22 H54 L50 14 H22 Z" fill="var(--accent-primary)" stroke="var(--border-strong)" stroke-width="2"></path>
+              <circle cx="29" cy="37" r="2.8" fill="var(--border-strong)"></circle>
+              <circle cx="43" cy="37" r="2.8" fill="var(--border-strong)"></circle>
+              <path id="mascot-mouth" d="M28 47 Q36 54 44 47" stroke="var(--border-strong)" stroke-width="2.5" stroke-linecap="round" fill="none"></path>
+            </svg>
+            <p id="mascot-caption" class="mascot-caption">
+              <strong>Mas Biji:</strong> Sentuh tombol merah untuk mengetuk cap stempel hari ini ke kartumu.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <button type="button" id="stamp-btn" class="btn btn-primary">Cap Stempel Hari Ini</button>
+            <a href="#menu-harian" class="inline-link">Lewati langsung ke daftar menu</a>
+          </div>
+        </div>
+
+        <!-- Tactile 8-Slot Stamp Card -->
+        <article id="stamp-card" class="tactile-panel" aria-labelledby="stamp-card-title">
+          <div class="card-header-row">
+            <h2 id="stamp-card-title" class="card-title">Kartu Stempel Digital</h2>
+            <span id="stamp-count" class="status-pill" data-status-badge="true" aria-live="polite">3 / 8 Stempel</span>
+          </div>
+
+          <ol id="stamp-grid" class="stamp-grid" aria-label="Daftar delapan slot stempel loyalitas"></ol>
+
+          <p id="stamp-status-note" class="live-note" aria-live="polite">
+            Kurang 5 cap lagi untuk membuka voucher kopi gratis deterministik.
+          </p>
+
+          <div id="voucher-panel" class="voucher-strip" hidden>
+            <div>
+              <strong>Voucher Hadiah Terbuka (Contoh):</strong>
+              <div id="voucher-code" class="voucher-code">TUGU-8CUP-CONTOH</div>
+            </div>
+            <button type="button" id="copy-voucher-btn" class="btn btn-outline">Salin Kode</button>
+          </div>
+
+          <div style="margin-top: 12px;">
+            <button type="button" id="reset-stamp-btn" class="btn btn-ghost">Ulangi Simulasi Kartu dari 0</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- INTERACTION 1: Live Custom Drink Builder -->
+    <section id="peracik" class="page-section builder-section" aria-labelledby="builder-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="builder-heading" class="section-title">Meja Racik Minuman Langsung</h2>
+          <p class="section-desc">Pilih dasar seduhan, jenis susu, dan tingkat manis menggunakan klik atau tombol panah keyboard. Gelas pratinjau dan harga menyesuaikan seketika.</p>
+        </div>
+
+        <div id="builder-panel" class="tactile-panel builder-grid">
+          <div>
+            <fieldset class="option-fieldset">
+              <legend class="option-legend">1. Pilih Dasar Seduhan</legend>
+              <div class="radio-row">
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-base" value="kopi-susu" checked>
+                  <span class="radio-title">Kopi Susu Tugu</span>
+                  <span class="radio-meta">Rp24.000</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-base" value="kopi-filter">
+                  <span class="radio-title">Seduh Manual Gayo</span>
+                  <span class="radio-meta">Rp26.000</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-base" value="matcha-kulonprogo">
+                  <span class="radio-title">Matcha &amp; Teh Sangrai</span>
+                  <span class="radio-meta">Rp27.000</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="option-fieldset">
+              <legend class="option-legend">2. Susu &amp; Penyajian</legend>
+              <div class="radio-row">
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-milk" value="susu-segar" checked>
+                  <span class="radio-title">Susu Segar Boyolali</span>
+                  <span class="radio-meta">+Rp0</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-milk" value="oat-milk">
+                  <span class="radio-title">Susu Oat</span>
+                  <span class="radio-meta">+Rp5.000</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-milk" value="es-hitam">
+                  <span class="radio-title">Es Tanpa Susu</span>
+                  <span class="radio-meta">-Rp2.000</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="option-fieldset">
+              <legend class="option-legend">3. Pemanis Alami</legend>
+              <div class="radio-row">
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-sweet" value="gula-aren" checked>
+                  <span class="radio-title">Gula Aren Kulonprogo</span>
+                  <span class="radio-meta">+Rp2.000</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-sweet" value="sedikit-manis">
+                  <span class="radio-title">Setengah Takar</span>
+                  <span class="radio-meta">+Rp1.000</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="coffee-sweet" value="tanpa-gula">
+                  <span class="radio-title">Tanpa Gula</span>
+                  <span class="radio-meta">+Rp0</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="cup-stage">
+            <svg id="cup-svg" class="cup-svg" viewBox="0 0 180 200" role="img" aria-label="Ilustrasi gelas minuman yang berubah warna mengikuti racikan">
+              <path d="M40 36 H140 L126 176 H54 Z" fill="var(--bg-canvas)" stroke="var(--border-strong)" stroke-width="3" stroke-linejoin="round"></path>
+              <rect id="cup-layer-sweet" x="55" y="148" width="70" height="24" rx="4" fill="var(--cup-aren)"></rect>
+              <rect id="cup-layer-milk" x="49" y="102" width="82" height="46" rx="4" fill="var(--cup-milk)"></rect>
+              <rect id="cup-layer-base" x="45" y="60" width="90" height="42" rx="4" fill="var(--cup-coffee)"></rect>
+              <ellipse id="cup-foam" cx="90" cy="58" rx="44" ry="8" fill="var(--bg-sticker-honey)" stroke="var(--border-strong)" stroke-width="2"></ellipse>
+              <path d="M40 36 H140 L126 176 H54 Z" fill="none" stroke="var(--border-strong)" stroke-width="3" stroke-linejoin="round"></path>
+              <rect x="108" y="12" width="10" height="86" rx="4" fill="var(--accent-primary)" stroke="var(--border-strong)" stroke-width="2"></rect>
+            </svg>
+
+            <h3 id="builder-summary">Kopi Susu Tugu · Susu Segar · Gula Aren</h3>
+            <p id="builder-price" class="price-figure" aria-live="polite">Rp26.000</p>
+            <p id="builder-note" class="section-desc">Harga contoh pratinjau termasuk gelas reguler 350 ml.</p>
+
+            <div class="summary-divider">
+              <button type="button" id="order-custom-btn" class="btn btn-primary" style="width: 100%;">Catat Racikan &amp; Tambah 1 Stempel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTION 2: 3-Step Product Matcher Quiz + Discovery Badges -->
+    <section id="kuis-rasa" class="page-section" aria-labelledby="quiz-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="quiz-heading" class="section-title">Kuis Penemuan Rasa &amp; Lencana Eksplorasi</h2>
+          <p class="section-desc">Belum tahu mau pesan apa? Jawab tiga pertanyaan singkat untuk rekomendasi menu yang cocok, atau tekan Lewati ke Menu kapan saja.</p>
+        </div>
+
+        <div class="quiz-grid">
+          <div id="quiz-panel" class="tactile-panel">
+            <fieldset class="option-fieldset">
+              <legend class="option-legend">1. Suasana minum sekarang?</legend>
+              <div class="radio-row">
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-mood" value="krimi">
+                  <span class="radio-title">Santai &amp; Gurih</span>
+                  <span class="radio-meta">Berbasis susu</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-mood" value="segar">
+                  <span class="radio-title">Fokus &amp; Ringan</span>
+                  <span class="radio-meta">Tanpa susu</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-mood" value="lembut">
+                  <span class="radio-title">Non-Kopi Hangat</span>
+                  <span class="radio-meta">Teh &amp; matcha</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="option-fieldset">
+              <legend class="option-legend">2. Karakter rasa pilihan?</legend>
+              <div class="radio-row">
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-roast" value="karamel">
+                  <span class="radio-title">Cokelat &amp; Kacang</span>
+                  <span class="radio-meta">Pahit rendah</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-roast" value="cerah">
+                  <span class="radio-title">Sitrus &amp; Floral</span>
+                  <span class="radio-meta">Seduh filter</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-roast" value="tanah">
+                  <span class="radio-title">Umami Daun Teh</span>
+                  <span class="radio-meta">Manis ringan</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="option-fieldset">
+              <legend class="option-legend">3. Teman makan yang pas?</legend>
+              <div class="radio-row">
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-pair" value="roti-asin">
+                  <span class="radio-title">Sourdough Keju</span>
+                  <span class="radio-meta">Gurih renyah</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-pair" value="asam-manis">
+                  <span class="radio-title">Roti Kismis Kayumanis</span>
+                  <span class="radio-meta">Tanpa mentega berlebih</span>
+                </label>
+                <label class="radio-choice">
+                  <input type="radio" class="radio-overlay-input" name="q-pair" value="tanpa-makan">
+                  <span class="radio-title">Minum Saja</span>
+                  <span class="radio-meta">Ringkas</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="card-header-row" style="border-bottom: 0; padding-bottom: 0; margin-top: 20px; margin-bottom: 0;">
+              <button type="button" id="quiz-skip-btn" class="btn btn-outline">Lewati ke Menu</button>
+              <span id="quiz-status-live" class="live-note" style="margin-top: 0;" aria-live="polite">Pilih ketiga langkah untuk melihat hasil.</span>
+            </div>
+
+            <div id="quiz-result" class="quiz-result-band" hidden>
+              <h3 id="quiz-rec-title" style="margin-bottom: 6px;">Rekomendasi: Seduh Manual Arabika Gayo</h3>
+              <p id="quiz-rec-reason" class="section-desc" style="margin-bottom: 14px;"></p>
+              <button type="button" id="apply-quiz-btn" class="btn btn-outline">Terapkan ke Meja Racik</button>
+            </div>
+          </div>
+
+          <!-- Discovery Badges List -->
+          <div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Lencana Eksplorasi</h3>
+            <p class="section-desc" style="margin-bottom: 16px;">Terbuka otomatis ketika kamu mencoba fitur di kedai tanpa syarat undian.</p>
+            <ul class="award-list">
+              <li class="award-item">
+                <div>
+                  <h4 class="award-name">Peracik Mandiri</h4>
+                  <p class="award-desc">Menyesuaikan racikan minuman di meja peracik.</p>
+                </div>
+                <span class="status-pill" data-status-badge="true" data-badge="crafter" data-unlocked="false">Terkunci</span>
+              </li>
+              <li class="award-item">
+                <div>
+                  <h4 class="award-name">Pencicip Pagi</h4>
+                  <p class="award-desc">Menuntaskan kuis penemuan rasa tiga langkah.</p>
+                </div>
+                <span class="status-pill" data-status-badge="true" data-badge="loyalist" data-unlocked="false">Terkunci</span>
+              </li>
+              <li class="award-item">
+                <div>
+                  <h4 class="award-name">Pelanggan 8 Cup</h4>
+                  <p class="award-desc">Melengkapi 8 stempel pada satu kartu digital.</p>
+                </div>
+                <span class="status-pill" data-status-badge="true" data-badge="collector" data-unlocked="false">Terkunci</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTION 3: Structured Menu + Collective Goal -->
+    <section id="menu-harian" class="page-section" aria-labelledby="menu-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="menu-heading" class="section-title">Daftar Menu Harian &amp; Target Komunitas</h2>
+          <p class="section-desc">Harga dan ketersediaan contoh untuk kedai Kopi &amp; Roti Tugu. Saring berdasarkan kategori tanpa memuat ulang halaman.</p>
+        </div>
+
+        <div class="tab-bar" role="tablist" aria-label="Filter kategori menu">
+          <button type="button" role="tab" id="tab-all" class="tab-btn" data-filter="all" aria-selected="true">Semua (5)</button>
+          <button type="button" role="tab" id="tab-kopi" class="tab-btn" data-filter="kopi" aria-selected="false">Kopi (3)</button>
+          <button type="button" role="tab" id="tab-roti" class="tab-btn" data-filter="roti" aria-selected="false">Roti Sourdough (2)</button>
+        </div>
+
+        <ul id="menu-list" class="menu-list">
+          <li class="menu-row" data-cat="kopi">
+            <strong>Kopi Susu Tugu Gula Aren</strong>
+            <span class="section-desc">Espresso ganda Temanggung, susu Boyolali, aren Kulonprogo</span>
+            <span style="color: var(--text-muted); font-size: 0.875rem;">350 ml · Panas/Es</span>
+            <span class="menu-price">Rp24.000</span>
+          </li>
+          <li class="menu-row" data-cat="kopi">
+            <strong>Seduh Manual Arabika Gayo</strong>
+            <span class="section-desc">Koperasi Kopi Gayo Lestari, catatan jeruk manis &amp; kakao</span>
+            <span style="color: var(--text-muted); font-size: 0.875rem;">250 ml · V60</span>
+            <span class="menu-price">Rp26.000</span>
+          </li>
+          <li class="menu-row" data-cat="kopi">
+            <strong>Matcha &amp; Teh Sangrai</strong>
+            <span class="section-desc">Bubuk teh hijau kukus dengan pilihan susu segar atau oat</span>
+            <span style="color: var(--text-muted); font-size: 0.875rem;">300 ml · Panas/Es</span>
+            <span class="menu-price">Rp27.000</span>
+          </li>
+          <li class="menu-row" data-cat="roti">
+            <strong>Sourdough Keju Panggang</strong>
+            <span class="section-desc">Ragi alami 24 jam, keju cheddar tua, mentega garut</span>
+            <span style="color: var(--text-muted); font-size: 0.875rem;">1 Potong Tebal</span>
+            <span class="menu-price">Rp28.000</span>
+          </li>
+          <li class="menu-row" data-cat="roti">
+            <strong>Roti Kismis Kayumanis</strong>
+            <span class="section-desc">Adonan gandum utuh, kayumanis Jambi, gula palem</span>
+            <span style="color: var(--text-muted); font-size: 0.875rem;">1 Gulung</span>
+            <span class="menu-price">Rp22.000</span>
+          </li>
+        </ul>
+
+        <div class="collective-wrap">
+          <h3 style="margin-bottom: 6px;">Target Komunitas Bulan Ini (Contoh): 742 / 1.000 Cup</h3>
+          <p class="section-desc">Setiap 1.000 gelas terjual mendanai 100 bibit kopi Arabika bersama mitra tani Gayo.</p>
+          <span class="progress-track" role="progressbar" aria-valuenow="742" aria-valuemin="0" aria-valuemax="1000" aria-label="Progres target komunitas 742 dari 1000 gelas">
+            <span class="progress-fill"></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Optional UU PDP Consent Form -->
+    <section id="simpan-kartu" class="page-section" aria-labelledby="form-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="form-heading" class="section-title">Simpan Kartu ke WhatsApp (Opsional)</h2>
+          <p class="section-desc">Isi hanya jika ingin memindahkan stempel dan voucher ke ponsel lain. Tanpa mengisi formulir ini pun simulasi stempel tetap dapat dicoba.</p>
+        </div>
+
+        <form id="save-card-form" class="form-panel" novalidate>
+          <div id="form-error-summary" class="error-summary" role="alert" tabindex="-1" hidden>
+            <strong>Periksa kembali isian berikut:</strong>
+            <ul id="form-error-list" style="margin: 8px 0 0 20px; padding: 0;"></ul>
+          </div>
+
+          <div class="field-group">
+            <label for="input-nickname" class="field-label">Nama Panggilan</label>
+            <span class="field-hint">Hanya dipakai saat memanggil pesanan di kasir (contoh: Rina).</span>
+            <input type="text" id="input-nickname" name="nickname" class="form-input" autocomplete="given-name" aria-describedby="err-nickname">
+            <p id="err-nickname" class="field-error" hidden></p>
+          </div>
+
+          <div class="field-group">
+            <label for="input-wa" class="field-label">Nomor WhatsApp Aktif</label>
+            <span class="field-hint">Contoh format Indonesia: 0812-0000-4210. Tidak dipakai untuk pesan promosi berulang.</span>
+            <input type="tel" id="input-wa" name="wa" class="form-input" autocomplete="tel" aria-describedby="err-wa">
+            <p id="err-wa" class="field-error" hidden></p>
+          </div>
+
+          <div class="consent-row">
+            <input type="checkbox" id="input-consent" class="consent-check" aria-describedby="err-consent">
+            <label for="input-consent">
+              Saya setuju nomor WhatsApp hanya digunakan untuk mengirim tautan pemulihan kartu stempel ini (UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi).
+            </label>
+          </div>
+          <p id="err-consent" class="field-error" style="margin-top: -12px; margin-bottom: 16px;" hidden></p>
+
+          <button type="submit" id="save-card-submit" class="btn btn-primary">Kirim Tautan Kartu</button>
+          <div id="form-success-msg" class="success-banner" role="status" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>Kopi &amp; Roti Tugu</strong> (Data Contoh Pratinjau · Arketipe <code>playful-gamified</code>)<br>
+        Buka setiap hari 07.00–21.00 WIB · Jl. Margo Utomo No. 42, Jetis, Yogyakarta
+      </div>
+      <div>
+        <button type="button" id="dev-toggle-footer" class="btn btn-ghost">Panel Pengembang</button>
+      </div>
+    </div>
+  </footer>
+
+  <aside id="dev-drawer" class="dev-drawer" role="dialog" aria-label="Panel Pengembang Arketipe" hidden>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <strong>Panel Pengembang (?dev=1)</strong>
+      <button type="button" id="dev-close-btn" class="btn btn-outline">Tutup</button>
+    </div>
+    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 12px;">
+      Arketipe: <code>playful-gamified</code> · Font: Bricolage Grotesque + DM Sans · Spring CSS <code>linear()</code>
+    </p>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button type="button" id="toggle-mode-btn" class="btn btn-outline">Mode: Full</button>
+      <button type="button" id="dev-reset-all" class="btn btn-outline">Reset Semua</button>
+    </div>
+  </aside>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = 'tugu_loyalty_v1';
+      let state = { stamps: 3, crafter: false, quiz: false, collector: false };
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        if (saved && typeof saved.stamps === 'number') state = Object.assign(state, saved);
+      } catch {}
+
+      const persist = () => {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+      };
+
+      const stampGrid = document.getElementById('stamp-grid');
+      const stampCount = document.getElementById('stamp-count');
+      const stampNote = document.getElementById('stamp-status-note');
+      const voucherPanel = document.getElementById('voucher-panel');
+      const mascotSvg = document.getElementById('mascot-svg');
+      const mascotCaption = document.getElementById('mascot-caption');
+
+      function renderStamps(animateIndex = -1) {
+        stampGrid.innerHTML = '';
+        for (let i = 0; i < 8; i++) {
+          const filled = i < state.stamps;
+          const li = document.createElement('li');
+          const slot = document.createElement('span');
+          slot.className = 'stamp-slot' + (i === animateIndex ? ' just-stamped' : '');
+          slot.setAttribute('data-filled', filled ? 'true' : 'false');
+          slot.innerHTML = filled
+            ? `<svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--accent-secondary)"/><path d="M8 12.5 L11 15.5 L16.5 9.5" stroke="var(--bg-surface)" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span aria-hidden="true">${i + 1}</span><span class="sr-only">Slot ${i + 1}: sudah distempel</span>`
+            : `<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="var(--border-subtle)" stroke-width="2"/></svg><span aria-hidden="true">${i + 1}</span><span class="sr-only">Slot ${i + 1}: kosong</span>`;
+          li.appendChild(slot);
+          stampGrid.appendChild(li);
+        }
+
+        stampCount.textContent = `${state.stamps} / 8 Stempel`;
+        stampCount.setAttribute('data-unlocked', state.stamps >= 8 ? 'true' : 'false');
+
+        if (state.stamps >= 8) {
+          state.collector = true;
+          voucherPanel.hidden = false;
+          stampNote.textContent = 'Delapan stempel terpenuhi. Tunjukkan kode voucher di bawah ke kasir kedai.';
+          mascotCaption.innerHTML = '<strong>Mas Biji:</strong> Delapan cangkir genap! Satu kopi reguler siap ditebus tanpa syarat undian.';
+        } else {
+          voucherPanel.hidden = true;
+          const rem = 8 - state.stamps;
+          stampNote.textContent = `Kurang ${rem} cap lagi untuk membuka voucher kopi gratis deterministik.`;
+        }
+        renderBadges();
+        persist();
+      }
+
+      function renderBadges() {
+        const map = { crafter: state.crafter, loyalist: state.quiz, collector: state.collector };
+        document.querySelectorAll('[data-badge]').forEach((el) => {
+          const k = el.getAttribute('data-badge');
+          const open = !!map[k];
+          el.setAttribute('data-unlocked', open ? 'true' : 'false');
+          el.textContent = open ? 'Terbuka' : 'Terkunci';
+        });
+      }
+
+      document.getElementById('stamp-btn').addEventListener('click', () => {
+        if (state.stamps < 8) {
+          const idx = state.stamps;
+          state.stamps += 1;
+          mascotSvg.classList.add('is-bouncing');
+          setTimeout(() => mascotSvg.classList.remove('is-bouncing'), 400);
+          renderStamps(idx);
+        }
+      });
+
+      document.getElementById('reset-stamp-btn').addEventListener('click', () => {
+        state.stamps = 0;
+        state.collector = false;
+        mascotCaption.innerHTML = '<strong>Mas Biji:</strong> Kartu diulang dari nol. Ketuk tombol merah untuk stempel pertama.';
+        renderStamps();
+      });
+
+      document.getElementById('copy-voucher-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('copy-voucher-btn');
+        try { await navigator.clipboard.writeText('TUGU-8CUP-CONTOH'); } catch {}
+        btn.textContent = 'Kode Tersalin';
+        setTimeout(() => { btn.textContent = 'Salin Kode'; }, 1600);
+      });
+
+      // Custom Drink Builder
+      const baseData = {
+        'kopi-susu': { label: 'Kopi Susu Tugu', price: 24000, color: '#6F4E37' },
+        'kopi-filter': { label: 'Seduh Manual Gayo', price: 26000, color: '#8B4513' },
+        'matcha-kulonprogo': { label: 'Matcha & Teh Sangrai', price: 27000, color: '#3F6212' }
+      };
+      const milkData = {
+        'susu-segar': { label: 'Susu Segar', delta: 0, color: '#F5E6CA' },
+        'oat-milk': { label: 'Susu Oat', delta: 5000, color: '#EFE5D5' },
+        'es-hitam': { label: 'Tanpa Susu', delta: -2000, color: 'transparent' }
+      };
+      const sweetData = {
+        'gula-aren': { label: 'Gula Aren', delta: 2000, color: '#9A3412' },
+        'sedikit-manis': { label: 'Setengah Takar', delta: 1000, color: '#C2410C' },
+        'tanpa-gula': { label: 'Tanpa Gula', delta: 0, color: 'transparent' }
+      };
+
+      function updateBuilder(unlockCrafter = false) {
+        const b = baseData[document.querySelector('input[name="coffee-base"]:checked').value];
+        const m = milkData[document.querySelector('input[name="coffee-milk"]:checked').value];
+        const s = sweetData[document.querySelector('input[name="coffee-sweet"]:checked').value];
+        const total = b.price + m.delta + s.delta;
+
+        document.getElementById('builder-summary').textContent = `${b.label} · ${m.label} · ${s.label}`;
+        document.getElementById('builder-price').textContent = `Rp${total.toLocaleString('id-ID')}`;
+        document.getElementById('cup-layer-base').setAttribute('fill', b.color);
+        document.getElementById('cup-layer-milk').setAttribute('fill', m.color);
+        document.getElementById('cup-layer-sweet').setAttribute('fill', s.color);
+
+        if (unlockCrafter && !state.crafter) {
+          state.crafter = true;
+          renderBadges();
+          persist();
+        }
+      }
+
+      document.querySelectorAll('#peracik input[type="radio"]').forEach((r) => {
+        r.addEventListener('change', () => updateBuilder(true));
+      });
+
+      document.getElementById('order-custom-btn').addEventListener('click', () => {
+        state.crafter = true;
+        if (state.stamps < 8) {
+          const idx = state.stamps;
+          state.stamps += 1;
+          renderStamps(idx);
+        } else {
+          renderStamps();
+        }
+        document.getElementById('builder-note').textContent = 'Racikan dicatat ke daftar pesan contoh dan 1 stempel ditambahkan.';
+      });
+
+      // Product Matcher Quiz
+      const quizRecTitle = document.getElementById('quiz-rec-title');
+      const quizRecReason = document.getElementById('quiz-rec-reason');
+      const quizResult = document.getElementById('quiz-result');
+      const quizLive = document.getElementById('quiz-status-live');
+      let recommendedPreset = { base: 'kopi-filter', milk: 'es-hitam', sweet: 'tanpa-gula' };
+
+      function checkQuiz() {
+        const mood = document.querySelector('input[name="q-mood"]:checked')?.value;
+        const roast = document.querySelector('input[name="q-roast"]:checked')?.value;
+        const pair = document.querySelector('input[name="q-pair"]:checked')?.value;
+        if (!mood || !roast || !pair) return;
+
+        if (mood === 'lembut' || roast === 'tanah') {
+          recommendedPreset = { base: 'matcha-kulonprogo', milk: 'oat-milk', sweet: 'sedikit-manis' };
+          quizRecTitle.textContent = 'Rekomendasi: Matcha & Teh Sangrai dengan Susu Oat';
+          quizRecReason.textContent = 'Pilihan lembut dan rendah pahit yang cocok diminum perlahan bersama roti.';
+        } else if (mood === 'segar' || roast === 'cerah') {
+          recommendedPreset = { base: 'kopi-filter', milk: 'es-hitam', sweet: 'tanpa-gula' };
+          quizRecTitle.textContent = 'Rekomendasi: Seduh Manual Arabika Gayo';
+          quizRecReason.textContent = 'Aroma sitrus bersih tanpa tambahan susu, pas menemani kudapan kismis atau minum langsung.';
+        } else {
+          recommendedPreset = { base: 'kopi-susu', milk: 'susu-segar', sweet: 'gula-aren' };
+          quizRecTitle.textContent = 'Rekomendasi: Kopi Susu Tugu Gula Aren';
+          quizRecReason.textContent = 'Keseimbangan espresso kakao dengan susu Boyolali dan gula aren.';
+        }
+
+        quizResult.hidden = false;
+        state.quiz = true;
+        quizLive.textContent = 'Hasil siap dan lencana Pencicip Pagi terbuka.';
+        renderBadges();
+        persist();
+      }
+
+      document.querySelectorAll('#kuis-rasa input[type="radio"]').forEach((r) => r.addEventListener('change', checkQuiz));
+
+      document.getElementById('apply-quiz-btn').addEventListener('click', () => {
+        document.querySelector(`input[name="coffee-base"][value="${recommendedPreset.base}"]`).checked = true;
+        document.querySelector(`input[name="coffee-milk"][value="${recommendedPreset.milk}"]`).checked = true;
+        document.querySelector(`input[name="coffee-sweet"][value="${recommendedPreset.sweet}"]`).checked = true;
+        updateBuilder(true);
+        document.getElementById('peracik').scrollIntoView();
+      });
+
+      function skipQuizToMenu() {
+        quizLive.textContent = 'Kuis dilewati. Berpindah ke daftar menu harian.';
+        document.getElementById('menu-heading').setAttribute('tabindex', '-1');
+        document.getElementById('menu-harian').scrollIntoView();
+        document.getElementById('menu-heading').focus({ preventScroll: true });
+      }
+
+      document.getElementById('quiz-skip-btn').addEventListener('click', skipQuizToMenu);
+      document.getElementById('quiz-panel').addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') skipQuizToMenu();
+      });
+
+      // Menu Filter Tabs
+      document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const f = btn.getAttribute('data-filter');
+          document.querySelectorAll('.tab-btn').forEach((b) => b.setAttribute('aria-selected', b === btn ? 'true' : 'false'));
+          document.querySelectorAll('.menu-row').forEach((row) => {
+            row.hidden = f !== 'all' && row.getAttribute('data-cat') !== f;
+          });
+        });
+      });
+
+      // UU PDP Form Validation
+      const form = document.getElementById('save-card-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nick = document.getElementById('input-nickname');
+        const wa = document.getElementById('input-wa');
+        const consent = document.getElementById('input-consent');
+        const summary = document.getElementById('form-error-summary');
+        const list = document.getElementById('form-error-list');
+        const success = document.getElementById('form-success-msg');
+
+        [nick, wa, consent].forEach((el) => el.removeAttribute('aria-invalid'));
+        document.getElementById('err-nickname').hidden = true;
+        document.getElementById('err-wa').hidden = true;
+        document.getElementById('err-consent').hidden = true;
+        list.innerHTML = '';
+        summary.hidden = true;
+        success.hidden = true;
+
+        const errs = [];
+        if (!nick.value.trim()) errs.push({ id: 'input-nickname', errId: 'err-nickname', msg: 'Isi nama panggilan terlebih dahulu.' });
+        if (wa.value.replace(/\D/g, '').length < 9) errs.push({ id: 'input-wa', errId: 'err-wa', msg: 'Masukkan minimal 9 digit nomor WhatsApp yang valid.' });
+        if (!consent.checked) errs.push({ id: 'input-consent', errId: 'err-consent', msg: 'Centang kotak persetujuan sebelum menyimpan nomor WhatsApp.' });
+
+        if (errs.length > 0) {
+          errs.forEach((it) => {
+            document.getElementById(it.id).setAttribute('aria-invalid', 'true');
+            const ep = document.getElementById(it.errId);
+            ep.textContent = it.msg;
+            ep.hidden = false;
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#' + it.id;
+            a.textContent = it.msg;
+            li.appendChild(a);
+            list.appendChild(li);
+          });
+          summary.hidden = false;
+          summary.focus();
+          return;
+        }
+
+        success.textContent = `Tautan pemulihan contoh disiapkan untuk ${nick.value.trim()} (${state.stamps}/8 stempel).`;
+        success.hidden = false;
+      });
+
+      // Theme & Dev Drawer
+      const themeBtn = document.getElementById('theme-toggle');
+      themeBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        themeBtn.setAttribute('aria-pressed', isDark ? 'false' : 'true');
+        themeBtn.textContent = isDark ? 'Mode Gelap' : 'Mode Terang';
+      });
+
+      const drawer = document.getElementById('dev-drawer');
+      const setDrawer = (open) => { drawer.hidden = !open; };
+      if (new URLSearchParams(location.search).get('dev') === '1') setDrawer(true);
+      document.getElementById('dev-toggle-footer').addEventListener('click', () => setDrawer(drawer.hidden));
+      document.getElementById('dev-close-btn').addEventListener('click', () => {
+        setDrawer(false);
+        document.getElementById('dev-toggle-footer').focus();
+      });
+
+      const modeBtn = document.getElementById('toggle-mode-btn');
+      modeBtn.addEventListener('click', () => {
+        const isLite = document.documentElement.getAttribute('data-complexity') === 'lite';
+        document.documentElement.setAttribute('data-complexity', isLite ? 'full' : 'lite');
+        modeBtn.textContent = isLite ? 'Mode: Full' : 'Mode: Lite';
+      });
+
+      document.getElementById('dev-reset-all').addEventListener('click', () => {
+        state = { stamps: 3, crafter: false, quiz: false, collector: false };
+        renderStamps();
+      });
+
+      renderStamps();
+      updateBuilder(false);
+    })();
+  </script>
+</body>
+</html>

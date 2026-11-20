@@ -1,0 +1,178 @@
+{
+  "url": "http://127.0.0.1:54803/preview.html",
+  "viewportWidth": 1280,
+  "passedAll": true,
+  "metrics": {
+    "decorativeBadges": 0,
+    "statusBadges": 1,
+    "filledInInitialViewport": 1,
+    "maxFilledPerScreen": 1,
+    "filledFullPage": 2,
+    "outlineInInitialViewport": 2,
+    "outlineFullPage": 3,
+    "ghostFullPage": 4,
+    "uniqueBorderRadii": 3,
+    "uniqueBorderWidths": 2,
+    "uniqueFontSizes": 7,
+    "uniqueFontWeights": 3,
+    "staticShadows": 0,
+    "maxNestedContainers": 0,
+    "alternatingSectionBgs": 2
+  },
+  "checks": {
+    "decorativeBadges": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "maxFilledPerScreen": {
+      "actual": 1,
+      "limit": 1,
+      "status": "LULUS"
+    },
+    "outlineFullPage": {
+      "actual": 3,
+      "limit": 4,
+      "status": "LULUS"
+    },
+    "uniqueBorderRadii": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "uniqueBorderWidths": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueFontWeights": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "maxNestedContainers": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "staticShadows": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "alternatingSectionBgs": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    }
+  },
+  "details": {
+    "decorativeBadgeNodes": [],
+    "statusBadgeNodes": [
+      "span#depth-readout.depth-pill"
+    ],
+    "filledBtns": [
+      {
+        "selector": "a#hero-cta.btn.btn-primary",
+        "text": "Pesan Slot Ekspedisi",
+        "top": 470,
+        "bottom": 514
+      },
+      {
+        "selector": "button#expedition-submit.btn.btn-primary",
+        "text": "Ajukan Slot Ekspedisi",
+        "top": 3041,
+        "bottom": 3085
+      }
+    ],
+    "outlineBtns": [
+      {
+        "selector": "button#audio-toggle.btn.btn-outline",
+        "text": "Audio: Nonaktif",
+        "top": 23,
+        "bottom": 67
+      },
+      {
+        "selector": "button#theme-toggle.btn.btn-outline",
+        "text": "Mode Peta Siang",
+        "top": 23,
+        "bottom": 67
+      },
+      {
+        "selector": "button#canvas-toggle.btn.btn-outline",
+        "text": "Jeda Partikel",
+        "top": 990,
+        "bottom": 1034
+      }
+    ],
+    "ghostBtns": [
+      {
+        "selector": "button.chapter-tab",
+        "text": "0 m · Permukaan Selat",
+        "top": 1365,
+        "bottom": 1409
+      },
+      {
+        "selector": "button.chapter-tab",
+        "text": "-18 m · Lereng Terumbu",
+        "top": 1365,
+        "bottom": 1409
+      },
+      {
+        "selector": "button.chapter-tab",
+        "text": "-45 m · Dinding Palung",
+        "top": 1365,
+        "bottom": 1409
+      },
+      {
+        "selector": "button#dev-toggle-footer.btn.btn-ghost",
+        "text": "Panel Pengembang",
+        "top": 3191,
+        "bottom": 3235
+      }
+    ],
+    "borderRadiiValues": [
+      "12px",
+      "4px",
+      "999px"
+    ],
+    "borderWidthValues": [
+      "1px",
+      "2px"
+    ],
+    "fontSizeValues": [
+      "14px",
+      "16px",
+      "17px",
+      "20px",
+      "32px",
+      "44px",
+      "72px"
+    ],
+    "fontWeightValues": [
+      "400",
+      "500",
+      "700"
+    ],
+    "staticShadowNodes": [],
+    "nestedOffenders": [],
+    "sectionBgs": [
+      {
+        "selector": "section#hero.hero-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "selector": "section#bab-kedalaman.story-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "selector": "section#observatorium.observatory-section",
+        "bg": "rgb(13, 37, 46)"
+      },
+      {
+        "selector": "section#jadwal-ekspedisi.story-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      }
+    ]
+  }
+}

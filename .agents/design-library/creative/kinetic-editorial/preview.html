@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biro Ruang Karsa — Monografi Arsitektur Kinetik (Contoh kinetic-editorial)</title>
+  <meta name="description" content="Portofolio studio arsitektur tropis Biro Ruang Karsa (data contoh). Tipografi kinetik sinkron guliran, panggung arsip View Transitions, dan pameran material.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #F4F2EC;
+      --bg-surface: #ECE9E0;
+      --bg-darkroom: #111110;
+      --text-on-darkroom: #F4F2EC;
+      --text-secondary-darkroom: #D6D3CD;
+      --text-primary: #111110;
+      --text-secondary: #3A3834;
+      --text-muted: #57534E;
+      --border-subtle: #CFCAC0;
+      --border-strong: #111110;
+      --accent-primary: #A8261B;
+      --accent-primary-hover: #841C13;
+      --accent-on-primary: #FFFFFF;
+      --focus-ring: #A8261B;
+      --skip-bg: #FBBF24;
+      --skip-fg: #111110;
+      --status-success-bg: #DCFCE7;
+      --status-success-fg: #14532D;
+      --status-danger-bg: #FEE2E2;
+      --status-danger-fg: #991B1B;
+
+      --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+      --font-sans: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --radius-sharp: 2px;
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html[data-theme="dark"] {
+      --bg-canvas: #111110;
+      --bg-surface: #1C1B19;
+      --bg-darkroom: #1C1B19;
+      --text-primary: #F4F2EC;
+      --text-secondary: #D6D3CD;
+      --text-muted: #A8A29E;
+      --border-subtle: #2E2D2A;
+      --border-strong: #F4F2EC;
+      --accent-primary: #F87171;
+      --accent-primary-hover: #FCA5A5;
+      --accent-on-primary: #111110;
+      --focus-ring: #FBBF24;
+      --status-success-bg: #143322;
+      --status-success-fg: #BBF7D0;
+      --status-danger-bg: #451212;
+      --status-danger-fg: #FECACA;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    h3, h4, strong, th {
+      font-weight: 700;
+    }
+
+    h3 {
+      font-family: var(--font-sans);
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -120px;
+      z-index: 250;
+      background: var(--skip-bg);
+      color: var(--skip-fg);
+      font-weight: 700;
+      padding: 10px 16px;
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-sharp);
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    /* Non-blocking top scroll progress & editorial rule intro */
+    .progress-rail {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-primary);
+      transform-origin: left center;
+      transform: scaleX(0);
+      z-index: 220;
+      pointer-events: none;
+    }
+
+    .curtain-rule {
+      height: 2px;
+      width: 100%;
+      background: var(--border-strong);
+      transform-origin: left center;
+      animation: ruleDraw 480ms var(--ease-out-expo) both;
+    }
+
+    html[data-complexity="lite"] .curtain-rule {
+      animation: none;
+    }
+
+    @keyframes ruleDraw {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 32px;
+      }
+    }
+
+    /* Header */
+    .site-header {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
+    }
+
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-mark {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-meta {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .header-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 8px 4px;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-primary);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 10px 22px;
+      border-radius: var(--radius-sharp);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 180ms var(--ease-out-quart), background-color var(--duration-fast) var(--ease-out-quart);
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: var(--accent-on-primary);
+      border: 1px solid var(--accent-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-primary-hover);
+      border-color: var(--accent-primary-hover);
+    }
+
+    .btn-outline {
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .btn-darkroom-outline {
+      background: #111110;
+      color: #F4F2EC;
+      border: 1px solid #F4F2EC;
+    }
+
+    .btn-darkroom-outline:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-primary);
+      border: 0;
+      border-bottom: 1px solid transparent;
+      border-radius: 0;
+      padding: 8px 0;
+      min-height: 44px;
+    }
+
+    .btn-ghost:hover {
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+    }
+
+    .inline-link {
+      color: var(--text-primary);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+
+    .inline-link:hover {
+      color: var(--accent-primary);
+    }
+
+    /* Hero Signature Moment */
+    .hero-section {
+      padding: 48px 0 64px;
+      border-bottom: 1px solid var(--border-subtle);
+      overflow-x: clip;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-section {
+        padding: 64px 0 88px;
+      }
+    }
+
+    .index-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .hero-title {
+      font-size: clamp(3.15rem, 8.2vw, 6.5rem);
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+    }
+
+    .hero-line {
+      display: block;
+      will-change: transform;
+    }
+
+    .hero-line-italic {
+      font-style: italic;
+      color: var(--accent-primary);
+    }
+
+    @media (min-width: 768px) {
+      .hero-line-italic {
+        padding-left: 10%;
+      }
+    }
+
+    .hero-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-subtle);
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-bottom-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+      }
+    }
+
+    .hero-lead {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 56ch;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* Archive & View Transition Stage */
+    .editorial-section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    @media (min-width: 768px) {
+      .editorial-section {
+        padding: 80px 0;
+      }
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4.2vw, 3.25rem);
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-lead {
+      color: var(--text-secondary);
+      max-width: 60ch;
+      margin-bottom: 32px;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 32px;
+    }
+
+    .filter-tab {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      padding: 10px 0;
+      min-height: 44px;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .filter-tab[aria-selected="true"] {
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+      .archive-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 48px;
+      }
+    }
+
+    .archive-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .archive-item {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .archive-row {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      padding: 20px 8px;
+      text-align: left;
+      display: grid;
+      grid-template-columns: 4.5rem 1fr auto;
+      gap: 16px;
+      align-items: baseline;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      transition: padding-left var(--duration-fast) var(--ease-out-quart);
+    }
+
+    .archive-row:hover,
+    .archive-row[aria-current="true"] {
+      padding-left: 14px;
+      color: var(--accent-primary);
+    }
+
+    .archive-row[aria-current="true"] {
+      border-left: 2px solid var(--accent-primary);
+    }
+
+    .archive-idx {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .archive-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      line-height: 1.15;
+    }
+
+    .archive-year {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .stage-panel {
+      view-transition-name: monografi-stage;
+      border-top: 2px solid var(--border-strong);
+      padding-top: 24px;
+    }
+
+    @media (min-width: 1024px) {
+      .stage-panel {
+        position: sticky;
+        top: 24px;
+      }
+    }
+
+    .stage-title {
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      line-height: 1.1;
+      margin: 16px 0 8px;
+    }
+
+    .stage-specs {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .stage-summary {
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    /* Darkroom Chapter (Exactly 1 contrasting section) */
+    .darkroom-section {
+      background: var(--bg-darkroom);
+      color: var(--text-on-darkroom);
+      padding: 72px 0;
+      overflow-x: clip;
+    }
+
+    .darkroom-section h2,
+    .darkroom-section h3 {
+      color: var(--text-on-darkroom);
+    }
+
+    .darkroom-section .section-lead,
+    .darkroom-section p {
+      color: var(--text-secondary-darkroom);
+    }
+
+    .darkroom-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+
+    @media (min-width: 768px) {
+      .darkroom-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+      }
+    }
+
+    .darkroom-essay {
+      border-top: 1px solid #3F3E3A;
+      padding-top: 20px;
+    }
+
+    /* WCAG 2.2.2 Pauseable Marquee */
+    .marquee-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #3F3E3A;
+      margin-bottom: 20px;
+    }
+
+    .marquee-viewport {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 48px;
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+      color: var(--text-on-darkroom);
+      animation: marqueeSlide 24s linear infinite;
+    }
+
+    .marquee-viewport:hover .marquee-track,
+    .marquee-viewport:focus-within .marquee-track,
+    .marquee-track.is-paused {
+      animation-play-state: paused;
+    }
+
+    html[data-complexity="lite"] .marquee-track {
+      animation: none;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 16px 32px;
+    }
+
+    @keyframes marqueeSlide {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Single-column Project Inquiry Form */
+    .form-wrap {
+      max-width: 600px;
+    }
+
+    .field-group {
+      margin-bottom: 24px;
+    }
+
+    .field-label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .field-hint {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      color: var(--text-primary);
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sharp);
+    }
+
+    .form-textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    .form-input[aria-invalid="true"],
+    .form-textarea[aria-invalid="true"] {
+      border-width: 2px;
+      border-color: var(--status-danger-fg);
+      background: var(--status-danger-bg);
+    }
+
+    .field-error {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--status-danger-fg);
+    }
+
+    .error-summary {
+      padding: 16px;
+      margin-bottom: 24px;
+      border: 2px solid var(--status-danger-fg);
+      border-radius: var(--radius-sharp);
+      background: var(--status-danger-bg);
+      color: var(--status-danger-fg);
+    }
+
+    .error-summary a {
+      color: var(--status-danger-fg);
+      font-weight: 700;
+    }
+
+    .success-banner {
+      margin-top: 20px;
+      padding: 16px;
+      border: 2px solid var(--status-success-fg);
+      border-radius: var(--radius-sharp);
+      background: var(--status-success-bg);
+      color: var(--status-success-fg);
+    }
+
+    /* Footer */
+    .site-footer {
+      padding: 32px 0 48px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Dev Drawer */
+    .dev-drawer {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 300;
+      width: min(360px, calc(100vw - 32px));
+      background: var(--bg-surface);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-sharp);
+      padding: 20px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .marquee-track {
+        animation: none !important;
+        animation-play-state: paused !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+  <div id="read-progress" class="progress-rail" aria-hidden="true"></div>
+  <div class="curtain-rule" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#hero" class="brand-mark">
+        Biro Ruang Karsa
+        <span class="brand-meta">Studio Arsitektur &amp; Ruang Publik · Bandung / Jakarta (Data Contoh)</span>
+      </a>
+      <nav class="header-nav" aria-label="Navigasi utama">
+        <a href="#arsip-karya" class="nav-link">Arsip Karya</a>
+        <a href="#ruang-gelap" class="nav-link">Material Tropis</a>
+        <a href="#diskusi-proyek" class="nav-link">Diskusi Proyek</a>
+        <button type="button" id="theme-toggle" class="btn btn-outline" aria-pressed="false">Mode Obsidian</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- 1. HERO: Kinetic Display Typography + Architectural Elevation Plate -->
+    <section id="hero" class="hero-section" aria-labelledby="hero-heading">
+      <div class="container">
+        <span class="index-kicker">01 / MONOGRAFI ARSITEKTUR TROPIS · 2022–2026</span>
+        <h1 id="hero-heading" class="hero-title">
+          <span id="hero-line-1" class="hero-line">Arsitektur yang</span>
+          <span id="hero-line-2" class="hero-line hero-line-italic">Mendengar Iklim.</span>
+        </h1>
+
+        <div class="hero-bottom-grid">
+          <div>
+            <p class="hero-lead">
+              Kami merancang ruang publik, perpustakaan kampung kota, dan paviliun budaya dengan ventilasi pasif, bata pembakaran lokal, serta struktur bayangan matahari khatulistiwa.
+            </p>
+            <div class="hero-actions">
+              <a href="#diskusi-proyek" id="hero-cta" class="btn btn-primary magnetic-btn">Jadwalkan Diskusi Proyek</a>
+              <a href="#arsip-karya" class="inline-link">Telusuri Arsip Karya</a>
+            </div>
+          </div>
+
+          <svg viewBox="0 0 480 240" width="100%" style="height: auto; display: block;" role="img" aria-label="Gambar potongan arsitektur tropis menunjukkan atap miring ganda, teritisan lebar, dan rongga ventilasi silang">
+            <rect x="1" y="1" width="478" height="238" fill="none" stroke="var(--border-subtle)" stroke-width="1"></rect>
+            <line x1="32" y1="196" x2="448" y2="196" stroke="var(--border-strong)" stroke-width="2"></line>
+            <line x1="72" y1="32" x2="72" y2="216" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="4 4"></line>
+            <line x1="240" y1="24" x2="240" y2="216" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="4 4"></line>
+            <line x1="408" y1="32" x2="408" y2="216" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="4 4"></line>
+            <!-- Roof trusses -->
+            <polygon points="48,108 240,44 240,68 72,118" fill="var(--accent-primary)"></polygon>
+            <polygon points="240,68 432,120 408,132 240,86" fill="var(--border-strong)"></polygon>
+            <!-- Columns & Courtyard walls -->
+            <rect x="96" y="114" width="12" height="82" fill="var(--border-strong)"></rect>
+            <rect x="234" y="84" width="12" height="112" fill="var(--border-strong)"></rect>
+            <rect x="372" y="122" width="12" height="74" fill="var(--border-strong)"></rect>
+            <!-- Sun shading / ventilation lines -->
+            <path d="M128 140 Q180 124 220 144" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" stroke-dasharray="5 3"></path>
+            <path d="M262 146 Q312 128 358 148" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" stroke-dasharray="5 3"></path>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. INTERACTION 1: Selected Works Archive + View Transition Monograph Stage -->
+    <section id="arsip-karya" class="editorial-section" aria-labelledby="archive-heading">
+      <div class="container">
+        <span class="index-kicker">02 / ARSIP KARYA TERPILIH</span>
+        <h2 id="archive-heading" class="section-title">Empat Studi Ruang &amp; Cuaca</h2>
+        <p class="section-lead">Pilih kategori atau baris proyek untuk memeriksa material utama, respons iklim setempat, dan diagram potongan pada panggung monografi.</p>
+
+        <div class="filter-bar" role="tablist" aria-label="Filter kategori proyek arsitektur">
+          <button type="button" role="tab" class="filter-tab" data-cat="all" aria-selected="true">Semua (4)</button>
+          <button type="button" role="tab" class="filter-tab" data-cat="publik" aria-selected="false">Ruang Publik (2)</button>
+          <button type="button" role="tab" class="filter-tab" data-cat="budaya" aria-selected="false">Ruang Budaya (2)</button>
+        </div>
+
+        <div class="archive-grid">
+          <ul id="archive-list" class="archive-list">
+            <li class="archive-item" data-cat="publik">
+              <button type="button" class="archive-row" data-project="cikapundung" aria-current="true">
+                <span class="archive-idx">01 / 04</span>
+                <span class="archive-name">Balai Baca Cikapundung</span>
+                <span class="archive-year">Bandung · 2026</span>
+              </button>
+            </li>
+            <li class="archive-item" data-cat="budaya">
+              <button type="button" class="archive-row" data-project="pahikung" aria-current="false">
+                <span class="archive-idx">02 / 04</span>
+                <span class="archive-name">Paviliun Tenun Pahikung</span>
+                <span class="archive-year">Sumba Timur · 2025</span>
+              </button>
+            </li>
+            <li class="archive-item" data-cat="budaya">
+              <button type="button" class="archive-row" data-project="kasongan" aria-current="false">
+                <span class="archive-idx">03 / 04</span>
+                <span class="archive-name">Studio Gerabah Kasongan</span>
+                <span class="archive-year">Bantul · 2024</span>
+              </button>
+            </li>
+            <li class="archive-item" data-cat="publik">
+              <button type="button" class="archive-row" data-project="kotalama" aria-current="false">
+                <span class="archive-idx">04 / 04</span>
+                <span class="archive-name">Plaza Teduh Kota Lama</span>
+                <span class="archive-year">Semarang · 2023</span>
+              </button>
+            </li>
+          </ul>
+
+          <article id="stage-panel" class="stage-panel" aria-live="polite" aria-labelledby="stage-title">
+            <svg id="stage-svg" viewBox="0 0 460 220" width="100%" style="height: auto; display: block;" role="img" aria-label="Diagram potongan proyek terpilih">
+              <rect x="1" y="1" width="458" height="218" fill="var(--bg-surface)" stroke="var(--border-strong)" stroke-width="1"></rect>
+              <g id="stage-svg-shapes"></g>
+            </svg>
+            <h3 id="stage-title" class="stage-title">Balai Baca Cikapundung</h3>
+            <p id="stage-specs" class="stage-specs">Bandung · 480 m2 · Bata Ekspos Jatiwangi &amp; Rangka Baja Ringan</p>
+            <p id="stage-summary" class="stage-summary">
+              Ruang baca kampung padat bantaran sungai yang memanen angin lembah lewat dinding roster bata berpori dan kolam tampung hujan di tengah pelataran.
+            </p>
+            <p id="stage-climate" class="stage-specs" style="margin-bottom: 0; color: var(--accent-primary);">
+              Penurunan suhu dalam ruangan terukur 3,4 derajat Celsius tanpa pendingin mekanis (angka simulasi contoh).
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. INTERACTION 2: Single Darkroom Exhibition Chapter + Pauseable Material Marquee -->
+    <section id="ruang-gelap" class="darkroom-section" aria-labelledby="darkroom-heading">
+      <div class="container">
+        <span class="index-kicker" style="color: var(--text-secondary-darkroom);">03 / PAMERAN MATERIAL &amp; KONSTRUKSI</span>
+        <h2 id="darkroom-heading" class="section-title" style="color: var(--text-on-darkroom); margin-bottom: 32px;">
+          Ketahanan Bangunan Lahir dari Material Setempat
+        </h2>
+
+        <div class="darkroom-grid">
+          <div class="darkroom-essay">
+            <h3 style="margin-bottom: 10px;">Berjalan Bersama Tukang Daerah</h3>
+            <p>
+              Setiap gambar kerja disusun sesuai panjang standar kayu reklame dan dimensi cetakan bata pengrajin radius 60 kilometer dari tapak proyek untuk menekan limbah potongan.
+            </p>
+          </div>
+          <div class="darkroom-essay">
+            <h3 style="margin-bottom: 10px;">Bayangan Sebelum Kaca</h3>
+            <p>
+              Di garis khatulistiwa, teritisan dalam dan kisi bayangan vertikal bekerja jauh lebih hemat energi dibanding menempel kaca pemantul panas di fasad barat.
+            </p>
+          </div>
+        </div>
+
+        <div class="marquee-header">
+          <span class="index-kicker" style="margin-bottom: 0; color: var(--text-secondary-darkroom);">KATALOG MATERIAL PASIF</span>
+          <button type="button" id="marquee-toggle" class="btn btn-darkroom-outline" aria-pressed="false">Jeda Gerakan</button>
+        </div>
+
+        <div class="marquee-viewport">
+          <div id="marquee-track" class="marquee-track">
+            <span>Bata Ekspos Jatiwangi</span>
+            <span>·</span>
+            <span>Kayu Ulin Reklamasi</span>
+            <span>·</span>
+            <span>Bambu Petung Laminasi</span>
+            <span>·</span>
+            <span>Beton Agregat Sungai</span>
+            <span>·</span>
+            <span>Bata Ekspos Jatiwangi</span>
+            <span>·</span>
+            <span>Kayu Ulin Reklamasi</span>
+            <span>·</span>
+            <span>Bambu Petung Laminasi</span>
+            <span>·</span>
+            <span>Beton Agregat Sungai</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. INTERACTION 3: Single-column Project Discussion Form -->
+    <section id="diskusi-proyek" class="editorial-section" aria-labelledby="inquiry-heading" style="border-bottom: 0;">
+      <div class="container">
+        <span class="index-kicker">04 / DISKUSI PROYEK BARU</span>
+        <h2 id="inquiry-heading" class="section-title">Mulai Percakapan Studio</h2>
+        <p class="section-lead">Kirimkan gambaran lokasi tapak, skala luas bangunan, dan perkiraan waktu pelaksanaan. Formulir contoh tidak mengirim data ke server luar.</p>
+
+        <form id="project-inquiry-form" class="form-wrap" novalidate>
+          <div id="form-error-summary" class="error-summary" role="alert" tabindex="-1" hidden>
+            <strong>Mohon lengkapi bagian berikut sebelum mengirim:</strong>
+            <ul id="form-error-list" style="margin: 8px 0 0 20px; padding: 0;"></ul>
+          </div>
+
+          <div class="field-group">
+            <label for="inq-name" class="field-label">Nama &amp; Organisasi / Pemilik Tapak</label>
+            <span class="field-hint">Contoh: Hendrawan — Yayasan Pustaka Kota Bandung</span>
+            <input type="text" id="inq-name" class="form-input" autocomplete="name" aria-describedby="err-inq-name">
+            <p id="err-inq-name" class="field-error" hidden></p>
+          </div>
+
+          <div class="field-group">
+            <label for="inq-email" class="field-label">Alamat Surel Korespondensi</label>
+            <span class="field-hint">Tanggapan jadwal pertemuan dikirim ke alamat ini.</span>
+            <input type="email" id="inq-email" class="form-input" autocomplete="email" aria-describedby="err-inq-email">
+            <p id="err-inq-email" class="field-error" hidden></p>
+          </div>
+
+          <div class="field-group">
+            <label for="inq-brief" class="field-label">Lokasi Tapak &amp; Ringkasan Kebutuhan Ruang</label>
+            <span class="field-hint">Sertakan kota, perkiraan luas tapak, dan fungsi utama bangunan.</span>
+            <textarea id="inq-brief" class="form-textarea" aria-describedby="err-inq-brief"></textarea>
+            <p id="err-inq-brief" class="field-error" hidden></p>
+          </div>
+
+          <button type="submit" id="inquiry-submit" class="btn btn-primary">Kirim Ringkasan Proyek</button>
+          <div id="inquiry-success" class="success-banner" role="status" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="border-top: 1px solid var(--border-subtle);">
+    <div class="container footer-inner">
+      <div>
+        <strong>Biro Ruang Karsa</strong> (Data Contoh Pratinjau · Arketipe <code>kinetic-editorial</code>)<br>
+        Jl. Taman Sari No. 18, Bandung · studio@ruangkarsa-contoh.id
+      </div>
+      <div>
+        <button type="button" id="dev-toggle-footer" class="btn btn-ghost">Panel Pengembang</button>
+      </div>
+    </div>
+  </footer>
+
+  <aside id="dev-drawer" class="dev-drawer" role="dialog" aria-label="Panel Pengembang Arketipe" hidden>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <strong>Panel Pengembang (?dev=1)</strong>
+      <button type="button" id="dev-close-btn" class="btn btn-outline">Tutup</button>
+    </div>
+    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 12px;">
+      Arketipe: <code>kinetic-editorial</code> · Font: Instrument Serif + Space Grotesk · View Transitions + Scroll Kinetic
+    </p>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button type="button" id="toggle-mode-btn" class="btn btn-outline">Mode: Full</button>
+    </div>
+  </aside>
+
+  <script>
+    (() => {
+      const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isLite = () => document.documentElement.getAttribute('data-complexity') === 'lite';
+
+      // Scroll-Driven Kinetic Typography & Top Reading Rail
+      const line1 = document.getElementById('hero-line-1');
+      const line2 = document.getElementById('hero-line-2');
+      const rail = document.getElementById('read-progress');
+      let rafPending = false;
+
+      function updateScrollMotion() {
+        rafPending = false;
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+        rail.style.transform = `scaleX(${progress.toFixed(4)})`;
+
+        if (reducedMotion() || isLite()) {
+          line1.style.transform = 'translate3d(0,0,0)';
+          line2.style.transform = 'translate3d(0,0,0)';
+          return;
+        }
+        const heroShift = Math.min(36, window.scrollY * 0.08);
+        line1.style.transform = `translate3d(${-heroShift.toFixed(1)}px, 0, 0)`;
+        line2.style.transform = `translate3d(${heroShift.toFixed(1)}px, 0, 0)`;
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!rafPending) {
+          rafPending = true;
+          requestAnimationFrame(updateScrollMotion);
+        }
+      }, { passive: true });
+      updateScrollMotion();
+
+      // Subtle Desktop Magnetic Button (<= 8px)
+      const magBtn = document.getElementById('hero-cta');
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        magBtn.addEventListener('mousemove', (e) => {
+          if (reducedMotion() || isLite()) return;
+          const r = magBtn.getBoundingClientRect();
+          const dx = Math.max(-8, Math.min(8, ((e.clientX - r.left) / r.width - 0.5) * 14));
+          const dy = Math.max(-8, Math.min(8, ((e.clientY - r.top) / r.height - 0.5) * 14));
+          magBtn.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
+        });
+        magBtn.addEventListener('mouseleave', () => {
+          magBtn.style.transform = 'translate3d(0,0,0)';
+        });
+      }
+
+      // Selected Works Archive Data & View Transition Stage
+      const projects = {
+        cikapundung: {
+          title: 'Balai Baca Cikapundung',
+          specs: 'Bandung · 480 m2 · Bata Ekspos Jatiwangi & Rangka Baja Ringan',
+          summary: 'Ruang baca kampung padat bantaran sungai yang memanen angin lembah lewat dinding roster bata berpori dan kolam tampung hujan di tengah pelataran.',
+          climate: 'Penurunan suhu dalam ruangan terukur 3,4 derajat Celsius tanpa pendingin mekanis (angka simulasi contoh).',
+          svg: '<polygon points="40,95 230,40 420,95" fill="none" stroke="var(--accent-primary)" stroke-width="2.5"/><rect x="88" y="95" width="96" height="86" fill="none" stroke="var(--border-strong)" stroke-width="2"/><rect x="276" y="95" width="96" height="86" fill="none" stroke="var(--border-strong)" stroke-width="2"/><line x1="28" y1="181" x2="432" y2="181" stroke="var(--border-strong)" stroke-width="2"/>'
+        },
+        pahikung: {
+          title: 'Paviliun Tenun Pahikung',
+          specs: 'Sumba Timur · 320 m2 · Kayu Lontar, Atap Alang & Batu Karang',
+          summary: 'Bangunan sanggar tenun ikat tanpa dinding masif untuk mempertahankan cahaya alami merata di meja pewarnaan benang dan ruang jemur angin laut.',
+          climate: 'Ketahanan tiang miring terhadap hembusan angin pesisir savana hingga 85 km/jam (angka simulasi contoh).',
+          svg: '<polygon points="60,120 230,28 400,120 350,120 230,56 110,120" fill="var(--accent-primary)"/><line x1="120" y1="120" x2="108" y2="184" stroke="var(--border-strong)" stroke-width="3"/><line x1="230" y1="56" x2="230" y2="184" stroke="var(--border-strong)" stroke-width="2" stroke-dasharray="4 4"/><line x1="340" y1="120" x2="352" y2="184" stroke="var(--border-strong)" stroke-width="3"/><line x1="40" y1="184" x2="420" y2="184" stroke="var(--border-strong)" stroke-width="2"/>'
+        },
+        kasongan: {
+          title: 'Studio Gerabah Kasongan',
+          specs: 'Bantul · 610 m2 · Bambu Petung Laminasi & Terakota Bakar',
+          summary: 'Lokakarya pembakaran keramik bertingkat terpisah yang mengalirkan panas tungku ke atas cerobong tinggi agar ruang kerja pengrajin tetap sejuk.',
+          climate: 'Pemanfaatan cerobong termal pasif memangkas kelembapan berlebih di rak pengering tanah liat.',
+          svg: '<rect x="190" y="30" width="80" height="40" fill="var(--accent-primary)"/><polygon points="56,118 190,70 270,70 404,118" fill="none" stroke="var(--border-strong)" stroke-width="2.5"/><rect x="84" y="118" width="292" height="66" fill="none" stroke="var(--border-strong)" stroke-width="2"/><line x1="28" y1="184" x2="432" y2="184" stroke="var(--border-strong)" stroke-width="2"/>'
+        },
+        kotalama: {
+          title: 'Plaza Teduh Kota Lama',
+          specs: 'Semarang · 1.150 m2 · Granit Reklamasi & Kanopi Kisi Kayu Ulin',
+          summary: 'Konservasi pelataran gudang tua yang menambahkan struktur kanopi mandiri tanpa mengebor dinding bata cagar budaya asli.',
+          climate: 'Mengurangi paparan radiasi matahari langsung pada permukaan plaza seluas 68 persen (angka simulasi contoh).',
+          svg: '<rect x="64" y="54" width="332" height="22" fill="none" stroke="var(--accent-primary)" stroke-width="2"/><line x1="90" y1="54" x2="90" y2="76" stroke="var(--accent-primary)" stroke-width="2"/><line x1="150" y1="54" x2="150" y2="76" stroke="var(--accent-primary)" stroke-width="2"/><line x1="210" y1="54" x2="210" y2="76" stroke="var(--accent-primary)" stroke-width="2"/><line x1="270" y1="54" x2="270" y2="76" stroke="var(--accent-primary)" stroke-width="2"/><line x1="330" y1="54" x2="330" y2="76" stroke="var(--accent-primary)" stroke-width="2"/><line x1="80" y1="76" x2="80" y2="184" stroke="var(--border-strong)" stroke-width="3"/><line x1="380" y1="76" x2="380" y2="184" stroke="var(--border-strong)" stroke-width="3"/><line x1="36" y1="184" x2="424" y2="184" stroke="var(--border-strong)" stroke-width="2"/>'
+        }
+      };
+
+      const renderStage = (key, useTransition = true) => {
+        const p = projects[key];
+        if (!p) return;
+        const apply = () => {
+          document.getElementById('stage-title').textContent = p.title;
+          document.getElementById('stage-specs').textContent = p.specs;
+          document.getElementById('stage-summary').textContent = p.summary;
+          document.getElementById('stage-climate').textContent = p.climate;
+          document.getElementById('stage-svg-shapes').innerHTML = p.svg;
+          document.querySelectorAll('.archive-row').forEach((row) => {
+            row.setAttribute('aria-current', row.getAttribute('data-project') === key ? 'true' : 'false');
+          });
+        };
+        if (useTransition && document.startViewTransition && !reducedMotion() && !isLite()) {
+          try {
+            const vt = document.startViewTransition(apply);
+            vt.ready.catch(() => {});
+            vt.finished.catch(() => {});
+          } catch {
+            apply();
+          }
+        } else {
+          apply();
+        }
+      };
+
+      document.querySelectorAll('.archive-row').forEach((row) => {
+        row.addEventListener('click', () => renderStage(row.getAttribute('data-project'), true));
+      });
+
+      document.querySelectorAll('.filter-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const cat = tab.getAttribute('data-cat');
+          document.querySelectorAll('.filter-tab').forEach((t) => t.setAttribute('aria-selected', t === tab ? 'true' : 'false'));
+          let firstVisibleKey = null;
+          document.querySelectorAll('.archive-item').forEach((item) => {
+            const match = cat === 'all' || item.getAttribute('data-cat') === cat;
+            item.hidden = !match;
+            const row = item.querySelector('.archive-row');
+            if (row) {
+              row.hidden = !match;
+              if (match && !firstVisibleKey) firstVisibleKey = row.getAttribute('data-project');
+            }
+          });
+          if (firstVisibleKey) renderStage(firstVisibleKey, true);
+        });
+      });
+
+      renderStage('cikapundung', false);
+
+      // WCAG 2.2.2 Pauseable Marquee Toggle
+      const mqToggle = document.getElementById('marquee-toggle');
+      const mqTrack = document.getElementById('marquee-track');
+      mqToggle.addEventListener('click', () => {
+        const paused = mqTrack.classList.toggle('is-paused');
+        mqToggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        mqToggle.textContent = paused ? 'Lanjutkan Gerakan' : 'Jeda Gerakan';
+      });
+
+      // Form Validation + Error Summary Box
+      const form = document.getElementById('project-inquiry-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameEl = document.getElementById('inq-name');
+        const emailEl = document.getElementById('inq-email');
+        const briefEl = document.getElementById('inq-brief');
+        const summary = document.getElementById('form-error-summary');
+        const list = document.getElementById('form-error-list');
+        const success = document.getElementById('inquiry-success');
+
+        [nameEl, emailEl, briefEl].forEach((el) => el.removeAttribute('aria-invalid'));
+        ['err-inq-name', 'err-inq-email', 'err-inq-brief'].forEach((id) => {
+          document.getElementById(id).hidden = true;
+        });
+        list.innerHTML = '';
+        summary.hidden = true;
+        success.hidden = true;
+
+        const errs = [];
+        if (!nameEl.value.trim()) errs.push({ id: 'inq-name', err: 'err-inq-name', msg: 'Isi nama dan organisasi Anda terlebih dahulu.' });
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) errs.push({ id: 'inq-email', err: 'err-inq-email', msg: 'Masukkan alamat surel korespondensi yang valid.' });
+        if (briefEl.value.trim().length < 15) errs.push({ id: 'inq-brief', err: 'err-inq-brief', msg: 'Jelaskan lokasi tapak dan kebutuhan ruang minimal 15 karakter.' });
+
+        if (errs.length > 0) {
+          errs.forEach((it) => {
+            document.getElementById(it.id).setAttribute('aria-invalid', 'true');
+            const ep = document.getElementById(it.err);
+            ep.textContent = it.msg;
+            ep.hidden = false;
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#' + it.id;
+            a.textContent = it.msg;
+            li.appendChild(a);
+            list.appendChild(li);
+          });
+          summary.hidden = false;
+          summary.focus();
+          return;
+        }
+
+        success.textContent = `Ringkasan proyek contoh atas nama ${nameEl.value.trim()} telah dicatat di sesi ini.`;
+        success.hidden = false;
+      });
+
+      // Theme & Dev Drawer
+      const themeBtn = document.getElementById('theme-toggle');
+      themeBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        themeBtn.setAttribute('aria-pressed', isDark ? 'false' : 'true');
+        themeBtn.textContent = isDark ? 'Mode Arsip Terang' : 'Mode Obsidian';
+      });
+
+      const drawer = document.getElementById('dev-drawer');
+      const setDrawer = (open) => { drawer.hidden = !open; };
+      if (new URLSearchParams(location.search).get('dev') === '1') setDrawer(true);
+      document.getElementById('dev-toggle-footer').addEventListener('click', () => setDrawer(drawer.hidden));
+      document.getElementById('dev-close-btn').addEventListener('click', () => {
+        setDrawer(false);
+        document.getElementById('dev-toggle-footer').focus();
+      });
+
+      const modeBtn = document.getElementById('toggle-mode-btn');
+      modeBtn.addEventListener('click', () => {
+        const nextLite = document.documentElement.getAttribute('data-complexity') !== 'lite';
+        document.documentElement.setAttribute('data-complexity', nextLite ? 'lite' : 'full');
+        modeBtn.textContent = nextLite ? 'Mode: Lite' : 'Mode: Full';
+        updateScrollMotion();
+      });
+    })();
+  </script>
+</body>
+</html>

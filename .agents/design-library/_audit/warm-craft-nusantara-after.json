@@ -1,0 +1,171 @@
+{
+  "url": "http://127.0.0.1:55510/preview.html",
+  "viewportWidth": 1280,
+  "passedAll": true,
+  "metrics": {
+    "decorativeBadges": 0,
+    "statusBadges": 0,
+    "filledInInitialViewport": 1,
+    "maxFilledPerScreen": 1,
+    "filledFullPage": 2,
+    "outlineInInitialViewport": 1,
+    "outlineFullPage": 2,
+    "ghostFullPage": 4,
+    "uniqueBorderRadii": 2,
+    "uniqueBorderWidths": 2,
+    "uniqueFontSizes": 9,
+    "uniqueFontWeights": 3,
+    "staticShadows": 0,
+    "maxNestedContainers": 0,
+    "alternatingSectionBgs": 2
+  },
+  "checks": {
+    "decorativeBadges": {
+      "actual": 0,
+      "limit": 1,
+      "status": "LULUS"
+    },
+    "maxFilledPerScreen": {
+      "actual": 1,
+      "limit": 1,
+      "status": "LULUS"
+    },
+    "outlineFullPage": {
+      "actual": 2,
+      "limit": 4,
+      "status": "LULUS"
+    },
+    "uniqueBorderRadii": {
+      "actual": 2,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "uniqueBorderWidths": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueFontWeights": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "maxNestedContainers": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "staticShadows": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "alternatingSectionBgs": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    }
+  },
+  "details": {
+    "decorativeBadgeNodes": [],
+    "statusBadgeNodes": [],
+    "filledBtns": [
+      {
+        "selector": "a#hero-cta.btn.btn-primary",
+        "text": "Susun Pesanan Kain",
+        "top": 516,
+        "bottom": 562
+      },
+      {
+        "selector": "button#wa-order-submit.btn.btn-primary",
+        "text": "Siapkan Pesan WhatsApp",
+        "top": 2627,
+        "bottom": 2671
+      }
+    ],
+    "outlineBtns": [
+      {
+        "selector": "button#theme-toggle.btn.btn-outline",
+        "text": "Mode Malam Sogan",
+        "top": 24,
+        "bottom": 68
+      },
+      {
+        "selector": "button#stamp-add-btn.btn.btn-outline",
+        "text": "+1 Catat Kain",
+        "top": 2477,
+        "bottom": 2521
+      }
+    ],
+    "ghostBtns": [
+      {
+        "selector": "button.process-tab",
+        "text": "01 · Nyanting Malam Lebah",
+        "top": 1451,
+        "bottom": 1495
+      },
+      {
+        "selector": "button.process-tab",
+        "text": "02 · Rendaman Nila Daun Tom",
+        "top": 1451,
+        "bottom": 1495
+      },
+      {
+        "selector": "button.process-tab",
+        "text": "03 · Sogan Tingi & Lorod",
+        "top": 1451,
+        "bottom": 1495
+      },
+      {
+        "selector": "button#dev-toggle-footer.btn.btn-ghost",
+        "text": "Panel Pengembang",
+        "top": 2777,
+        "bottom": 2821
+      }
+    ],
+    "borderRadiiValues": [
+      "4px",
+      "999px"
+    ],
+    "borderWidthValues": [
+      "1px",
+      "2px"
+    ],
+    "fontSizeValues": [
+      "14px",
+      "16px",
+      "17px",
+      "18.72px",
+      "20px",
+      "29.6px",
+      "32px",
+      "39.2px",
+      "61.6px"
+    ],
+    "fontWeightValues": [
+      "400",
+      "500",
+      "700"
+    ],
+    "staticShadowNodes": [],
+    "nestedOffenders": [],
+    "sectionBgs": [
+      {
+        "selector": "section#hero.hero-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "selector": "section#filosofi-kawung.philosophy-section",
+        "bg": "rgb(239, 230, 213)"
+      },
+      {
+        "selector": "section#proses-kriya.craft-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "selector": "section#pesan-kriya.craft-section",
+        "bg": "rgba(0, 0, 0, 0)"
+      }
+    ]
+  }
+}

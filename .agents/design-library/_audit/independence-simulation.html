@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NusantaraPay Webhook Inspector — Simulasi Kemandirian DESIGN.md (dark-tech-signal)</title>
+  <meta name="description" content="Halaman simulasi uji kemandirian Fase 5 yang dibangun murni dari spesifikasi creative/dark-tech-signal/DESIGN.md: Hero, Verifikator HMAC, dan Form Endpoint.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Sora:wght@500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Sora Fallback';
+      src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Arial');
+      font-weight: 500 700;
+      size-adjust: 108%;
+      ascent-override: 95%;
+      descent-override: 24%;
+      line-gap-override: 0%;
+    }
+
+    @font-face {
+      font-family: 'Plex Fallback';
+      src: local('Arial'), local('Helvetica Neue');
+      font-weight: 400 700;
+      size-adjust: 101%;
+      ascent-override: 96%;
+      descent-override: 24%;
+      line-gap-override: 0%;
+    }
+
+    /* Disalin langsung dari Bagian 17A creative/dark-tech-signal/DESIGN.md */
+    :root {
+      --bg-canvas: #090C0B;
+      --bg-chapter: #111715;
+      --bg-surface: #111715;
+      --text-primary: #EEF2F0;
+      --text-secondary: #B8C4BE;
+      --text-muted: #8B9A93;
+      --border-subtle: #1E2925;
+      --border-strong: #6A8077;
+      --accent-primary: #22C55E;
+      --accent-primary-hover: #4ADE80;
+      --accent-on-primary: #090C0B;
+      --accent-amber: #F59E0B;
+      --focus-ring: #4ADE80;
+      --status-success-bg: #102B1C;
+      --status-success-fg: #BBF7D0;
+      --status-danger-bg: #451212;
+      --status-danger-fg: #FECACA;
+
+      --font-display: 'Sora', 'Sora Fallback', system-ui, -apple-system, sans-serif;
+      --font-sans: 'IBM Plex Sans', 'Plex Fallback', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+      --radius-tech: 4px;
+      --duration-fast: 150ms;
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    html[data-theme="daylight"] {
+      --bg-canvas: #F4F7F5;
+      --bg-chapter: #E8F0EC;
+      --bg-surface: #FFFFFF;
+      --text-primary: #0D1311;
+      --text-secondary: #32423C;
+      --text-muted: #485B54;
+      --border-subtle: #CBD6D0;
+      --border-strong: #32423C;
+      --accent-primary: #15703E;
+      --accent-primary-hover: #115E34;
+      --accent-on-primary: #FFFFFF;
+      --accent-amber: #B45309;
+      --focus-ring: #15703E;
+      --status-success-bg: #DCFCE7;
+      --status-success-fg: #14532D;
+      --status-danger-bg: #FEE2E2;
+      --status-danger-fg: #991B1B;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+
+    body {
+      margin: 0;
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.55;
+    }
+
+    h1, h2, h3, strong { font-weight: 700; margin: 0; }
+    h1, h2 { font-family: var(--font-display); }
+    p, pre { margin: 0; }
+
+    :focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -120px;
+      z-index: 200;
+      background: var(--accent-primary);
+      color: var(--accent-on-primary);
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: var(--radius-tech);
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 12px; }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    @media (min-width: 768px) { .container { padding: 0 28px; } }
+
+    .site-header {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
+    }
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 18px;
+      border-radius: var(--radius-tech);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--duration-fast) var(--ease-out-quart);
+    }
+    .btn-primary {
+      background: var(--accent-primary);
+      color: var(--accent-on-primary);
+      border: 1px solid var(--accent-primary);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+    }
+    .inline-link {
+      color: var(--accent-primary);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+
+    /* 1. HERO + Console */
+    .hero-section {
+      padding: 56px 0 72px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+    .hero-grid > * { min-width: 0; }
+    @media (min-width: 1024px) {
+      .hero-grid { grid-template-columns: 0.95fr 1.05fr; gap: 48px; }
+    }
+    .mono-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .hero-title {
+      font-size: clamp(2.2rem, 4.8vw, 3.75rem);
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+    }
+    .hero-lead {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      max-width: 58ch;
+      margin-bottom: 24px;
+    }
+    .status-readout {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: var(--radius-tech);
+      border: 1px solid var(--border-strong);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 700;
+      background: var(--status-success-bg);
+      color: var(--status-success-fg);
+    }
+    .json-pre {
+      margin-top: 14px;
+      padding: 16px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-tech);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* 2. Contrast Architecture Section */
+    .chapter-band {
+      background: var(--bg-chapter);
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .spec-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    @media (min-width: 768px) {
+      .spec-row { grid-template-columns: 9rem 1.2fr 2fr; gap: 20px; }
+    }
+
+    /* 3. Form Component */
+    .form-section { padding: 64px 0; }
+    .form-wrap { max-width: 560px; }
+    .field-group { margin-bottom: 20px; }
+    .field-label { display: block; font-weight: 700; margin-bottom: 4px; }
+    .field-hint { display: block; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 8px; }
+    .form-input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-tech);
+    }
+    .form-input[aria-invalid="true"] {
+      border-width: 2px;
+      border-color: var(--status-danger-fg);
+      background: var(--status-danger-bg);
+    }
+    .field-error {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--status-danger-fg);
+    }
+    .error-summary {
+      padding: 16px;
+      margin-bottom: 20px;
+      border: 2px solid var(--status-danger-fg);
+      border-radius: var(--radius-tech);
+      background: var(--status-danger-bg);
+      color: var(--status-danger-fg);
+    }
+    .error-summary a { color: var(--status-danger-fg); font-weight: 700; }
+    .success-banner {
+      margin-top: 16px;
+      padding: 16px;
+      border: 2px solid var(--status-success-fg);
+      border-radius: var(--radius-tech);
+      background: var(--status-success-bg);
+      color: var(--status-success-fg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#hero" class="brand-title">NusantaraPay // Webhook Inspector (Simulasi Kemandirian DESIGN.md)</a>
+      <button type="button" id="theme-toggle" class="btn btn-outline" aria-pressed="false">Mode Daylight Lab</button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section id="hero" class="hero-section" aria-labelledby="hero-heading">
+      <div class="container hero-grid">
+        <div>
+          <span class="mono-kicker">HMAC-SHA256 VERIFIER · NODE JAKARTA</span>
+          <h1 id="hero-heading" class="hero-title">Verifikasi Tanda Tangan Webhook Tanpa Selisih.</h1>
+          <p class="hero-lead">
+            Dibangun murni menggunakan token, skala tipografi, dan aturan komponen dari <code>creative/dark-tech-signal/DESIGN.md</code> untuk membuktikan kemandirian spesifikasi.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
+            <a href="#register-webhook" class="btn btn-primary">Daftarkan Endpoint</a>
+            <a href="#spesifikasi-retry" class="inline-link">Lihat kebijakan retry</a>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span id="hmac-status" class="status-readout" data-status-badge="true" aria-live="polite">HMAC: VALID · 200 OK</span>
+            <button type="button" id="tamper-btn" class="btn btn-outline">Simulasi Payload Rusak</button>
+          </div>
+          <pre id="webhook-json" class="json-pre" aria-live="polite">{
+  "event": "payment.qris.settled",
+  "merchant_id": "mch_bandung_091",
+  "amount_idr": 185000,
+  "signature_hmac": "sha256=8f91c2a0b4e7d911",
+  "verified": true
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="spesifikasi-retry" class="chapter-band" aria-labelledby="retry-heading">
+      <div class="container">
+        <span class="mono-kicker">01 / KEBIJAKAN RETRY DETERMINISTIK</span>
+        <h2 id="retry-heading" style="font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 20px;">Jadwal Pengiriman Ulang Eksponensial</h2>
+        <div class="spec-row">
+          <span class="mono-kicker" style="margin: 0;">RETRY-01</span>
+          <strong>Detik ke-5 &amp; ke-30</strong>
+          <span style="color: var(--text-secondary);">Mengatasi fluktuasi koneksi singkat pada gerbang merchant</span>
+        </div>
+        <div class="spec-row">
+          <span class="mono-kicker" style="margin: 0;">RETRY-02</span>
+          <strong>Menit ke-5 &amp; ke-30</strong>
+          <span style="color: var(--text-secondary);">Menahan antrean selama deployment rutin server tujuan</span>
+        </div>
+        <div class="spec-row">
+          <span class="mono-kicker" style="margin: 0;">RETRY-03</span>
+          <strong>Jam ke-2 &amp; ke-6 (Dead-Letter Queue)</strong>
+          <span style="color: var(--text-secondary);">Disimpan terenkripsi selama 14 hari untuk replay manual dari konsol</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="kuota-webhook" class="form-section" aria-labelledby="quota-heading" style="border-bottom: 1px solid var(--border-subtle);">
+      <div class="container">
+        <span class="mono-kicker">02 / SIMULASI VOLUME EVENT</span>
+        <h2 id="quota-heading" style="font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 16px;">Estimasi Kuota Pengiriman Bulanan</h2>
+        <p class="hero-lead">Pilih estimasi transaksi harian untuk melihat jaminan konkurensi worker pengiriman webhook.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+          <a href="#register-webhook" class="inline-link">10.000 Event / Hari (8 Worker Paralel)</a>
+          <a href="#register-webhook" class="inline-link">100.000 Event / Hari (32 Worker Paralel)</a>
+          <a href="#register-webhook" class="inline-link">500.000 Event / Hari (Klaster Dedikasi)</a>
+        </div>
+        <div class="spec-row">
+          <span class="mono-kicker" style="margin: 0;">SLA-99.95</span>
+          <strong>Timeout Koneksi Maksimal 4.000 ms</strong>
+          <span style="color: var(--text-secondary);">Koneksi TLS 1.3 dipertahankan lewat pool keep-alive Jakarta</span>
+        </div>
+        <div class="spec-row">
+          <span class="mono-kicker" style="margin: 0;">HMAC-KEY</span>
+          <strong>Rotasi Kunci Ganda Tanpa Downtime</strong>
+          <span style="color: var(--text-secondary);">Header X-Nusantara-Signature mendukung kunci aktif dan kunci transisi</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="register-webhook" class="form-section" aria-labelledby="form-heading">
+      <div class="container">
+        <span class="mono-kicker">03 / KOMPONEN FORMULIR 1 KOLOM</span>
+        <h2 id="form-heading" style="font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 20px;">Daftarkan URL Endpoint Penerima</h2>
+
+        <form id="webhook-form" class="form-wrap" novalidate>
+          <div id="form-error-summary" class="error-summary" role="alert" tabindex="-1" hidden>
+            <strong>Perbaiki isian berikut sebelum menyimpan endpoint:</strong>
+            <ul id="form-error-list" style="margin: 8px 0 0 20px; padding: 0;"></ul>
+          </div>
+
+          <div class="field-group">
+            <label for="wh-url" class="field-label">URL HTTPS Endpoint</label>
+            <span class="field-hint">Wajib menggunakan skema https:// (contoh: https://api.toko-contoh.id/webhooks/qris)</span>
+            <input type="url" id="wh-url" class="form-input" aria-describedby="err-wh-url">
+            <p id="err-wh-url" class="field-error" hidden></p>
+          </div>
+
+          <div class="field-group">
+            <label for="wh-email" class="field-label">Surel Notifikasi Gagal Kirim</label>
+            <span class="field-hint">Peringatan dikirim jika endpoint gagal merespons 2xx setelah 5 percobaan.</span>
+            <input type="email" id="wh-email" class="form-input" autocomplete="email" value="devops@toko-contoh.id">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Simpan Endpoint</button>
+          <div id="wh-success" class="success-banner" role="status" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <aside id="dev-drawer" hidden></aside>
+
+  <script>
+    (() => {
+      let tampered = false;
+      document.getElementById('tamper-btn').addEventListener('click', () => {
+        tampered = !tampered;
+        const st = document.getElementById('hmac-status');
+        const pre = document.getElementById('webhook-json');
+        st.textContent = tampered ? 'HMAC: DITOLAK · 401 INVALID' : 'HMAC: VALID · 200 OK';
+        pre.textContent = tampered
+          ? `{\n  "event": "payment.qris.settled",\n  "amount_idr": 9990000,\n  "signature_hmac": "sha256=MISMATCH_TAMPERED",\n  "verified": false\n}`
+          : `{\n  "event": "payment.qris.settled",\n  "merchant_id": "mch_bandung_091",\n  "amount_idr": 185000,\n  "signature_hmac": "sha256=8f91c2a0b4e7d911",\n  "verified": true\n}`;
+      });
+
+      document.getElementById('theme-toggle').addEventListener('click', (e) => {
+        const isDay = document.documentElement.getAttribute('data-theme') === 'daylight';
+        document.documentElement.setAttribute('data-theme', isDay ? 'graphite' : 'daylight');
+        e.currentTarget.setAttribute('aria-pressed', isDay ? 'false' : 'true');
+      });
+
+      document.getElementById('webhook-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const urlEl = document.getElementById('wh-url');
+        const summary = document.getElementById('form-error-summary');
+        const list = document.getElementById('form-error-list');
+        const errP = document.getElementById('err-wh-url');
+        const ok = document.getElementById('wh-success');
+
+        urlEl.removeAttribute('aria-invalid');
+        errP.hidden = true;
+        summary.hidden = true;
+        ok.hidden = true;
+        list.innerHTML = '';
+
+        if (!/^https:\/\/.+\..+/.test(urlEl.value.trim())) {
+          const msg = 'Masukkan URL dengan awalan https:// yang valid.';
+          urlEl.setAttribute('aria-invalid', 'true');
+          errP.textContent = msg;
+          errP.hidden = false;
+          list.innerHTML = `<li><a href="#wh-url">${msg}</a></li>`;
+          summary.hidden = false;
+          summary.focus();
+          return;
+        }
+        ok.textContent = `Endpoint ${urlEl.value.trim()} berhasil didaftarkan di simulasi ini.`;
+        ok.hidden = false;
+      });
+    })();
+  </script>
+</body>
+</html>

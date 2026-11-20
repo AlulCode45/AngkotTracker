@@ -1,0 +1,298 @@
+{
+  "url": "http://127.0.0.1:53510/preview.html",
+  "viewportWidth": 1280,
+  "passedAll": false,
+  "metrics": {
+    "decorativeBadges": 14,
+    "statusBadges": 1,
+    "filledInInitialViewport": 1,
+    "maxFilledPerScreen": 1,
+    "filledFullPage": 3,
+    "outlineInInitialViewport": 3,
+    "outlineFullPage": 11,
+    "ghostFullPage": 1,
+    "uniqueBorderRadii": 3,
+    "uniqueBorderWidths": 3,
+    "uniqueFontSizes": 11,
+    "uniqueFontWeights": 5,
+    "staticShadows": 10,
+    "maxNestedContainers": 1,
+    "alternatingSectionBgs": 3
+  },
+  "checks": {
+    "decorativeBadges": {
+      "actual": 14,
+      "limit": 0,
+      "status": "GAGAL"
+    },
+    "maxFilledPerScreen": {
+      "actual": 1,
+      "limit": 1,
+      "status": "LULUS"
+    },
+    "outlineFullPage": {
+      "actual": 11,
+      "limit": 2,
+      "status": "GAGAL"
+    },
+    "uniqueBorderRadii": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "uniqueBorderWidths": {
+      "actual": 3,
+      "limit": 2,
+      "status": "GAGAL"
+    },
+    "uniqueFontWeights": {
+      "actual": 5,
+      "limit": 3,
+      "status": "GAGAL"
+    },
+    "maxNestedContainers": {
+      "actual": 1,
+      "limit": 0,
+      "status": "GAGAL"
+    },
+    "staticShadows": {
+      "actual": 10,
+      "limit": 0,
+      "status": "GAGAL"
+    },
+    "alternatingSectionBgs": {
+      "actual": 3,
+      "limit": 0,
+      "status": "GAGAL"
+    }
+  },
+  "details": {
+    "decorativeBadgeNodes": [
+      {
+        "selector": "span.masthead-badge",
+        "text": "CONTOH"
+      },
+      {
+        "selector": "span.badge.badge-info",
+        "text": "Bebas Biaya Layanan Utama • Batas Waktu "
+      },
+      {
+        "selector": "div.chip-group",
+        "text": "Kategori:\n            Semua (6)\n        "
+      },
+      {
+        "selector": "button.chip",
+        "text": "Semua (6)"
+      },
+      {
+        "selector": "button.chip",
+        "text": "Perizinan Usaha (2)"
+      },
+      {
+        "selector": "button.chip",
+        "text": "Keterangan & Domisili (2)"
+      },
+      {
+        "selector": "button.chip",
+        "text": "Tenaga Kesehatan (2)"
+      },
+      {
+        "selector": "span.badge.badge-info",
+        "text": "Perizinan Usaha"
+      },
+      {
+        "selector": "span.badge.badge-info",
+        "text": "Keterangan & Domisili"
+      },
+      {
+        "selector": "span.badge.badge-info",
+        "text": "Tenaga Kesehatan"
+      },
+      {
+        "selector": "span.badge.badge-info",
+        "text": "Perizinan Usaha"
+      },
+      {
+        "selector": "span.badge.badge-info",
+        "text": "Keterangan & Domisili"
+      },
+      {
+        "selector": "span.badge.badge-info",
+        "text": "Tenaga Kesehatan"
+      },
+      {
+        "selector": "span#readiness-badge.badge.badge-warning",
+        "text": "Siap 2 dari 3 dokumen"
+      }
+    ],
+    "statusBadgeNodes": [
+      "span#track-badge.badge.badge-success"
+    ],
+    "filledBtns": [
+      {
+        "selector": "button.btn.btn-primary",
+        "text": "Cari Layanan",
+        "top": 390,
+        "bottom": 434
+      },
+      {
+        "selector": "button#apply-estimator-btn.btn.btn-primary",
+        "text": "Gunakan Layanan Ini di Formulir Pengajua",
+        "top": 1981,
+        "bottom": 2025
+      },
+      {
+        "selector": "button#submit-wizard-btn.btn.btn-primary",
+        "text": "Simpan & Lanjut ke Langkah 3 →",
+        "top": 3321,
+        "bottom": 3365
+      }
+    ],
+    "outlineBtns": [
+      {
+        "selector": "button#theme-toggle.btn.btn-secondary",
+        "text": "Mode Kontras Gelap",
+        "top": 43,
+        "bottom": 83
+      },
+      {
+        "selector": "button#dismiss-notice-btn.notice-dismiss",
+        "text": "Tutup",
+        "top": 106,
+        "bottom": 142
+      },
+      {
+        "selector": "button#track-btn.btn.btn-secondary",
+        "text": "Periksa Status Berkas",
+        "top": 401,
+        "bottom": 445
+      },
+      {
+        "selector": "a.btn.btn-secondary",
+        "text": "Periksa Syarat & Ajukan",
+        "top": 1068,
+        "bottom": 1108
+      },
+      {
+        "selector": "a.btn.btn-secondary",
+        "text": "Periksa Syarat & Ajukan",
+        "top": 1068,
+        "bottom": 1108
+      },
+      {
+        "selector": "a.btn.btn-secondary",
+        "text": "Periksa Syarat & Ajukan",
+        "top": 1068,
+        "bottom": 1108
+      },
+      {
+        "selector": "a.btn.btn-secondary",
+        "text": "Periksa Syarat & Ajukan",
+        "top": 1398,
+        "bottom": 1438
+      },
+      {
+        "selector": "a.btn.btn-secondary",
+        "text": "Periksa Syarat & Ajukan",
+        "top": 1398,
+        "bottom": 1438
+      },
+      {
+        "selector": "a.btn.btn-secondary",
+        "text": "Periksa Syarat & Ajukan",
+        "top": 1398,
+        "bottom": 1438
+      },
+      {
+        "selector": "button#save-draft-btn.btn.btn-secondary",
+        "text": "Simpan Draf Lokal",
+        "top": 3321,
+        "bottom": 3365
+      },
+      {
+        "selector": "button#dev-toggle-btn.dev-toggle-btn",
+        "text": "Panel Pengembang",
+        "top": 3746,
+        "bottom": 3782
+      }
+    ],
+    "ghostBtns": [
+      {
+        "selector": "button#masthead-btn.masthead-toggle",
+        "text": "Cara mengenali situs resmi\n          ▾",
+        "top": 2,
+        "bottom": 26
+      }
+    ],
+    "borderRadiiValues": [
+      "4px",
+      "6px",
+      "8px"
+    ],
+    "borderWidthValues": [
+      "1px",
+      "2px",
+      "4px"
+    ],
+    "fontSizeValues": [
+      "11px",
+      "12px",
+      "12.6px",
+      "13px",
+      "14px",
+      "14.4px",
+      "16px",
+      "17px",
+      "20px",
+      "21.76px",
+      "33.28px"
+    ],
+    "fontWeightValues": [
+      "400",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "staticShadowNodes": [
+      "section.card.tracker-card",
+      "article.card.service-card",
+      "article.card.service-card",
+      "article.card.service-card",
+      "article.card.service-card",
+      "article.card.service-card",
+      "article.card.service-card",
+      "div.card",
+      "div.card",
+      "form#application-form.card"
+    ],
+    "nestedOffenders": [
+      {
+        "selector": "div.sla-box",
+        "depth": 2
+      },
+      {
+        "selector": "div.sla-box",
+        "depth": 2
+      }
+    ],
+    "sectionBgs": [
+      {
+        "selector": "section.hero-section",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "selector": "section#katalog-layanan.section",
+        "bg": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "selector": "section#estimator-syarat.section.estimator-section",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "selector": "section#formulir-pengajuan.section",
+        "bg": "rgba(0, 0, 0, 0)"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Pengadaan &amp; Persediaan — Contoh enterprise-dashboard</title>
+  <meta name="description" content="Pratinjau sistem desain enterprise-dashboard: tabel data dengan sortir, filter, aksi massal, toggle kepadatan, RBAC UI, grafik aksesibel, dan log audit.">
+  <style>
+    :root {
+      --bg-canvas: #FFFFFF;
+      --bg-subtle: #F8FAFC;
+      --bg-selected: #F0FDFA;
+      --bg-elevated: #FFFFFF;
+      --text-primary: #0F172A;
+      --text-secondary: #334155;
+      --text-muted: #475569;
+      --border-subtle: #CBD5E1;
+      --border-strong: #475569;
+      --accent-primary: #0F766E;
+      --accent-primary-hover: #115E59;
+      --accent-on-primary: #FFFFFF;
+      --focus-ring: #B45309;
+      --skip-bg: #FBBF24;
+      --skip-fg: #0F172A;
+      --btn-disabled-bg: #E2E8F0;
+      --btn-disabled-fg: #64748B;
+      --btn-danger-bg: #B91C1C;
+      --btn-danger-fg: #FFFFFF;
+      --status-info-bg: #EFF6FF;
+      --status-info-fg: #1E3A8A;
+      --status-success-bg: #F0FDF4;
+      --status-success-fg: #14532D;
+      --status-warning-bg: #FFFBEB;
+      --status-warning-fg: #78350F;
+      --status-danger-bg: #FEF2F2;
+      --status-danger-fg: #7F1D1D;
+      --status-danger-border: #B91C1C;
+
+      --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --text-display: clamp(1.35rem, 2vw, 1.75rem);
+      --text-h2: clamp(1.125rem, 1.5vw, 1.35rem);
+      --text-h3: 1rem;
+      --text-body: 0.9375rem;
+      --text-sm: 0.875rem;
+      --text-xs: 0.75rem;
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+
+      --radius-control: 4px;
+      --radius-container: 6px;
+      --border-thin: 1px;
+      --border-accent: 2px;
+      --row-pad-y: 0.75rem;
+      --duration-fast: 120ms;
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg-canvas: #090D16;
+      --bg-subtle: #111827;
+      --bg-selected: #042F2E;
+      --bg-elevated: #111827;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --border-subtle: #334155;
+      --border-strong: #94A3B8;
+      --accent-primary: #2DD4BF;
+      --accent-primary-hover: #5EEAD4;
+      --accent-on-primary: #042F2E;
+      --focus-ring: #FBBF24;
+      --btn-disabled-bg: #1E293B;
+      --btn-disabled-fg: #94A3B8;
+      --status-info-bg: #172554;
+      --status-info-fg: #DBEAFE;
+      --status-success-bg: #052E16;
+      --status-success-fg: #DCFCE7;
+      --status-warning-bg: #451A03;
+      --status-warning-fg: #FEF3C7;
+      --status-danger-bg: #450A0A;
+      --status-danger-fg: #FEE2E2;
+      --status-danger-border: #EF4444;
+    }
+
+    [data-density="compact"] {
+      --row-pad-y: 0.4rem;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-padding-top: 4rem;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: var(--text-body);
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text-primary);
+      background-color: var(--bg-canvas);
+      font-variant-numeric: tabular-nums;
+      overflow-x: hidden;
+    }
+
+    strong, b, th {
+      font-weight: 700;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .code-mono {
+      font-family: var(--font-mono);
+      font-size: inherit;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: var(--space-4);
+      background: var(--skip-bg);
+      color: var(--skip-fg);
+      font-weight: 700;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-control);
+      z-index: 1000;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      top: var(--space-2);
+    }
+
+    /* App Shell Layout: Fixed-width rail >=1024px, clean drawer <1024px */
+    .app-shell {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: 100vh;
+    }
+
+    @media (min-width: 1024px) {
+      .app-shell {
+        grid-template-columns: 240px minmax(0, 1fr);
+      }
+    }
+
+    .sidebar {
+      background-color: var(--bg-subtle);
+      border-right: var(--border-thin) solid var(--border-subtle);
+      padding: var(--space-6) var(--space-4);
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-6);
+    }
+
+    .sidebar.is-open {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 260px;
+      z-index: 800;
+      box-shadow: 6px 0 20px rgba(15, 23, 42, 0.2);
+    }
+
+    @media (min-width: 1024px) {
+      .sidebar {
+        display: flex;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+      }
+    }
+
+    .sidebar-brand {
+      margin-bottom: var(--space-6);
+    }
+
+    .sidebar-brand strong {
+      display: block;
+      font-size: var(--text-h3);
+      line-height: 1.25;
+    }
+
+    .sidebar-brand span {
+      display: block;
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .side-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: var(--space-1);
+    }
+
+    .side-link {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+      padding: var(--space-2) var(--space-3);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      border-left: var(--border-accent) solid transparent;
+      border-radius: var(--radius-control);
+    }
+
+    .side-link:hover {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+    }
+
+    .side-link[aria-current="page"] {
+      color: var(--accent-primary);
+      font-weight: 700;
+      border-left-color: var(--accent-primary);
+      background-color: var(--bg-selected);
+    }
+
+    .sidebar-meta {
+      border-top: var(--border-thin) solid var(--border-subtle);
+      padding-top: var(--space-4);
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+    }
+
+    /* Main Workspace Column */
+    .workspace-col {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      background-color: var(--bg-canvas);
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+
+    @media (min-width: 768px) {
+      .topbar {
+        padding: var(--space-3) var(--space-6);
+      }
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .mobile-menu-btn {
+      display: inline-flex;
+    }
+
+    @media (min-width: 1024px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+
+    .page-title {
+      font-size: var(--text-display);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* Buttons: Filled (1/screen), Outline (<=2/page), Ghost */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: 44px;
+      padding: 0.55rem 1rem;
+      font-family: inherit;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      line-height: 1.2;
+      border-radius: var(--radius-control);
+      border: var(--border-thin) solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--duration-fast) var(--ease-out-quart);
+    }
+
+    .btn-sm {
+      min-height: 36px;
+      padding: 0.35rem 0.7rem;
+      font-size: var(--text-xs);
+    }
+
+    .btn-primary {
+      background-color: var(--accent-primary);
+      color: var(--accent-on-primary);
+      font-weight: 700;
+    }
+
+    .btn-primary:hover, .btn-primary.is-hover {
+      background-color: var(--accent-primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-subtle);
+    }
+
+    .btn-ghost {
+      background-color: transparent;
+      color: var(--text-primary);
+      border: none;
+    }
+
+    .btn-ghost:hover {
+      background-color: var(--bg-subtle);
+    }
+
+    .btn-danger {
+      background-color: var(--btn-danger-bg);
+      color: var(--btn-danger-fg);
+      font-weight: 700;
+    }
+
+    .btn[disabled] {
+      background-color: var(--btn-disabled-bg);
+      color: var(--btn-disabled-fg);
+      border-color: transparent;
+      cursor: not-allowed;
+    }
+
+    .btn.is-focused {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* Sections: uniform single canvas, separated by 1px border & spacing */
+    .main-content {
+      padding: var(--space-6) var(--space-4);
+      flex: 1;
+    }
+
+    @media (min-width: 768px) {
+      .main-content {
+        padding: var(--space-6);
+      }
+    }
+
+    .ws-section {
+      background-color: var(--bg-canvas);
+      padding-bottom: var(--space-8);
+      margin-bottom: var(--space-8);
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+    }
+
+    .ws-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+      font-size: var(--text-h2);
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* KPI Strip (clean typography + hairlines, zero cards) */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+
+    @media (min-width: 768px) {
+      .kpi-strip {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .kpi-item {
+      padding-right: var(--space-4);
+      border-right: var(--border-thin) solid var(--border-subtle);
+    }
+
+    .kpi-item:last-child {
+      border-right: none;
+    }
+
+    .kpi-label {
+      display: block;
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .kpi-value {
+      display: block;
+      font-size: var(--text-h2);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 2px 0;
+    }
+
+    .kpi-note {
+      display: block;
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+    }
+
+    /* Accessible SVG Chart & Table Toggle */
+    .chart-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .data-table-alt {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+    .data-table-alt th, .data-table-alt td {
+      padding: var(--space-2) var(--space-3);
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .data-table-alt th.num, .data-table-alt td.num {
+      text-align: right;
+    }
+
+    /* Procurement Table Controls */
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+    }
+
+    .filter-tab {
+      background: transparent;
+      color: var(--text-secondary);
+      border: none;
+      border-bottom: var(--border-accent) solid transparent;
+      padding: var(--space-2) var(--space-3);
+      font-family: inherit;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 44px;
+      margin-bottom: -1px;
+    }
+
+    .filter-tab[aria-pressed="true"] {
+      color: var(--accent-primary);
+      font-weight: 700;
+      border-bottom-color: var(--accent-primary);
+    }
+
+    .controls-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .form-input, .form-select {
+      min-height: 44px;
+      padding: 0.45rem 0.75rem;
+      font-family: inherit;
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      background-color: var(--bg-canvas);
+      border: var(--border-thin) solid var(--border-strong);
+      border-radius: var(--radius-control);
+    }
+
+    /* Mobile 16px input sizing to prevent iOS zoom */
+    @media (max-width: 767px) {
+      .form-input, .form-select {
+        font-size: 1rem;
+      }
+    }
+
+    .bulk-bar {
+      background-color: var(--bg-selected);
+      border-left: var(--border-accent) solid var(--accent-primary);
+      padding: var(--space-2) var(--space-4);
+      margin-bottom: var(--space-3);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+    }
+
+    /* Scrollable Data Table with Sticky First Column */
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      border-top: var(--border-thin) solid var(--border-strong);
+    }
+
+    .proc-table {
+      width: 100%;
+      min-width: 780px;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+    .proc-table th, .proc-table td {
+      padding: var(--row-pad-y) var(--space-3);
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .proc-table th {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--text-muted);
+      background-color: var(--bg-canvas);
+      border-bottom-color: var(--border-strong);
+      white-space: nowrap;
+    }
+
+    .proc-table th.num, .proc-table td.num {
+      text-align: right;
+    }
+
+    .proc-table th.sticky-col,
+    .proc-table td.sticky-col {
+      position: sticky;
+      left: 0;
+      background-color: var(--bg-canvas);
+      z-index: 2;
+      border-right: var(--border-thin) solid var(--border-subtle);
+    }
+
+    .proc-table tbody tr:hover td {
+      background-color: var(--bg-subtle);
+    }
+
+    .proc-table tbody tr.is-selected td {
+      background-color: var(--bg-selected);
+    }
+
+    .sort-btn {
+      background: transparent;
+      border: none;
+      color: inherit;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 2px 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Status Badge (Dynamic only) */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px var(--space-2);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      border-radius: var(--radius-control);
+      white-space: nowrap;
+    }
+
+    .status-info { background-color: var(--status-info-bg); color: var(--status-info-fg); }
+    .status-success { background-color: var(--status-success-bg); color: var(--status-success-fg); }
+    .status-warning { background-color: var(--status-warning-bg); color: var(--status-warning-fg); }
+
+    .rbac-hint {
+      display: block;
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .pagination-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    /* Empty, Loading, Error States */
+    .state-panel {
+      padding: var(--space-8) var(--space-4);
+      text-align: left;
+      border-top: var(--border-thin) solid var(--border-subtle);
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+    }
+
+    .state-panel-error {
+      background-color: var(--status-danger-bg);
+      color: var(--status-danger-fg);
+      border: var(--border-accent) solid var(--status-danger-border);
+      border-radius: var(--radius-container);
+      padding: var(--space-4);
+    }
+
+    .skeleton-line {
+      height: 16px;
+      background-color: var(--bg-subtle);
+      border-radius: var(--radius-control);
+      margin-bottom: var(--space-3);
+    }
+
+    /* Audit Log List */
+    .audit-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .audit-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+      padding: var(--space-3) 0;
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+      font-size: var(--text-sm);
+    }
+
+    @media (min-width: 768px) {
+      .audit-row {
+        grid-template-columns: 11rem 12rem 1fr 9rem;
+        gap: var(--space-4);
+        align-items: baseline;
+      }
+    }
+
+    /* Workspace Footer */
+    .ws-footer {
+      border-top: var(--border-thin) solid var(--border-subtle);
+      padding: var(--space-4);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    @media (min-width: 768px) {
+      .ws-footer {
+        padding: var(--space-4) var(--space-6);
+      }
+    }
+
+    /* Collapsible Developer Drawer (?dev=1) */
+    .dev-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(440px, 100vw);
+      background-color: var(--bg-elevated);
+      color: var(--text-primary);
+      border-left: var(--border-thin) solid var(--border-strong);
+      z-index: 950;
+      overflow-y: auto;
+      padding: var(--space-6);
+      box-shadow: -8px 0 24px rgba(15, 23, 42, 0.18);
+    }
+
+    .dev-drawer[hidden] {
+      display: none !important;
+    }
+
+    .dev-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      padding-bottom: var(--space-3);
+      margin-bottom: var(--space-4);
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+    }
+
+    .dev-section {
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: var(--border-thin) solid var(--border-subtle);
+    }
+
+    .dev-section h3 {
+      font-size: var(--text-sm);
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    .dev-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .state-mini-grid, .spec-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-2);
+    }
+
+    .swatch {
+      border: var(--border-thin) solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      overflow: hidden;
+    }
+
+    .swatch-preview {
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-xs);
+      font-weight: 700;
+    }
+
+    .swatch-meta {
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-xs);
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+
+    .kbd-monitor {
+      background: var(--bg-subtle);
+      border: var(--border-thin) solid var(--border-strong);
+      border-radius: var(--radius-control);
+      padding: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <div class="app-shell">
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar-nav" class="sidebar" aria-label="Navigasi Ruang Kerja">
+      <div>
+        <div class="sidebar-brand">
+          <strong>Nusantara Ops</strong>
+          <span>PT Sinar Logistik Nusantara (Contoh)</span>
+        </div>
+        <nav aria-label="Menu Modul">
+          <ul class="side-nav">
+            <li><a href="#ringkasan-kpi" class="side-link" aria-current="page">Ringkasan Pengadaan</a></li>
+            <li><a href="#tren-bulanan" class="side-link">Tren Belanja Bulanan</a></li>
+            <li><a href="#daftar-pengadaan" class="side-link">Daftar Pesanan (PO)</a></li>
+            <li><a href="#jejak-audit" class="side-link">Jejak Audit Sistem</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="sidebar-meta">
+        <div><strong>Pengguna Aktif:</strong> Budi Santoso</div>
+        <div>Peran: <strong id="sidebar-role-label">Staf Pengadaan</strong></div>
+        <button type="button" class="btn btn-ghost btn-sm" id="mobile-nav-close" style="margin-top: var(--space-2); padding-left: 0; display: none;">Tutup Menu</button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Column -->
+    <div class="workspace-col">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="btn btn-ghost btn-sm mobile-menu-btn" id="mobile-nav-open" aria-expanded="false" aria-controls="sidebar-nav">Menu</button>
+          <h1 class="page-title">Pengadaan dan Persetujuan Pembelian</h1>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="btn btn-ghost btn-sm" id="theme-toggle" aria-pressed="false">Mode Gelap</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="export-csv-btn">Ekspor CSV</button>
+          <button type="button" class="btn btn-primary btn-sm" id="new-po-btn">+ Buat Pengajuan</button>
+        </div>
+      </header>
+
+      <main id="main-content" class="main-content">
+        <!-- 1. KPI Strip -->
+        <section id="ringkasan-kpi" class="ws-section" aria-labelledby="kpi-heading">
+          <h2 id="kpi-heading" class="hidden">Ringkasan Kinerja Pengadaan</h2>
+          <div class="kpi-strip">
+            <div class="kpi-item">
+              <span class="kpi-label">Total Komitmen November</span>
+              <span class="kpi-value">Rp418.750.000</span>
+              <span class="kpi-note">6 pesanan pembelian aktif</span>
+            </div>
+            <div class="kpi-item">
+              <span class="kpi-label">Menunggu Persetujuan</span>
+              <span class="kpi-value">2 berkas</span>
+              <span class="kpi-note">1 di atas batas wewenang staf</span>
+            </div>
+            <div class="kpi-item">
+              <span class="kpi-label">Rata-rata Waktu Persetujuan</span>
+              <span class="kpi-value">1,4 hari</span>
+              <span class="kpi-note">Target batas internal: 2 hari</span>
+            </div>
+            <div class="kpi-item">
+              <span class="kpi-label">Kepatuhan Kelengkapan Lampiran</span>
+              <span class="kpi-value">96,2%</span>
+              <span class="kpi-note">2 revisi faktur tercatat</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Accessible SVG Trend Chart + Toggle to Semantic Data Table -->
+        <section id="tren-bulanan" class="ws-section" aria-labelledby="chart-heading">
+          <div class="section-head">
+            <div>
+              <h2 id="chart-heading" class="section-title">Realisasi Belanja Operasional (Juta Rupiah)</h2>
+              <p style="margin: 2px 0 0 0; font-size: var(--text-xs); color: var(--text-muted);">Periode Juni–November 2026 • Angka tertulis di atas tiap batang untuk keterbacaan tanpa warna.</p>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" id="toggle-chart-table" aria-pressed="false">Lihat Tabel Data</button>
+          </div>
+
+          <div id="chart-panel" class="chart-wrap">
+            <svg viewBox="0 0 720 210" width="100%" style="max-width: 720px; height: auto; display: block;" role="img" aria-label="Grafik batang belanja operasional Juni hingga November 2026: Juni 310 juta, Juli 345 juta, Agustus 290 juta, September 395 juta, Oktober 370 juta, November 418,75 juta Rupiah.">
+              <defs>
+                <pattern id="bar-hatch" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                  <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-opacity="0.22" stroke-width="2"></line>
+                </pattern>
+              </defs>
+              <line x1="36" y1="168" x2="700" y2="168" stroke="var(--border-strong)" stroke-width="1"></line>
+              <!-- Bars with direct text labels -->
+              <g>
+                <rect x="60" y="68" width="68" height="100" fill="var(--border-strong)" rx="2"></rect>
+                <text x="94" y="60" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="700">310 jt</text>
+                <text x="94" y="188" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Jun</text>
+
+                <rect x="166" y="57" width="68" height="111" fill="var(--border-strong)" rx="2"></rect>
+                <text x="200" y="49" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="700">345 jt</text>
+                <text x="200" y="188" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Jul</text>
+
+                <rect x="272" y="75" width="68" height="93" fill="var(--border-strong)" rx="2"></rect>
+                <text x="306" y="67" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="700">290 jt</text>
+                <text x="306" y="188" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Agu</text>
+
+                <rect x="378" y="41" width="68" height="127" fill="var(--border-strong)" rx="2"></rect>
+                <text x="412" y="33" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="700">395 jt</text>
+                <text x="412" y="188" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Sep</text>
+
+                <rect x="484" y="49" width="68" height="119" fill="var(--border-strong)" rx="2"></rect>
+                <text x="518" y="41" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="700">370 jt</text>
+                <text x="518" y="188" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Okt</text>
+
+                <rect x="590" y="33" width="68" height="135" fill="var(--accent-primary)" rx="2"></rect>
+                <rect x="590" y="33" width="68" height="135" fill="url(#bar-hatch)" rx="2"></rect>
+                <text x="624" y="25" text-anchor="middle" fill="var(--accent-primary)" font-size="12" font-weight="700">418,8 jt</text>
+                <text x="624" y="188" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="700">Nov (Aktif)</text>
+              </g>
+            </svg>
+          </div>
+
+          <div id="chart-table-panel" class="hidden">
+            <table class="data-table-alt">
+              <caption class="hidden">Tabel realisasi belanja operasional Juni hingga November 2026</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Bulan</th>
+                  <th scope="col" class="num">Total Pengadaan</th>
+                  <th scope="col" class="num">Jumlah PO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Juni 2026</td><td class="num">Rp310.000.000</td><td class="num">5</td></tr>
+                <tr><td>Juli 2026</td><td class="num">Rp345.000.000</td><td class="num">7</td></tr>
+                <tr><td>Agustus 2026</td><td class="num">Rp290.000.000</td><td class="num">4</td></tr>
+                <tr><td>September 2026</td><td class="num">Rp395.000.000</td><td class="num">8</td></tr>
+                <tr><td>Oktober 2026</td><td class="num">Rp370.000.000</td><td class="num">6</td></tr>
+                <tr><td><strong>November 2026</strong></td><td class="num"><strong>Rp418.750.000</strong></td><td class="num"><strong>6</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3. Procurement Data Table (Sort, Filter, Density, Sticky Col 1, Pagination, RBAC, Bulk Action) -->
+        <section id="daftar-pengadaan" class="ws-section" aria-labelledby="table-heading">
+          <div class="section-head">
+            <div>
+              <h2 id="table-heading" class="section-title">Daftar Pesanan Pembelian (PO)</h2>
+              <p id="rbac-banner-info" style="margin: 2px 0 0 0; font-size: var(--text-xs); color: var(--text-secondary);">
+                Hak akses aktif: <strong id="active-role-text">Staf Pengadaan</strong> — Persetujuan di atas Rp50.000.000 dinonaktifkan dan penghapusan arsip disembunyikan.
+              </p>
+            </div>
+            <div class="controls-right">
+              <label for="role-select" style="font-size: var(--text-xs); font-weight: 700;">Peran UI:</label>
+              <select id="role-select" class="form-select" style="min-height: 36px; padding-top: 4px; padding-bottom: 4px;">
+                <option value="staf">Staf Pengadaan</option>
+                <option value="manajer">Manajer Keuangan</option>
+              </select>
+              <button type="button" class="btn btn-ghost btn-sm" id="density-toggle" aria-pressed="false">Mode Ringkas</button>
+            </div>
+          </div>
+
+          <div class="toolbar-row">
+            <div class="filter-tabs" role="group" aria-label="Filter status pesanan">
+              <button type="button" class="filter-tab" data-status="all" aria-pressed="true">Semua (6)</button>
+              <button type="button" class="filter-tab" data-status="Menunggu" aria-pressed="false">Menunggu (2)</button>
+              <button type="button" class="filter-tab" data-status="Disetujui" aria-pressed="false">Disetujui (2)</button>
+              <button type="button" class="filter-tab" data-status="Revisi" aria-pressed="false">Perlu Revisi (2)</button>
+            </div>
+            <div>
+              <label for="po-search" class="hidden">Cari nomor PO atau pemasok</label>
+              <input type="search" id="po-search" class="form-input" placeholder="Cari PO, SKU, atau pemasok..." style="min-height: 36px;">
+            </div>
+          </div>
+
+          <!-- Bulk Action Bar -->
+          <div id="bulk-bar" class="bulk-bar hidden" role="region" aria-label="Aksi massal baris terpilih" aria-live="polite">
+            <span id="bulk-count">0 pesanan dipilih</span>
+            <div class="controls-right">
+              <button type="button" class="btn btn-ghost btn-sm" id="bulk-approve-btn">Setujui Terpilih</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="bulk-clear-btn">Batal Pilih</button>
+            </div>
+          </div>
+
+          <!-- Table State Views: Loading / Error / Empty / Normal -->
+          <div id="table-loading" class="state-panel hidden" aria-busy="true" aria-label="Memuat daftar pesanan">
+            <div class="skeleton-line" style="width: 100%;"></div>
+            <div class="skeleton-line" style="width: 92%;"></div>
+            <div class="skeleton-line" style="width: 96%;"></div>
+            <div class="skeleton-line" style="width: 85%; margin-bottom: 0;"></div>
+          </div>
+
+          <div id="table-error" class="state-panel-error hidden" role="alert">
+            <strong>Gagal memuat daftar pesanan pembelian dari server lokal.</strong>
+            <p style="margin: 4px 0 var(--space-3) 0; font-size: var(--text-sm);">Koneksi ke layanan pengadaan terputus sementara (Kode: ERR-PROC-503).</p>
+            <button type="button" class="btn btn-ghost btn-sm" id="retry-table-btn" style="text-decoration: underline;">Muat Ulang Data</button>
+          </div>
+
+          <div id="table-empty" class="state-panel hidden">
+            <strong>Tidak ada pesanan pembelian yang cocok dengan filter saat ini.</strong>
+            <p style="margin: 4px 0 var(--space-3) 0; font-size: var(--text-sm); color: var(--text-secondary);">Ubah kata kunci pencarian atau tampilkan seluruh status pesanan.</p>
+            <button type="button" class="btn btn-ghost btn-sm" id="reset-filter-btn" style="text-decoration: underline;">Tampilkan Semua Pesanan</button>
+          </div>
+
+          <div id="table-wrapper">
+            <div class="table-scroll">
+              <table class="proc-table">
+                <caption class="hidden">Daftar pesanan pembelian PT Sinar Logistik Nusantara</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" class="sticky-col">
+                      <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                        <input type="checkbox" id="select-all-po" aria-label="Pilih semua baris di halaman ini">
+                        <span>Nomor PO</span>
+                      </label>
+                    </th>
+                    <th scope="col">Pemasok &amp; Barang</th>
+                    <th scope="col" aria-sort="none" id="th-date">
+                      <button type="button" class="sort-btn" data-sort="date">Tanggal <span aria-hidden="true">↕</span></button>
+                    </th>
+                    <th scope="col" class="num" aria-sort="none" id="th-amount">
+                      <button type="button" class="sort-btn" data-sort="amount">Nilai Pengadaan <span aria-hidden="true">↕</span></button>
+                    </th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Tindakan (RBAC)</th>
+                  </tr>
+                </thead>
+                <tbody id="po-tbody"></tbody>
+              </table>
+            </div>
+
+            <div class="pagination-row">
+              <span id="pagination-info" aria-live="polite">Menampilkan 1–4 dari 6 pesanan (Halaman 1 dari 2)</span>
+              <div class="controls-right">
+                <button type="button" class="btn btn-ghost btn-sm" id="prev-page-btn" disabled>← Sebelumnya</button>
+                <button type="button" class="btn btn-ghost btn-sm" id="next-page-btn">Berikutnya →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Audit Log View -->
+        <section id="jejak-audit" class="ws-section" aria-labelledby="audit-heading">
+          <div class="section-head">
+            <h2 id="audit-heading" class="section-title">Jejak Audit Aktivitas Terkini</h2>
+          </div>
+          <ul class="audit-list">
+            <li class="audit-row">
+              <span style="color: var(--text-muted);">19 Nov 2026, 14.12 WIB</span>
+              <strong>Budi Santoso (Staf)</strong>
+              <span>Mengunggah lampiran penawaran harga baru untuk <span class="code-mono">PO-2026-8K4M</span></span>
+              <span class="code-mono" style="color: var(--text-muted);">AUD-9914 • OK</span>
+            </li>
+            <li class="audit-row">
+              <span style="color: var(--text-muted);">19 Nov 2026, 11.45 WIB</span>
+              <strong>Dewi Anggraini (Manajer)</strong>
+              <span>Menyetujui pengadaan suku cadang armada <span class="code-mono">PO-2026-3N7P</span></span>
+              <span class="code-mono" style="color: var(--text-muted);">AUD-9911 • OK</span>
+            </li>
+            <li class="audit-row">
+              <span style="color: var(--text-muted);">18 Nov 2026, 16.30 WIB</span>
+              <strong>Hendra Wijaya (Auditor)</strong>
+              <span>Menandai faktur pajak kurang lengkap pada <span class="code-mono">PO-2026-5R2V</span></span>
+              <span class="code-mono" style="color: var(--text-muted);">AUD-9908 • REVISI</span>
+            </li>
+          </ul>
+        </section>
+      </main>
+
+      <footer class="ws-footer">
+        <span>Arketipe <code>enterprise-dashboard</code> • Data simulasi PT Sinar Logistik Nusantara.</span>
+        <button type="button" class="btn btn-ghost btn-sm code-mono" id="dev-toggle-btn" aria-expanded="false" aria-controls="dev-drawer">
+          Panel Pengembang
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Separated Collapsible Developer Drawer (?dev=1) -->
+  <aside id="dev-drawer" class="dev-drawer" hidden aria-label="Panel Pengembang Sistem Desain">
+    <div class="dev-drawer-header">
+      <div>
+        <strong class="code-mono">enterprise-dashboard // dev</strong>
+        <span style="display: block; font-size: var(--text-xs); color: var(--text-secondary);">Aktifkan otomatis dengan <code>?dev=1</code></span>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" id="dev-close-btn">Tutup</button>
+    </div>
+
+    <div class="dev-section">
+      <h3>1. Simulator State Tabel</h3>
+      <div class="dev-btn-row" role="group" aria-label="Simulasi State Tabel">
+        <button type="button" class="btn btn-ghost btn-sm" data-table-state="normal" aria-pressed="true">Normal</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-table-state="loading" aria-pressed="false">Skeleton</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-table-state="empty" aria-pressed="false">Empty</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-table-state="error" aria-pressed="false">Error</button>
+      </div>
+    </div>
+
+    <div class="dev-section">
+      <h3>2. Monitor Navigasi Keyboard</h3>
+      <div class="kbd-monitor">
+        <div>Fokus: <strong id="kbd-focus-target">-</strong></div>
+        <div>Tombol: <strong id="kbd-last-key">-</strong></div>
+      </div>
+    </div>
+
+    <div class="dev-section">
+      <h3>3. Delapan State Komponen</h3>
+      <div class="state-mini-grid">
+        <div><span style="font-size: var(--text-xs); color: var(--text-muted);">Default</span><button type="button" class="btn btn-primary btn-sm" style="width: 100%;">Simpan</button></div>
+        <div><span style="font-size: var(--text-xs); color: var(--text-muted);">Hover</span><button type="button" class="btn btn-primary btn-sm is-hover" style="width: 100%;">Simpan</button></div>
+        <div><span style="font-size: var(--text-xs); color: var(--text-muted);">Focus</span><button type="button" class="btn btn-primary btn-sm is-focused" style="width: 100%;">Simpan</button></div>
+        <div><span style="font-size: var(--text-xs); color: var(--text-muted);">Disabled</span><button type="button" class="btn btn-primary btn-sm" disabled style="width: 100%;">Terkunci</button></div>
+        <div><span style="font-size: var(--text-xs); color: var(--text-muted);">Danger</span><button type="button" class="btn btn-danger btn-sm" style="width: 100%;">Hapus</button></div>
+        <div><span style="font-size: var(--text-xs); color: var(--text-muted);">Success</span><span class="status-badge status-success" style="min-height: 36px; width: 100%; justify-content: center;">Disetujui</span></div>
+      </div>
+    </div>
+
+    <div class="dev-section" style="border-bottom: none; margin-bottom: 0;">
+      <h3>4. Palet &amp; Kontras Terukur</h3>
+      <div class="spec-mini-grid">
+        <div class="swatch">
+          <div class="swatch-preview" style="background: #FFFFFF; color: #0F172A;">Text / Canvas</div>
+          <div class="swatch-meta">#0F172A / #FFFFFF<br><strong>17,85:1 (AAA)</strong></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-preview" style="background: #0F766E; color: #FFFFFF;">Deep Teal</div>
+          <div class="swatch-meta">#FFFFFF / #0F766E<br><strong>5,47:1 (AA)</strong></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    (function () {
+      const initialData = [
+        { id: 'PO-2026-8K4M', sku: 'SKU-EL-402', item: 'Pemindai Barcode Gudang (12 unit)', vendor: 'PT Mitra Perangkat Niaga', date: '2026-11-19', dateLabel: '19 Nov 2026', amount: 74500000, status: 'Menunggu' },
+        { id: 'PO-2026-3N7P', sku: 'SKU-TR-118', item: 'Ban Truk Logistik Ring 20 (16 buah)', vendor: 'CV Jaya Ban Sentosa', date: '2026-11-18', dateLabel: '18 Nov 2026', amount: 42400000, status: 'Disetujui' },
+        { id: 'PO-2026-5R2V', sku: 'SKU-PK-091', item: 'Palet Kayu Ekspor ISPM-15 (200 unit)', vendor: 'UD Rimba Sejahtera', date: '2026-11-17', dateLabel: '17 Nov 2026', amount: 61200000, status: 'Revisi' },
+        { id: 'PO-2026-9W1Q', sku: 'SKU-IT-204', item: 'Perpanjangan Lisensi ERP Tahunan', vendor: 'PT Awan Data Nusantara', date: '2026-11-16', dateLabel: '16 Nov 2026', amount: 118000000, status: 'Menunggu' },
+        { id: 'PO-2026-2C6H', sku: 'SKU-GD-310', item: 'Rak Besi Heavy-Duty 4 Susun (10 set)', vendor: 'PT Baja Karya Mandiri', date: '2026-11-14', dateLabel: '14 Nov 2026', amount: 88650000, status: 'Disetujui' },
+        { id: 'PO-2026-7M4L', sku: 'SKU-OP-055', item: 'Kertas Label Termal & Pita Cetak', vendor: 'CV Surya Grafika', date: '2026-11-12', dateLabel: '12 Nov 2026', amount: 34000000, status: 'Revisi' }
+      ];
+
+      let statusFilter = 'all';
+      let searchQuery = '';
+      let sortField = null;
+      let sortDir = 'asc';
+      let currentPage = 1;
+      const pageSize = 4;
+      let currentRole = 'staf';
+      const selectedIds = new Set();
+
+      const tbody = document.getElementById('po-tbody');
+      const selectAll = document.getElementById('select-all-po');
+      const bulkBar = document.getElementById('bulk-bar');
+      const bulkCount = document.getElementById('bulk-count');
+      const paginationInfo = document.getElementById('pagination-info');
+      const prevBtn = document.getElementById('prev-page-btn');
+      const nextBtn = document.getElementById('next-page-btn');
+
+      function formatRp(n) {
+        return 'Rp' + n.toLocaleString('id-ID');
+      }
+
+      function statusBadgeClass(s) {
+        if (s === 'Disetujui') return 'status-badge status-success';
+        if (s === 'Revisi') return 'status-badge status-warning';
+        return 'status-badge status-info';
+      }
+
+      function getFilteredRows() {
+        let rows = initialData.filter((r) => {
+          const stMatch = statusFilter === 'all' || r.status === statusFilter;
+          const qMatch = !searchQuery || r.id.toLowerCase().includes(searchQuery) || r.vendor.toLowerCase().includes(searchQuery) || r.item.toLowerCase().includes(searchQuery) || r.sku.toLowerCase().includes(searchQuery);
+          return stMatch && qMatch;
+        });
+
+        if (sortField) {
+          rows = [...rows].sort((a, b) => {
+            const va = sortField === 'amount' ? a.amount : a.date;
+            const vb = sortField === 'amount' ? b.amount : b.date;
+            if (va < vb) return sortDir === 'asc' ? -1 : 1;
+            if (va > vb) return sortDir === 'asc' ? 1 : -1;
+            return 0;
+          });
+        }
+        return rows;
+      }
+
+      function renderTable() {
+        const filtered = getFilteredRows();
+        const total = filtered.length;
+        const totalPages = Math.max(1, Math.ceil(total / pageSize));
+        if (currentPage > totalPages) currentPage = totalPages;
+
+        const tableWrap = document.getElementById('table-wrapper');
+        const emptyBox = document.getElementById('table-empty');
+        if (total === 0) {
+          tableWrap.classList.add('hidden');
+          emptyBox.classList.remove('hidden');
+          return;
+        }
+        tableWrap.classList.remove('hidden');
+        emptyBox.classList.add('hidden');
+
+        const startIdx = (currentPage - 1) * pageSize;
+        const pageRows = filtered.slice(startIdx, startIdx + pageSize);
+
+        tbody.innerHTML = pageRows.map((r) => {
+          const isHighValue = r.amount > 50000000;
+          const canApprove = !(currentRole === 'staf' && isHighValue);
+          const showDelete = currentRole === 'manajer';
+          const checked = selectedIds.has(r.id);
+
+          return `<tr class="${checked ? 'is-selected' : ''}">
+            <td class="sticky-col">
+              <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox" class="row-check" data-id="${r.id}" ${checked ? 'checked' : ''} aria-label="Pilih ${r.id}">
+                <strong class="code-mono">${r.id}</strong>
+              </label>
+            </td>
+            <td>
+              <div><strong>${r.item}</strong></div>
+              <div style="font-size: var(--text-xs); color: var(--text-muted);">${r.vendor} • <span class="code-mono">${r.sku}</span></div>
+            </td>
+            <td>${r.dateLabel}</td>
+            <td class="num"><strong>${formatRp(r.amount)}</strong></td>
+            <td><span class="${statusBadgeClass(r.status)}" data-status-badge="true">${r.status === 'Revisi' ? 'Perlu Revisi' : r.status}</span></td>
+            <td>
+              <div style="display: flex; flex-wrap: wrap; gap: 4px; align-items: center;">
+                <button type="button" class="btn btn-ghost btn-sm row-approve" data-id="${r.id}" ${canApprove ? '' : 'disabled'}>Setujui</button>
+                ${showDelete ? `<button type="button" class="btn btn-ghost btn-sm row-archive" data-id="${r.id}">Hapus Arsip</button>` : ''}
+              </div>
+              ${!canApprove ? `<span class="rbac-hint">Perlu peran Manajer (> Rp50 jt)</span>` : ''}
+            </td>
+          </tr>`;
+        }).join('');
+
+        paginationInfo.textContent = `Menampilkan ${startIdx + 1}–${startIdx + pageRows.length} dari ${total} pesanan (Halaman ${currentPage} dari ${totalPages})`;
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+
+        selectAll.checked = pageRows.length > 0 && pageRows.every((r) => selectedIds.has(r.id));
+        bulkBar.classList.toggle('hidden', selectedIds.size === 0);
+        bulkCount.textContent = `${selectedIds.size} pesanan dipilih`;
+
+        tbody.querySelectorAll('.row-check').forEach((cb) => {
+          cb.addEventListener('change', () => {
+            if (cb.checked) selectedIds.add(cb.dataset.id);
+            else selectedIds.delete(cb.dataset.id);
+            renderTable();
+          });
+        });
+
+        tbody.querySelectorAll('.row-approve').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const item = initialData.find((x) => x.id === btn.dataset.id);
+            if (item) { item.status = 'Disetujui'; renderTable(); }
+          });
+        });
+      }
+
+      // Filter tabs
+      document.querySelectorAll('.filter-tab[data-status]').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          statusFilter = tab.dataset.status;
+          currentPage = 1;
+          document.querySelectorAll('.filter-tab').forEach((t) => t.setAttribute('aria-pressed', String(t === tab)));
+          setTableViewState('normal');
+          renderTable();
+        });
+      });
+
+      document.getElementById('po-search').addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim().toLowerCase();
+        currentPage = 1;
+        renderTable();
+      });
+
+      selectAll.addEventListener('change', () => {
+        const pageRows = getFilteredRows().slice((currentPage - 1) * pageSize, currentPage * pageSize);
+        pageRows.forEach((r) => selectAll.checked ? selectedIds.add(r.id) : selectedIds.delete(r.id));
+        renderTable();
+      });
+
+      document.getElementById('bulk-clear-btn').addEventListener('click', () => { selectedIds.clear(); renderTable(); });
+      document.getElementById('bulk-approve-btn').addEventListener('click', () => {
+        selectedIds.forEach((id) => {
+          const row = initialData.find((r) => r.id === id);
+          if (row && !(currentRole === 'staf' && row.amount > 50000000)) row.status = 'Disetujui';
+        });
+        selectedIds.clear();
+        renderTable();
+      });
+
+      // Sorting
+      document.querySelectorAll('.sort-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const f = btn.dataset.sort;
+          if (sortField === f) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+          else { sortField = f; sortDir = 'asc'; }
+          document.getElementById('th-date').setAttribute('aria-sort', sortField === 'date' ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none');
+          document.getElementById('th-amount').setAttribute('aria-sort', sortField === 'amount' ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none');
+          renderTable();
+        });
+      });
+
+      prevBtn.addEventListener('click', () => { if (currentPage > 1) { currentPage--; renderTable(); } });
+      nextBtn.addEventListener('click', () => { currentPage++; renderTable(); });
+
+      // Density toggle
+      const densityBtn = document.getElementById('density-toggle');
+      densityBtn.addEventListener('click', () => {
+        const isCompact = document.documentElement.getAttribute('data-density') === 'compact';
+        if (isCompact) {
+          document.documentElement.removeAttribute('data-density');
+          densityBtn.setAttribute('aria-pressed', 'false');
+          densityBtn.textContent = 'Mode Ringkas';
+        } else {
+          document.documentElement.setAttribute('data-density', 'compact');
+          densityBtn.setAttribute('aria-pressed', 'true');
+          densityBtn.textContent = 'Mode Nyaman';
+        }
+      });
+
+      // RBAC Role Switch
+      const roleSelect = document.getElementById('role-select');
+      const roleText = document.getElementById('active-role-text');
+      const sidebarRole = document.getElementById('sidebar-role-label');
+      const rbacInfo = document.getElementById('rbac-banner-info');
+      roleSelect.addEventListener('change', () => {
+        currentRole = roleSelect.value;
+        const label = currentRole === 'manajer' ? 'Manajer Keuangan' : 'Staf Pengadaan';
+        sidebarRole.textContent = label;
+        rbacInfo.innerHTML = currentRole === 'manajer'
+          ? 'Hak akses aktif: <strong>Manajer Keuangan</strong> — Semua persetujuan > Rp50.000.000 dan penghapusan arsip diizinkan.'
+          : 'Hak akses aktif: <strong>Staf Pengadaan</strong> — Persetujuan di atas Rp50.000.000 dinonaktifkan dan penghapusan arsip disembunyikan.';
+        renderTable();
+      });
+
+      // Chart <-> Semantic Data Table Toggle
+      const toggleChartBtn = document.getElementById('toggle-chart-table');
+      const chartPanel = document.getElementById('chart-panel');
+      const chartTablePanel = document.getElementById('chart-table-panel');
+      toggleChartBtn.addEventListener('click', () => {
+        const showTable = chartTablePanel.classList.contains('hidden');
+        chartTablePanel.classList.toggle('hidden', !showTable);
+        chartPanel.classList.toggle('hidden', showTable);
+        toggleChartBtn.setAttribute('aria-pressed', String(showTable));
+        toggleChartBtn.textContent = showTable ? 'Lihat Grafik Batang' : 'Lihat Tabel Data';
+      });
+
+      // Dark mode toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.documentElement.removeAttribute('data-theme');
+          themeToggle.setAttribute('aria-pressed', 'false');
+          themeToggle.textContent = 'Mode Gelap';
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          themeToggle.setAttribute('aria-pressed', 'true');
+          themeToggle.textContent = 'Mode Terang';
+        }
+      });
+
+      // Mobile sidebar drawer
+      const sidebar = document.getElementById('sidebar-nav');
+      const mobileOpen = document.getElementById('mobile-nav-open');
+      const mobileClose = document.getElementById('mobile-nav-close');
+      mobileOpen.addEventListener('click', () => {
+        sidebar.classList.add('is-open');
+        mobileOpen.setAttribute('aria-expanded', 'true');
+        mobileClose.style.display = 'inline-flex';
+        mobileClose.focus();
+      });
+      mobileClose.addEventListener('click', () => {
+        sidebar.classList.remove('is-open');
+        mobileOpen.setAttribute('aria-expanded', 'false');
+        mobileClose.style.display = 'none';
+        mobileOpen.focus();
+      });
+
+      // Table State Simulator
+      function setTableViewState(mode) {
+        document.querySelectorAll('[data-table-state]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tableState === mode)));
+        document.getElementById('table-loading').classList.toggle('hidden', mode !== 'loading');
+        document.getElementById('table-error').classList.toggle('hidden', mode !== 'error');
+        document.getElementById('table-empty').classList.toggle('hidden', mode !== 'empty');
+        document.getElementById('table-wrapper').classList.toggle('hidden', mode !== 'normal');
+      }
+
+      document.querySelectorAll('[data-table-state]').forEach((btn) => {
+        btn.addEventListener('click', () => setTableViewState(btn.dataset.tableState));
+      });
+      document.getElementById('retry-table-btn').addEventListener('click', () => { setTableViewState('normal'); renderTable(); });
+      document.getElementById('reset-filter-btn').addEventListener('click', () => {
+        statusFilter = 'all'; searchQuery = ''; document.getElementById('po-search').value = '';
+        setTableViewState('normal'); renderTable();
+      });
+
+      // Dev drawer + keyboard monitor
+      const devToggleBtn = document.getElementById('dev-toggle-btn');
+      const devDrawer = document.getElementById('dev-drawer');
+      const devCloseBtn = document.getElementById('dev-close-btn');
+      function setDevDrawer(open) {
+        devDrawer.hidden = !open;
+        devToggleBtn.setAttribute('aria-expanded', String(open));
+        if (open) devCloseBtn.focus();
+      }
+      devToggleBtn.addEventListener('click', () => setDevDrawer(devDrawer.hidden));
+      devCloseBtn.addEventListener('click', () => { setDevDrawer(false); devToggleBtn.focus(); });
+      if (new URLSearchParams(window.location.search).get('dev') === '1') setDevDrawer(true);
+
+      document.addEventListener('focusin', (e) => {
+        const el = e.target;
+        const id = el.id ? `#${el.id}` : '';
+        document.getElementById('kbd-focus-target').textContent = `<${el.tagName.toLowerCase()}${id}>`;
+      });
+      document.addEventListener('keydown', (e) => {
+        document.getElementById('kbd-last-key').textContent = e.key;
+        if (e.key === 'Escape') {
+          if (sidebar.classList.contains('is-open')) mobileClose.click();
+          if (!devDrawer.hidden) { setDevDrawer(false); devToggleBtn.focus(); }
+        }
+      });
+
+      renderTable();
+    })();
+  </script>
+</body>
+</html>

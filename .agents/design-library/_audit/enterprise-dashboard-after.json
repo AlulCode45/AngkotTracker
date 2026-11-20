@@ -1,0 +1,237 @@
+{
+  "url": "http://127.0.0.1:53876/preview.html",
+  "viewportWidth": 1280,
+  "passedAll": true,
+  "metrics": {
+    "decorativeBadges": 0,
+    "statusBadges": 4,
+    "filledInInitialViewport": 1,
+    "maxFilledPerScreen": 1,
+    "filledFullPage": 1,
+    "outlineInInitialViewport": 2,
+    "outlineFullPage": 2,
+    "ghostFullPage": 16,
+    "uniqueBorderRadii": 1,
+    "uniqueBorderWidths": 2,
+    "uniqueFontSizes": 5,
+    "uniqueFontWeights": 3,
+    "staticShadows": 0,
+    "maxNestedContainers": 0,
+    "alternatingSectionBgs": 0
+  },
+  "checks": {
+    "decorativeBadges": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "maxFilledPerScreen": {
+      "actual": 1,
+      "limit": 1,
+      "status": "LULUS"
+    },
+    "outlineFullPage": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueBorderRadii": {
+      "actual": 1,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "uniqueBorderWidths": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueFontWeights": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "maxNestedContainers": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "staticShadows": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "alternatingSectionBgs": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    }
+  },
+  "details": {
+    "decorativeBadgeNodes": [],
+    "statusBadgeNodes": [
+      "span.status-badge.status-info",
+      "span.status-badge.status-success",
+      "span.status-badge.status-warning",
+      "span.status-badge.status-info"
+    ],
+    "filledBtns": [
+      {
+        "selector": "button#new-po-btn.btn.btn-primary",
+        "text": "+ Buat Pengajuan",
+        "top": 12,
+        "bottom": 48
+      }
+    ],
+    "outlineBtns": [
+      {
+        "selector": "button#export-csv-btn.btn.btn-secondary",
+        "text": "Ekspor CSV",
+        "top": 12,
+        "bottom": 48
+      },
+      {
+        "selector": "button#toggle-chart-table.btn.btn-secondary",
+        "text": "Lihat Tabel Data",
+        "top": 219,
+        "bottom": 255
+      }
+    ],
+    "ghostBtns": [
+      {
+        "selector": "button#mobile-nav-open.btn.btn-ghost",
+        "text": "Menu",
+        "top": 12,
+        "bottom": 48
+      },
+      {
+        "selector": "button#theme-toggle.btn.btn-ghost",
+        "text": "Mode Gelap",
+        "top": 12,
+        "bottom": 48
+      },
+      {
+        "selector": "button#density-toggle.btn.btn-ghost",
+        "text": "Mode Ringkas",
+        "top": 620,
+        "bottom": 656
+      },
+      {
+        "selector": "button.filter-tab",
+        "text": "Semua (6)",
+        "top": 672,
+        "bottom": 716
+      },
+      {
+        "selector": "button.filter-tab",
+        "text": "Menunggu (2)",
+        "top": 672,
+        "bottom": 716
+      },
+      {
+        "selector": "button.filter-tab",
+        "text": "Disetujui (2)",
+        "top": 672,
+        "bottom": 716
+      },
+      {
+        "selector": "button.filter-tab",
+        "text": "Perlu Revisi (2)",
+        "top": 672,
+        "bottom": 716
+      },
+      {
+        "selector": "button.sort-btn",
+        "text": "Tanggal ↕",
+        "top": 745,
+        "bottom": 767
+      },
+      {
+        "selector": "button.sort-btn",
+        "text": "Nilai Pengadaan ↕",
+        "top": 745,
+        "bottom": 767
+      },
+      {
+        "selector": "button.btn.btn-ghost",
+        "text": "Setujui",
+        "top": 792,
+        "bottom": 828
+      },
+      {
+        "selector": "button.btn.btn-ghost",
+        "text": "Setujui",
+        "top": 894,
+        "bottom": 930
+      },
+      {
+        "selector": "button.btn.btn-ghost",
+        "text": "Setujui",
+        "top": 958,
+        "bottom": 994
+      },
+      {
+        "selector": "button.btn.btn-ghost",
+        "text": "Setujui",
+        "top": 1057,
+        "bottom": 1093
+      },
+      {
+        "selector": "button#prev-page-btn.btn.btn-ghost",
+        "text": "← Sebelumnya",
+        "top": 1160,
+        "bottom": 1196
+      },
+      {
+        "selector": "button#next-page-btn.btn.btn-ghost",
+        "text": "Berikutnya →",
+        "top": 1160,
+        "bottom": 1196
+      },
+      {
+        "selector": "button#dev-toggle-btn.btn.btn-ghost",
+        "text": "Panel Pengembang",
+        "top": 1510,
+        "bottom": 1546
+      }
+    ],
+    "borderRadiiValues": [
+      "4px"
+    ],
+    "borderWidthValues": [
+      "1px",
+      "2px"
+    ],
+    "fontSizeValues": [
+      "12px",
+      "14px",
+      "16px",
+      "19.2px",
+      "25.6px"
+    ],
+    "fontWeightValues": [
+      "400",
+      "500",
+      "700"
+    ],
+    "staticShadowNodes": [],
+    "nestedOffenders": [],
+    "sectionBgs": [
+      {
+        "selector": "section#ringkasan-kpi.ws-section",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "selector": "section#tren-bulanan.ws-section",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "selector": "section#daftar-pengadaan.ws-section",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "selector": "section#jejak-audit.ws-section",
+        "bg": "rgb(255, 255, 255)"
+      }
+    ]
+  }
+}

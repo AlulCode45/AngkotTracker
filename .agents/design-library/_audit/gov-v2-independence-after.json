@@ -1,0 +1,330 @@
+{
+  "url": "http://127.0.0.1:58804/_audit/gov-v2-independence-simulation.html",
+  "viewportWidth": 1280,
+  "passedAll": true,
+  "richnessPassedAll": true,
+  "bidirectionalPassedAll": true,
+  "metrics": {
+    "decorativeBadges": 0,
+    "statusBadges": 0,
+    "filledInInitialViewport": 1,
+    "maxFilledPerScreen": 1,
+    "filledFullPage": 2,
+    "outlineInInitialViewport": 1,
+    "outlineFullPage": 1,
+    "ghostFullPage": 9,
+    "uniqueBorderRadii": 2,
+    "uniqueBorderWidths": 2,
+    "uniqueFontSizes": 12,
+    "uniqueFontWeights": 3,
+    "staticShadows": 0,
+    "maxNestedContainers": 0,
+    "alternatingSectionBgs": 3
+  },
+  "checks": {
+    "decorativeBadges": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "maxFilledPerScreen": {
+      "actual": 1,
+      "limit": 1,
+      "status": "LULUS"
+    },
+    "outlineFullPage": {
+      "actual": 1,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueBorderRadii": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueBorderWidths": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueFontWeights": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "maxNestedContainers": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "staticShadows": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "alternatingSectionBgs": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    }
+  },
+  "richnessMetrics": {
+    "meaningfulVisuals": 2,
+    "dataVisualizations": 2,
+    "hasDataTableAlternative": true,
+    "compositionPatterns": 4,
+    "displayToBodyRatio": 2.88,
+    "dataNumberChecked": 28,
+    "dataNumberCompliant": 28,
+    "hasTabularLining": true,
+    "functionalColors": 5,
+    "hasMotionDeclaration": true,
+    "hasReducedMotionFallback": true
+  },
+  "richnessChecks": {
+    "meaningfulVisuals": {
+      "actual": 2,
+      "minimum": 1,
+      "status": "LULUS"
+    },
+    "dataVisualizations": {
+      "actual": 2,
+      "minimum": 1,
+      "status": "LULUS"
+    },
+    "dataTableAlternative": {
+      "actual": true,
+      "minimum": true,
+      "status": "LULUS"
+    },
+    "compositionPatterns": {
+      "actual": 4,
+      "minimum": 3,
+      "status": "LULUS"
+    },
+    "displayToBodyRatio": {
+      "actual": 2.88,
+      "minimum": 2,
+      "status": "LULUS"
+    },
+    "tabularLining": {
+      "actual": true,
+      "minimum": true,
+      "status": "LULUS"
+    },
+    "functionalColors": {
+      "actual": 5,
+      "minimum": 4,
+      "status": "LULUS"
+    },
+    "motionDeclaration": {
+      "actual": true,
+      "minimum": true,
+      "status": "LULUS"
+    },
+    "reducedMotionFallback": {
+      "actual": true,
+      "minimum": true,
+      "status": "LULUS"
+    }
+  },
+  "details": {
+    "decorativeBadgeNodes": [],
+    "statusBadgeNodes": [],
+    "filledBtns": [
+      {
+        "selector": "a#hero-cta-btn.btn.btn-primary",
+        "text": "Lihat Realisasi per Bidang",
+        "top": 532,
+        "bottom": 578
+      },
+      {
+        "selector": "button#clarify-submit-btn.btn.btn-primary",
+        "text": "Kirim Permintaan RAB",
+        "top": 3068,
+        "bottom": 3112
+      }
+    ],
+    "outlineBtns": [
+      {
+        "selector": "button#theme-toggle.btn.btn-outline",
+        "text": "Mode Gelap",
+        "top": 104,
+        "bottom": 148
+      }
+    ],
+    "ghostBtns": [
+      {
+        "selector": "button#masthead-btn.masthead-toggle",
+        "text": "Cara mengenali situs resmi",
+        "top": 4,
+        "bottom": 27
+      },
+      {
+        "selector": "button.btn.btn-ghost",
+        "text": "Cari",
+        "top": 104,
+        "bottom": 148
+      },
+      {
+        "selector": "button#lang-toggle.btn.btn-ghost",
+        "text": "ID / EN (Ganti bahasa)",
+        "top": 104,
+        "bottom": 148
+      },
+      {
+        "selector": "button.year-step-btn",
+        "text": "TAHUN ANGGARAN 2026 (BERJALAN)\n         ",
+        "top": 860,
+        "bottom": 978
+      },
+      {
+        "selector": "button.year-step-btn",
+        "text": "TAHUN ANGGARAN 2025\n              Pagu R",
+        "top": 978,
+        "bottom": 1096
+      },
+      {
+        "selector": "button.year-step-btn",
+        "text": "TAHUN ANGGARAN 2024 (DASAR)\n            ",
+        "top": 1096,
+        "bottom": 1214
+      },
+      {
+        "selector": "button#chart-view-toggle.btn.btn-ghost",
+        "text": "Lihat sebagai Tabel",
+        "top": 1001,
+        "bottom": 1045
+      },
+      {
+        "selector": "button#download-csv-btn.btn.btn-ghost",
+        "text": "Unduh CSV",
+        "top": 1001,
+        "bottom": 1045
+      },
+      {
+        "selector": "button#export-filtered-btn.btn.btn-ghost",
+        "text": "Ekspor Baris Terfilter",
+        "top": 2069,
+        "bottom": 2113
+      }
+    ],
+    "borderRadiiValues": [
+      "4px",
+      "8px"
+    ],
+    "borderWidthValues": [
+      "1px",
+      "2px"
+    ],
+    "fontSizeValues": [
+      "12px",
+      "13.33px",
+      "14px",
+      "15px",
+      "16px",
+      "16.38px",
+      "17px",
+      "18.72px",
+      "22px",
+      "28.16px",
+      "32px",
+      "46.08px"
+    ],
+    "fontWeightValues": [
+      "400",
+      "500",
+      "700"
+    ],
+    "staticShadowNodes": [],
+    "nestedOffenders": [],
+    "sectionBgs": [
+      {
+        "selector": "section#ringkasan-dana.band-warm",
+        "bg": "rgb(237, 242, 247)"
+      },
+      {
+        "selector": "section#grafik-pagu.band-canvas",
+        "bg": "rgb(249, 250, 251)"
+      },
+      {
+        "selector": "section#dampak-desa.band-warm",
+        "bg": "rgb(237, 242, 247)"
+      },
+      {
+        "selector": "section#klarifikasi-dana.band-canvas",
+        "bg": "rgb(249, 250, 251)"
+      }
+    ]
+  },
+  "richnessDetails": {
+    "meaningfulVisualNodes": [
+      "svg#dana-desa-bar-svg",
+      "svg#desa-ratio-svg"
+    ],
+    "visualsPerSection": [
+      {
+        "selector": "section#ringkasan-dana.band-warm",
+        "count": 0
+      },
+      {
+        "selector": "section#grafik-pagu.band-canvas",
+        "count": 1
+      },
+      {
+        "selector": "section#dampak-desa.band-warm",
+        "count": 1
+      },
+      {
+        "selector": "section#klarifikasi-dana.band-canvas",
+        "count": 0
+      }
+    ],
+    "chartNodes": [
+      "svg#dana-desa-bar-svg",
+      "svg#desa-ratio-svg"
+    ],
+    "tableAlternativesCount": 2,
+    "sectionPatterns": [
+      {
+        "selector": "section#ringkasan-dana.band-warm",
+        "signature": "full-bleed-band|wide|symmetric-grid|text-led",
+        "widthPx": 1200
+      },
+      {
+        "selector": "section#grafik-pagu.band-canvas",
+        "signature": "canvas-band|wide|sticky-split|with-visual-stage",
+        "widthPx": 1200
+      },
+      {
+        "selector": "section#dampak-desa.band-warm",
+        "signature": "full-bleed-band|wide|asymmetric-grid|with-visual-stage",
+        "widthPx": 1200
+      },
+      {
+        "selector": "section#klarifikasi-dana.band-canvas",
+        "signature": "canvas-band|wide|single-col|text-led",
+        "widthPx": 1200
+      }
+    ],
+    "functionalColorRoles": [
+      "primary",
+      "secondary",
+      "dataAccent",
+      "warmNeutral",
+      "status"
+    ],
+    "functionalColors": {
+      "primary": "#1B4D7A",
+      "secondary": "#9A3412",
+      "dataAccent": [
+        "--accent-data-1:#1B4D7A",
+        "--accent-data-2:#9A3412",
+        "--accent-data-3:#115E59"
+      ],
+      "warmNeutral": "#EDF2F7",
+      "status": "#14532D"
+    },
+    "nonTabularLiningNodes": []
+  }
+}

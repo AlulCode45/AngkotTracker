@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perbandingan Tiga Arah GOV V2 — Layanan Warga, Editorial Kebijakan &amp; Data Terbuka</title>
+  <meta name="description" content="Perbandingan berdampingan tiga arah DESIGN.md pemerintah versi 2: gov-civic-warm, gov-institutional-editorial, dan gov-data-open lengkap dengan tangkapan layar 1280px/375px/mode gelap, palet WCAG, spesimen tipografi self-hosted, dan kelemahan jujur.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%23162328'/%3E%3Crect x='4' y='5' width='4' height='14' rx='1' fill='%234FD1C5'/%3E%3Crect x='10' y='5' width='4' height='14' rx='1' fill='%238AB4F8'/%3E%3Crect x='16' y='5' width='4' height='14' rx='1' fill='%23FDBA74'/%3E%3C/svg%3E">
+  <style>
+    @font-face {
+      font-family: 'Figtree';
+      src: url('../_fonts/figtree-latin-wght-normal.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('../_fonts/inter-latin-wght-normal.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Public Sans';
+      src: url('../_fonts/public-sans-latin-wght-normal.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Source Serif 4';
+      src: url('../_fonts/source-serif-4-latin-wght-normal.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Source Serif 4';
+      src: url('../_fonts/source-serif-4-latin-wght-italic.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'IBM Plex Sans';
+      src: url('../_fonts/ibm-plex-sans-latin-400-normal.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'IBM Plex Sans';
+      src: url('../_fonts/ibm-plex-sans-latin-700-normal.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../_fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg-canvas: #F9F8F5;
+      --bg-warm: #EFECE5;
+      --bg-surface: #FFFFFF;
+      --text-primary: #141B22;
+      --text-secondary: #334150;
+      --text-muted: #4A5564;
+      --border-subtle: #D5D0C5;
+      --border-strong: #4A5564;
+      --accent-primary: #164E63;
+      --accent-primary-hover: #0F3A4A;
+      --accent-on-primary: #FFFFFF;
+      --focus-ring: #B45309;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      text-wrap: balance;
+      color: var(--text-primary);
+    }
+
+    p { margin: 0; }
+    :focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+
+    .num { font-variant-numeric: tabular-nums lining-nums; }
+    .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums lining-nums; }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -120px;
+      z-index: 200;
+      background-color: var(--accent-primary);
+      color: var(--accent-on-primary);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 12px; }
+
+    .container {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    @media (min-width: 768px) { .container { padding: 0 28px; } }
+
+    .page-header {
+      background-color: var(--bg-warm);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 28px 0 32px;
+    }
+    .kicker {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #8F4A12;
+      margin-bottom: 8px;
+    }
+    .page-title {
+      font-family: 'Public Sans', var(--font-ui);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .page-lead {
+      max-width: 72ch;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+    .header-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .text-link {
+      color: var(--accent-primary);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+
+    .toolbar-section {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+    }
+    .toolbar-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .mode-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .mode-btn {
+      min-height: 44px;
+      padding: 10px 16px;
+      font-family: var(--font-ui);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background-color: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    }
+    .mode-btn[aria-pressed="true"] {
+      background-color: var(--accent-primary);
+      color: var(--accent-on-primary);
+      border-color: var(--accent-primary);
+    }
+
+    .compare-section { padding: 36px 0 48px; }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .compare-grid > * { min-width: 0; }
+    @media (min-width: 1024px) {
+      .compare-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    }
+
+    .dir-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .dir-head {
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border-strong);
+    }
+    .dir-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .dir-slug {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+    .dir-dial {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #8F4A12;
+    }
+    .dir-title {
+      font-size: 1.25rem;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .dir-idea {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+    }
+
+    .shot-block { display: grid; gap: 8px; }
+    .shot-frame {
+      height: 420px;
+      overflow-y: auto;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-warm);
+    }
+    .shot-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .shot-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px 12px;
+      font-size: 0.8125rem;
+    }
+
+    .subhead {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .specimen-box {
+      padding: 14px 16px;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+    }
+    .specimen-sample-title {
+      display: block;
+      font-size: 1.375rem;
+      line-height: 1.2;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .specimen-sample-body {
+      display: block;
+      font-size: 0.9375rem;
+      margin-bottom: 6px;
+    }
+    .specimen-sample-nums {
+      display: block;
+      font-size: 0.875rem;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-weight: 700;
+    }
+
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .swatch {
+      padding: 10px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.8125rem;
+      line-height: 1.35;
+    }
+    .swatch code { display: block; font-family: var(--font-mono); font-size: 0.75rem; }
+
+    .metrics-dl {
+      margin: 0;
+      display: grid;
+      gap: 6px;
+      font-size: 0.875rem;
+    }
+    .metrics-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .metrics-row dt { color: var(--text-muted); }
+    .metrics-row dd { margin: 0; font-weight: 700; text-align: right; }
+
+    .bullet-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      display: grid;
+      gap: 6px;
+    }
+
+    .matrix-section {
+      background-color: var(--bg-warm);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 40px 0 48px;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; }
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--bg-surface);
+      font-size: 0.9375rem;
+    }
+    .matrix-table th, .matrix-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: top;
+    }
+    .matrix-table th {
+      background-color: #E7E3D8;
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    .site-footer {
+      padding: 28px 0;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Lewati ke matriks perbandingan</a>
+
+  <header class="page-header">
+    <div class="container">
+      <span class="kicker">FASE D · VALIDASI &amp; PERBANDINGAN JALUR PEMERINTAH (GOV V2)</span>
+      <h1 class="page-title">Perbandingan Tiga Arah DESIGN.md Pemerintah yang Hidup &amp; Terukur</h1>
+      <p class="page-lead">
+        Seluruh contoh dibangun tanpa CDN eksternal (font lokal <code class="mono">WOFF2</code> lisensi <code class="mono">SIL OFL-1.1</code>), diuji di Chromium nyata pada lebar <code class="mono">1280px</code> dan <code class="mono">375px</code>, diaudit dua arah dengan <code class="mono">_shared/slop-audit.js</code> (Slop Budget + Richness Floor), <code class="mono">axe-core</code> WCAG 2.2 AA, serta Lighthouse Mobile &amp; Desktop.
+      </p>
+      <nav class="header-links" aria-label="Tautan dokumen pendukung GOV V2">
+        <a href="../GOV-V2-RESEARCH.md" class="text-link">Riset Fase B (GOV-V2-RESEARCH.md)</a>
+        <a href="../README.md" class="text-link">Panduan Jalur Profesional</a>
+        <a href="../_archive/v1/gov-portal/preview.html" class="text-link">Arsip v1: gov-portal</a>
+        <a href="../_archive/v1/corporate-trust/preview.html" class="text-link">Arsip v1: corporate-trust</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="toolbar-section" aria-label="Pengalih mode pratinjau tangkapan layar">
+      <div class="container toolbar-inner">
+        <div>
+          <strong style="display: block;">Mode Pratinjau Tangkapan Layar Verifikasi:</strong>
+          <span id="mode-status" style="font-size: 0.875rem; color: var(--text-muted);" aria-live="polite">
+            Menampilkan Desktop 1280px Mode Terang (gulir di dalam bingkai gambar atau buka berkas penuh).
+          </span>
+        </div>
+        <div class="mode-group" role="group" aria-label="Pilih ukuran dan tema tangkapan layar">
+          <button type="button" class="mode-btn" data-mode="1280" aria-pressed="true">Desktop 1280px (Terang)</button>
+          <button type="button" class="mode-btn" data-mode="375" aria-pressed="false">Ponsel 375px</button>
+          <button type="button" class="mode-btn" data-mode="1280-dark" aria-pressed="false">Mode Gelap 1280px</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare-section" aria-label="Perbandingan berdampingan tiga arah GOV V2">
+      <div class="container compare-grid">
+        <!-- 1. gov-civic-warm -->
+        <article class="dir-card" aria-labelledby="title-civic">
+          <header class="dir-head">
+            <div class="dir-meta-row">
+              <span class="dir-slug">gov-civic-warm</span>
+              <span class="dir-dial num">Dial 4,5 / 10</span>
+            </div>
+            <h2 id="title-civic" class="dir-title">Layanan Warga &amp; Portal Perizinan Ramah</h2>
+            <p class="dir-idea"><strong>Gagasan Besar:</strong> Layanan publik yang terasa seperti dibantu petugas loket yang sabar dan menjelaskan syarat sebelum formulir diisi.</p>
+          </header>
+
+          <div class="shot-block">
+            <div class="shot-frame" tabindex="0" role="region" aria-label="Tangkapan layar terverifikasi gov-civic-warm">
+              <img
+                id="img-gov-civic-warm"
+                src="assets/gov-civic-warm-1280.png"
+                data-base="gov-civic-warm"
+                width="1920"
+                height="5705"
+                alt="Pratinjau penuh gov-civic-warm menampilkan pemilih 4 tugas warga, ilustrasi alur loket 3 langkah, checklist wizard, pelacak 2FA Zero-PII, dan grafik SLA."
+              >
+            </div>
+            <div class="shot-links">
+              <a href="../gov-civic-warm/preview.html" class="text-link">Buka preview.html</a>
+              <a href="../gov-civic-warm/DESIGN.md" class="text-link">Baca DESIGN.md</a>
+              <a id="raw-gov-civic-warm" href="assets/gov-civic-warm-1280.png" class="text-link">Gambar Penuh</a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Tipografi (Self-Hosted WOFF2)</h3>
+            <div class="specimen-box" style="background-color: #FCFBF8; color: #162328;">
+              <span class="specimen-sample-title" style="font-family: 'Figtree', sans-serif;">Urus KTP-el &amp; Pindah Domisili</span>
+              <span class="specimen-sample-body" style="font-family: 'Inter', sans-serif; color: #374950;">Display <code class="mono">Figtree</code> + Body <code class="mono">Inter</code> + Kode <code class="mono">JetBrains Mono</code></span>
+              <span class="specimen-sample-nums" style="font-family: 'Inter', sans-serif; color: #0F5E63;">0,9 hari · 96,4% tepat waktu · CS-2026-X9K2</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Palet &amp; Rentang Kontras Terukur</h3>
+            <div class="swatch-grid">
+              <div class="swatch" style="background-color: #F2EDE4; color: #162328;"><code>#F2EDE4</code>Hangat 13,80:1</div>
+              <div class="swatch" style="background-color: #FCFBF8; color: #162328;"><code>#FCFBF8</code>Kertas 15,55:1</div>
+              <div class="swatch" style="background-color: #0F5E63; color: #FFFFFF;"><code>#0F5E63</code>Teal 7,50:1</div>
+              <div class="swatch" style="background-color: #9A3F16; color: #FFFFFF;"><code>#9A3F16</code>Terakota 5,82:1</div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Hasil Audit Nyata (<code class="mono">task-881</code>)</h3>
+            <dl class="metrics-dl num">
+              <div class="metrics-row"><dt>slop-audit 2 Arah</dt><dd>LULUS (3 visual, 2 grafik, 12/12 tabular)</dd></div>
+              <div class="metrics-row"><dt>axe-core (4 State)</dt><dd>0 pelanggaran (1 incomplete SVG &lt;text&gt;)</dd></div>
+              <div class="metrics-row"><dt>Lighthouse Mobile / Desk</dt><dd>100/100/100/100 (LCP 1,1 s / 0,3 s)</dd></div>
+              <div class="metrics-row"><dt>Ukuran &amp; Request CDN</dt><dd>83.449 B HTML · 188 KiB · 0 CDN</dd></div>
+            </dl>
+          </div>
+
+          <div>
+            <h3 class="subhead">Uji Kaku (Ringkas)</h3>
+            <p style="font-size: 0.9375rem; color: var(--text-secondary);">
+              Hero dibuka pemilih 4 tugas warga terhubung ke wizard cek syarat + bantuan <code class="mono">sticky</code> petugas + pelacak Zero-PII &amp; grafik SLA bertabel. Menolak ornamen pada Langkah 2 form agar pengisian fokus.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="subhead">Kekuatan &amp; Kelemahan Jujur</h3>
+            <ul class="bullet-list">
+              <li><strong>Kuat:</strong> Sangat cocok meredam kecemasan warga pada form multi-langkah; alur syarat sebelum input memangkas gagal kirim.</li>
+              <li><strong>Lemah / Ketergantungan:</strong> Panjang halaman cukup tinggi di ponsel (<code class="mono">6.534px</code> pada <code class="mono">375px</code>) jika semua bagian diletakkan di 1 halaman; ilustrasi loket tetap butuh foto petugas asli saat produksi agar tidak terasa ilustratif saja.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 2. gov-institutional-editorial -->
+        <article class="dir-card" aria-labelledby="title-editorial">
+          <header class="dir-head">
+            <div class="dir-meta-row">
+              <span class="dir-slug">gov-institutional-editorial</span>
+              <span class="dir-dial num">Dial 6,0 / 10</span>
+            </div>
+            <h2 id="title-editorial" class="dir-title">Kementerian, Pemda &amp; Publikasi Kebijakan</h2>
+            <p class="dir-idea"><strong>Gagasan Besar:</strong> Otoritas publik yang dapat didekati lewat jurnalisme kebijakan jernih, foto dokumenter jujur, dan daftar isi aktif.</p>
+          </header>
+
+          <div class="shot-block">
+            <div class="shot-frame" tabindex="0" role="region" aria-label="Tangkapan layar terverifikasi gov-institutional-editorial">
+              <img
+                id="img-gov-institutional-editorial"
+                src="assets/gov-institutional-editorial-1280.png"
+                data-base="gov-institutional-editorial"
+                width="1920"
+                height="6453"
+                alt="Pratinjau penuh gov-institutional-editorial menampilkan judul serif besar, placeholder arahan foto 16:10, rilis berfilter, naskah dengan sticky TOC + pull quote, dan grafik capaian pesisir."
+              >
+            </div>
+            <div class="shot-links">
+              <a href="../gov-institutional-editorial/preview.html" class="text-link">Buka preview.html</a>
+              <a href="../gov-institutional-editorial/DESIGN.md" class="text-link">Baca DESIGN.md</a>
+              <a id="raw-gov-institutional-editorial" href="assets/gov-institutional-editorial-1280.png" class="text-link">Gambar Penuh</a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Tipografi (Self-Hosted WOFF2)</h3>
+            <div class="specimen-box" style="background-color: #FAF8F4; color: #141C24;">
+              <span class="specimen-sample-title" style="font-family: 'Source Serif 4', Georgia, serif;">Memulihkan 412 km Sabuk Pesisir</span>
+              <span class="specimen-sample-body" style="font-family: 'IBM Plex Sans', sans-serif; color: #374350;">Display <code class="mono">Source Serif 4</code> + UI <code class="mono">IBM Plex Sans</code></span>
+              <span class="specimen-sample-nums" style="font-family: 'IBM Plex Sans', sans-serif; color: #1B3B6F;">412 km · +102 km target · PERMEN-14/2026</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Palet &amp; Rentang Kontras Terukur</h3>
+            <div class="swatch-grid">
+              <div class="swatch" style="background-color: #EFECE3; color: #141C24;"><code>#EFECE3</code>Batu Kapur 14,56:1</div>
+              <div class="swatch" style="background-color: #FAF8F4; color: #141C24;"><code>#FAF8F4</code>Arsip 16,21:1</div>
+              <div class="swatch" style="background-color: #1B3B6F; color: #FFFFFF;"><code>#1B3B6F</code>Prussian 11,04:1</div>
+              <div class="swatch" style="background-color: #8F4A12; color: #FFFFFF;"><code>#8F4A12</code>Oker 5,63:1</div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Hasil Audit Nyata (<code class="mono">task-906</code>)</h3>
+            <dl class="metrics-dl num">
+              <div class="metrics-row"><dt>slop-audit 2 Arah</dt><dd>LULUS (3 visual, 1 grafik, 11/11 tabular)</dd></div>
+              <div class="metrics-row"><dt>axe-core (4 State)</dt><dd>0 pelanggaran (1 incomplete SVG &lt;text&gt;)</dd></div>
+              <div class="metrics-row"><dt>Lighthouse Mobile / Desk</dt><dd>100/100/100/100 (LCP 0,9 s / 0,3 s)</dd></div>
+              <div class="metrics-row"><dt>Ukuran &amp; Request CDN</dt><dd>59.740 B HTML · 267 KiB · 0 CDN</dd></div>
+            </dl>
+          </div>
+
+          <div>
+            <h3 class="subhead">Uji Kaku (Ringkas)</h3>
+            <p style="font-size: 0.9375rem; color: var(--text-secondary);">
+              Ritme editorial empat lapis (Hero berarahan foto, rilis + layanan cepat, naskah <code class="mono">62ch</code> dengan sticky TOC + pull quote miring + kronologi + grafik, dan PPID sempit). Daftar berita tetap rata tipis tanpa kotak kartu.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="subhead">Kekuatan &amp; Kelemahan Jujur</h3>
+            <ul class="bullet-list">
+              <li><strong>Kuat:</strong> Wibawa editorial paling tinggi; ideal untuk naskah kebijakan panjang, laporan tahunan, dan rilis resmi kementerian.</li>
+              <li><strong>Lemah / Ketergantungan:</strong> Total unduhan aset paling berat di antara ketiganya (<code class="mono">267 KiB</code> karena <code class="mono">Source Serif 4</code> reguler+miring), dan kekuatan visualnya sangat bergantung pada foto dokumenter nyata dari tim humas (bukan pose pejabat).</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 3. gov-data-open -->
+        <article class="dir-card" aria-labelledby="title-data">
+          <header class="dir-head">
+            <div class="dir-meta-row">
+              <span class="dir-slug">gov-data-open</span>
+              <span class="dir-dial num">Dial 5,5 / 10</span>
+            </div>
+            <h2 id="title-data" class="dir-title">Data Terbuka, Statistik &amp; Transparansi Anggaran</h2>
+            <p class="dir-idea"><strong>Gagasan Besar:</strong> Angka publik yang bisa dipahami warga biasa lewat cerita data bertahap, label langsung, dan akses CSV seketika.</p>
+          </header>
+
+          <div class="shot-block">
+            <div class="shot-frame" tabindex="0" role="region" aria-label="Tangkapan layar terverifikasi gov-data-open">
+              <img
+                id="img-gov-data-open"
+                src="assets/gov-data-open-1280.png"
+                data-base="gov-data-open"
+                width="1920"
+                height="5195"
+                alt="Pratinjau penuh gov-data-open menampilkan 3 angka KPI + sparkline, cerita data bertahap panggung grafik sticky, pemilih dampak kecamatan, peta hatch, dan tabel penjelajah CSV."
+              >
+            </div>
+            <div class="shot-links">
+              <a href="../gov-data-open/preview.html" class="text-link">Buka preview.html</a>
+              <a href="../gov-data-open/DESIGN.md" class="text-link">Baca DESIGN.md</a>
+              <a id="raw-gov-data-open" href="assets/gov-data-open-1280.png" class="text-link">Gambar Penuh</a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Tipografi (Self-Hosted WOFF2)</h3>
+            <div class="specimen-box" style="background-color: #F9FAFB; color: #111827;">
+              <span class="specimen-sample-title" style="font-family: 'Public Sans', sans-serif;">Cakupan Air Naik 14,2 Poin</span>
+              <span class="specimen-sample-body" style="font-family: 'Inter', sans-serif; color: #374151;">Display <code class="mono">Public Sans</code> + Tabel <code class="mono">Inter</code></span>
+              <span class="specimen-sample-nums" style="font-family: 'Inter', sans-serif; color: #1B4D7A;">84,2% · Rp15,2 M · Rp248.000/thn</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Palet Aman Buta Warna &amp; Kontras</h3>
+            <div class="swatch-grid">
+              <div class="swatch" style="background-color: #EDF2F7; color: #111827;"><code>#EDF2F7</code>Slate 15,75:1</div>
+              <div class="swatch" style="background-color: #F9FAFB; color: #111827;"><code>#F9FAFB</code>Kertas 16,98:1</div>
+              <div class="swatch" style="background-color: #1B4D7A; color: #FFFFFF;"><code>#1B4D7A</code>Ocean 8,79:1</div>
+              <div class="swatch" style="background-color: #9A3412; color: #FFFFFF;"><code>#9A3412</code>Rust 6,49:1</div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="subhead">Hasil Audit Nyata (<code class="mono">task-981</code>)</h3>
+            <dl class="metrics-dl num">
+              <div class="metrics-row"><dt>slop-audit 2 Arah</dt><dd>LULUS (2 visual, 2 grafik, 28/28 tabular)</dd></div>
+              <div class="metrics-row"><dt>axe-core (4 State)</dt><dd>0 pelanggaran (1 incomplete SVG &lt;text&gt;)</dd></div>
+              <div class="metrics-row"><dt>Lighthouse Mobile / Desk</dt><dd>100/100/100/100 (LCP 0,9 s / 0,3 s)</dd></div>
+              <div class="metrics-row"><dt>Ukuran &amp; Request CDN</dt><dd>62.963 B HTML · 175 KiB · 0 CDN</dd></div>
+            </dl>
+          </div>
+
+          <div>
+            <h3 class="subhead">Uji Kaku (Ringkas)</h3>
+            <p style="font-size: 0.9375rem; color: var(--text-secondary);">
+              Menyajikan <em>action title</em> statistik + 3 sparkline, panggung cerita data 3 tahap yang bisa dilewati ke tabel, peta hatch aman buta warna, dan terjemahan dampak lokal. Menolak kartu KPI berbayang dan gradien grafik dekoratif.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="subhead">Kekuatan &amp; Kelemahan Jujur</h3>
+            <ul class="bullet-list">
+              <li><strong>Kuat:</strong> Paling jelas menerjemahkan angka APBD/statistik bagi warga awam tanpa mengorbankan tabel mentah bagi jurnalis/peneliti.</li>
+              <li><strong>Lemah / Ketergantungan:</strong> Membutuhkan tim data untuk merawat narasi <em>action title</em> dan metodologi tiap kali rilis data baru; peta koridor skematis tidak cocok untuk pemetaan GIS persil batas tanah yang membutuhkan koordinat presisi.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="matrix-section" aria-labelledby="rec-heading">
+      <div class="container">
+        <h2 id="rec-heading" style="font-size: 1.5rem; margin-bottom: 14px;">Panduan Pilih Cepat untuk Proyek Pemerintah</h2>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Tabel panduan pilih cepat arah desain pemerintah">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th scope="col">Kebutuhan / Konteks Proyek</th>
+                <th scope="col">Arah yang Direkomendasikan</th>
+                <th scope="col">Alasan Pemilihan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Portal layanan warga, perizinan daerah, dukcapil, bansos, pajak daerah</td>
+                <td><code class="mono">gov-civic-warm</code></td>
+                <td>Alur pemilih tugas, checklist syarat sebelum isi form, dan pelacak Zero-PII menekan tingkat kesalahan berkas warga.</td>
+              </tr>
+              <tr>
+                <td>Situs resmi kementerian, pemda, regulasi/JDIH, naskah kebijakan, laporan tahunan</td>
+                <td><code class="mono">gov-institutional-editorial</code></td>
+                <td>Tipografi serif+sans berwibawa, sticky TOC untuk naskah panjang, megamenu aksesibel, dan tempat utama bagi fotografi lapangan.</td>
+              </tr>
+              <tr>
+                <td>Portal SatuData, transparansi APBD/APBN, indeks kinerja daerah, dashboard publik</td>
+                <td><code class="mono">gov-data-open</code></td>
+                <td>Fokus grafik aman buta warna dengan label langsung, terjemahan "Apa artinya bagi saya", tabel alternatif, dan unduh CSV.</td>
+              </tr>
+              <tr>
+                <td>Aplikasi back-office internal ASN, persetujuan pengadaan, log audit RBAC</td>
+                <td><code class="mono">enterprise-dashboard</code></td>
+                <td>Tetap dipakai untuk antarmuka kerja internal berdensitas tabel padat, sort/bulk action, dan kepadatan kompak.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;">
+      <span>Arsip v1 (<code class="mono">gov-portal</code> &amp; <code class="mono">corporate-trust</code>) tetap disimpan di <code class="mono">professional/_archive/v1/</code> tanpa penghapusan.</span>
+      <span>Diverifikasi pada Chromium nyata · Font <code class="mono">SIL OFL-1.1</code> self-hosted (Zero CDN).</span>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const MODE_LABELS = {
+        '1280': 'Menampilkan Desktop 1280px Mode Terang (gulir di dalam bingkai gambar atau buka berkas penuh).',
+        '375': 'Menampilkan Ponsel 375px untuk menguji tata letak responsif satu kolom.',
+        '1280-dark': 'Menampilkan Desktop 1280px Mode Gelap dengan palet kontras malam terukur.'
+      };
+      const buttons = [...document.querySelectorAll('.mode-btn')];
+      const statusEl = document.getElementById('mode-status');
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const mode = btn.dataset.mode;
+          buttons.forEach((b) => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+          statusEl.textContent = MODE_LABELS[mode] || '';
+          document.querySelectorAll('img[data-base]').forEach((img) => {
+            const base = img.dataset.base;
+            const file = `assets/${base}-${mode}.png`;
+            img.src = file;
+            const rawLink = document.getElementById(`raw-${base}`);
+            if (rawLink) rawLink.href = file;
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

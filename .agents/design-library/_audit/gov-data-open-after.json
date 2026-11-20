@@ -1,0 +1,330 @@
+{
+  "url": "http://127.0.0.1:58587/professional/gov-data-open/preview.html",
+  "viewportWidth": 1280,
+  "passedAll": true,
+  "richnessPassedAll": true,
+  "bidirectionalPassedAll": true,
+  "metrics": {
+    "decorativeBadges": 0,
+    "statusBadges": 0,
+    "filledInInitialViewport": 1,
+    "maxFilledPerScreen": 1,
+    "filledFullPage": 2,
+    "outlineInInitialViewport": 1,
+    "outlineFullPage": 1,
+    "ghostFullPage": 9,
+    "uniqueBorderRadii": 2,
+    "uniqueBorderWidths": 2,
+    "uniqueFontSizes": 12,
+    "uniqueFontWeights": 3,
+    "staticShadows": 0,
+    "maxNestedContainers": 0,
+    "alternatingSectionBgs": 3
+  },
+  "checks": {
+    "decorativeBadges": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "maxFilledPerScreen": {
+      "actual": 1,
+      "limit": 1,
+      "status": "LULUS"
+    },
+    "outlineFullPage": {
+      "actual": 1,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueBorderRadii": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueBorderWidths": {
+      "actual": 2,
+      "limit": 2,
+      "status": "LULUS"
+    },
+    "uniqueFontWeights": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    },
+    "maxNestedContainers": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "staticShadows": {
+      "actual": 0,
+      "limit": 0,
+      "status": "LULUS"
+    },
+    "alternatingSectionBgs": {
+      "actual": 3,
+      "limit": 3,
+      "status": "LULUS"
+    }
+  },
+  "richnessMetrics": {
+    "meaningfulVisuals": 2,
+    "dataVisualizations": 2,
+    "hasDataTableAlternative": true,
+    "compositionPatterns": 4,
+    "displayToBodyRatio": 2.88,
+    "dataNumberChecked": 28,
+    "dataNumberCompliant": 28,
+    "hasTabularLining": true,
+    "functionalColors": 5,
+    "hasMotionDeclaration": true,
+    "hasReducedMotionFallback": true
+  },
+  "richnessChecks": {
+    "meaningfulVisuals": {
+      "actual": 2,
+      "minimum": 1,
+      "status": "LULUS"
+    },
+    "dataVisualizations": {
+      "actual": 2,
+      "minimum": 1,
+      "status": "LULUS"
+    },
+    "dataTableAlternative": {
+      "actual": true,
+      "minimum": true,
+      "status": "LULUS"
+    },
+    "compositionPatterns": {
+      "actual": 4,
+      "minimum": 3,
+      "status": "LULUS"
+    },
+    "displayToBodyRatio": {
+      "actual": 2.88,
+      "minimum": 2,
+      "status": "LULUS"
+    },
+    "tabularLining": {
+      "actual": true,
+      "minimum": true,
+      "status": "LULUS"
+    },
+    "functionalColors": {
+      "actual": 5,
+      "minimum": 4,
+      "status": "LULUS"
+    },
+    "motionDeclaration": {
+      "actual": true,
+      "minimum": true,
+      "status": "LULUS"
+    },
+    "reducedMotionFallback": {
+      "actual": true,
+      "minimum": true,
+      "status": "LULUS"
+    }
+  },
+  "details": {
+    "decorativeBadgeNodes": [],
+    "statusBadgeNodes": [],
+    "filledBtns": [
+      {
+        "selector": "a#hero-story-btn.btn.btn-primary",
+        "text": "Telusuri Cerita Data Bertahap",
+        "top": 583,
+        "bottom": 629
+      },
+      {
+        "selector": "button#ds-submit-btn.btn.btn-primary",
+        "text": "Kirim Permintaan Dataset",
+        "top": 3061,
+        "bottom": 3105
+      }
+    ],
+    "outlineBtns": [
+      {
+        "selector": "button#theme-toggle.btn.btn-outline",
+        "text": "Mode Gelap",
+        "top": 104,
+        "bottom": 148
+      }
+    ],
+    "ghostBtns": [
+      {
+        "selector": "button#masthead-btn.masthead-toggle",
+        "text": "Cara mengenali situs resmi",
+        "top": 4,
+        "bottom": 27
+      },
+      {
+        "selector": "button.btn.btn-ghost",
+        "text": "Cari",
+        "top": 104,
+        "bottom": 148
+      },
+      {
+        "selector": "button#lang-toggle.btn.btn-ghost",
+        "text": "ID / EN (Ganti bahasa)",
+        "top": 104,
+        "bottom": 148
+      },
+      {
+        "selector": "button.story-step-btn",
+        "text": "TAHAP 01 · 2022 (SEBELUM REALOKASI)\n    ",
+        "top": 912,
+        "bottom": 1030
+      },
+      {
+        "selector": "button.story-step-btn",
+        "text": "TAHAP 02 · 2023–2024 (PEMATOKAN ZONA PRI",
+        "top": 1030,
+        "bottom": 1148
+      },
+      {
+        "selector": "button.story-step-btn",
+        "text": "TAHAP 03 · 2025–2026 (CAPAIAN & SISA KES",
+        "top": 1148,
+        "bottom": 1266
+      },
+      {
+        "selector": "button#chart-view-toggle.btn.btn-ghost",
+        "text": "Lihat sebagai Tabel",
+        "top": 1000,
+        "bottom": 1044
+      },
+      {
+        "selector": "button#download-csv-btn.btn.btn-ghost",
+        "text": "Unduh CSV",
+        "top": 1000,
+        "bottom": 1044
+      },
+      {
+        "selector": "button#explorer-csv-btn.btn.btn-ghost",
+        "text": "Ekspor Baris Terfilter",
+        "top": 2062,
+        "bottom": 2106
+      }
+    ],
+    "borderRadiiValues": [
+      "4px",
+      "8px"
+    ],
+    "borderWidthValues": [
+      "1px",
+      "2px"
+    ],
+    "fontSizeValues": [
+      "12px",
+      "13.33px",
+      "14px",
+      "15px",
+      "16px",
+      "16.38px",
+      "17px",
+      "18.72px",
+      "22px",
+      "28.16px",
+      "32px",
+      "46.08px"
+    ],
+    "fontWeightValues": [
+      "400",
+      "500",
+      "700"
+    ],
+    "staticShadowNodes": [],
+    "nestedOffenders": [],
+    "sectionBgs": [
+      {
+        "selector": "section#ringkasan-temuan.band-warm",
+        "bg": "rgb(237, 242, 247)"
+      },
+      {
+        "selector": "section#cerita-data.band-canvas",
+        "bg": "rgb(249, 250, 251)"
+      },
+      {
+        "selector": "section#dampak-wilayah.band-warm",
+        "bg": "rgb(237, 242, 247)"
+      },
+      {
+        "selector": "section#permintaan-dataset.band-canvas",
+        "bg": "rgb(249, 250, 251)"
+      }
+    ]
+  },
+  "richnessDetails": {
+    "meaningfulVisualNodes": [
+      "svg#story-chart-svg",
+      "svg#corridor-map-svg"
+    ],
+    "visualsPerSection": [
+      {
+        "selector": "section#ringkasan-temuan.band-warm",
+        "count": 0
+      },
+      {
+        "selector": "section#cerita-data.band-canvas",
+        "count": 1
+      },
+      {
+        "selector": "section#dampak-wilayah.band-warm",
+        "count": 1
+      },
+      {
+        "selector": "section#permintaan-dataset.band-canvas",
+        "count": 0
+      }
+    ],
+    "chartNodes": [
+      "svg#story-chart-svg",
+      "svg#corridor-map-svg"
+    ],
+    "tableAlternativesCount": 2,
+    "sectionPatterns": [
+      {
+        "selector": "section#ringkasan-temuan.band-warm",
+        "signature": "full-bleed-band|wide|symmetric-grid|text-led",
+        "widthPx": 1200
+      },
+      {
+        "selector": "section#cerita-data.band-canvas",
+        "signature": "canvas-band|wide|sticky-split|with-visual-stage",
+        "widthPx": 1200
+      },
+      {
+        "selector": "section#dampak-wilayah.band-warm",
+        "signature": "full-bleed-band|wide|symmetric-grid|with-visual-stage",
+        "widthPx": 1200
+      },
+      {
+        "selector": "section#permintaan-dataset.band-canvas",
+        "signature": "canvas-band|wide|single-col|text-led",
+        "widthPx": 1200
+      }
+    ],
+    "functionalColorRoles": [
+      "primary",
+      "secondary",
+      "dataAccent",
+      "warmNeutral",
+      "status"
+    ],
+    "functionalColors": {
+      "primary": "#1B4D7A",
+      "secondary": "#9A3412",
+      "dataAccent": [
+        "--accent-data-1:#1B4D7A",
+        "--accent-data-2:#9A3412",
+        "--accent-data-3:#115E59"
+      ],
+      "warmNeutral": "#EDF2F7",
+      "status": "#14532D"
+    },
+    "nonTabularLiningNodes": []
+  }
+}
