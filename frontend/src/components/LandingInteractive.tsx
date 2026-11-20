@@ -7,77 +7,113 @@ type StudentFilter = "terdekat" | "semua";
 
 interface AngkotItem {
   code: string;
-  route: string;
+  routeCode: string;
+  routeName: string;
   area: string;
   distanceMeters: number;
+  etaMinutes: number;
   updatedAgo: string;
-  status: "Beroperasi" | "Menuju Halte";
+  status: "Menuju Halte" | "Beroperasi";
+  mapX: number;
+  mapY: number;
 }
 
 interface ClusterItem {
   id: string;
   area: string;
+  schoolLandmark: string;
   routeHint: string;
   waitingCount: number;
   distanceMeters: number;
+  mapX: number;
+  mapY: number;
+  radiusPx: number;
 }
 
 const SAMPLE_ANGKOT: AngkotItem[] = [
   {
     code: "ANG-01A",
-    route: "Trayek 01 · Terminal Induk – SMAN 1",
+    routeCode: "T01",
+    routeName: "Terminal Induk – SMAN 1",
     area: "Simpang Jl. Ahmad Yani",
     distanceMeters: 280,
+    etaMinutes: 2,
     updatedAgo: "8 dtk lalu",
     status: "Menuju Halte",
+    mapX: 165,
+    mapY: 132,
   },
   {
     code: "ANG-03B",
-    route: "Trayek 03 · Pasar Baru – SMPN 3",
+    routeCode: "T03",
+    routeName: "Pasar Baru – SMPN 3",
     area: "Depan Taman Kota",
     distanceMeters: 640,
+    etaMinutes: 4,
     updatedAgo: "14 dtk lalu",
     status: "Beroperasi",
+    mapX: 285,
+    mapY: 168,
   },
   {
     code: "ANG-02C",
-    route: "Trayek 02 · Perumnas – SDN 01",
+    routeCode: "T02",
+    routeName: "Perumnas – SDN 01",
     area: "Bundaran Balai Kota",
     distanceMeters: 1250,
+    etaMinutes: 7,
     updatedAgo: "22 dtk lalu",
     status: "Beroperasi",
+    mapX: 112,
+    mapY: 224,
   },
   {
     code: "ANG-05A",
-    route: "Trayek 05 · Stasiun – SMAN 2",
+    routeCode: "T05",
+    routeName: "Stasiun – SMAN 2",
     area: "Jl. Diponegoro",
     distanceMeters: 1890,
+    etaMinutes: 11,
     updatedAgo: "35 dtk lalu",
     status: "Beroperasi",
+    mapX: 356,
+    mapY: 96,
   },
 ];
 
 const SAMPLE_CLUSTERS: ClusterItem[] = [
   {
     id: "CL-01",
-    area: "Simpang SMAN 1 (Radius 200 m)",
+    area: "Simpang SMAN 1",
+    schoolLandmark: "SMAN 1 & SMK Negeri 2",
     routeHint: "Trayek 01 & 05",
     waitingCount: 14,
     distanceMeters: 420,
+    mapX: 255,
+    mapY: 92,
+    radiusPx: 30,
   },
   {
     id: "CL-02",
-    area: "Gerbang SMPN 3 (Radius 200 m)",
+    area: "Gerbang SMPN 3",
+    schoolLandmark: "SMPN 3 Kota",
     routeHint: "Trayek 03",
     waitingCount: 9,
     distanceMeters: 950,
+    mapX: 332,
+    mapY: 192,
+    radiusPx: 24,
   },
   {
     id: "CL-03",
-    area: "Halte SDN 01 Perumnas (Radius 200 m)",
+    area: "Halte SDN 01 Perumnas",
+    schoolLandmark: "SDN 01 & SDN 04",
     routeHint: "Trayek 02",
     waitingCount: 6,
     distanceMeters: 1520,
+    mapX: 98,
+    mapY: 188,
+    radiusPx: 20,
   },
 ];
 
@@ -114,20 +150,27 @@ export function ThemeToggle() {
 export function RolePreviewWorkspace() {
   const [role, setRole] = useState<RoleMode>("pelajar");
   const [studentFilter, setStudentFilter] = useState<StudentFilter>("terdekat");
+  const [selectedAngkot, setSelectedAngkot] = useState<string>("ANG-01A");
+  const [selectedCluster, setSelectedCluster] = useState<string>("CL-01");
   const [waitingActive, setWaitingActive] = useState(false);
-  const [driverBroadcasting, setDriverBroadcasting] = useState(false);
+  const [driverBroadcasting, setDriverBroadcasting] = useState(true);
 
   const displayedAngkot =
     studentFilter === "terdekat"
       ? [...SAMPLE_ANGKOT].sort((a, b) => a.distanceMeters - b.distanceMeters)
       : SAMPLE_ANGKOT;
 
+  const activeAngkotObj =
+    SAMPLE_ANGKOT.find((a) => a.code === selectedAngkot) ?? SAMPLE_ANGKOT[0];
+  const activeClusterObj =
+    SAMPLE_CLUSTERS.find((c) => c.id === selectedCluster) ?? SAMPLE_CLUSTERS[0];
+
   return (
-    <div className="space-y-8">
-      {/* Pemilih Peran Utama (Task-First Selector) */}
+    <div className="space-y-6">
+      {/* Tab Pemilih Peran */}
       <div
         role="tablist"
-        aria-label="Pilih peran pengguna"
+        aria-label="Pilih mode pratinjau"
         className="grid grid-cols-1 sm:grid-cols-2 gap-3"
       >
         <button
@@ -135,7 +178,7 @@ export function RolePreviewWorkspace() {
           role="tab"
           aria-selected={role === "pelajar"}
           onClick={() => setRole("pelajar")}
-          className={`min-h-[64px] text-left px-5 py-4 rounded-[10px] border transition-colors cursor-pointer flex items-start gap-3.5 ${
+          className={`min-h-[68px] text-left px-5 py-4 rounded-[10px] border transition-colors cursor-pointer flex items-start gap-3.5 ${
             role === "pelajar"
               ? "border-2 border-[var(--accent-primary)] bg-[var(--bg-surface)]"
               : "border border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:border-[var(--border-strong)]"
@@ -158,10 +201,10 @@ export function RolePreviewWorkspace() {
           </svg>
           <div>
             <div className="font-bold text-base text-[var(--text-primary)]">
-              Saya Pelajar (Cari Angkot)
+              Mode Pelajar — Radar Angkot Terdekat
             </div>
             <div className="text-sm text-[var(--text-secondary)]">
-              Lihat daftar semua angkot aktif &amp; jarak terdekat dari lokasi Anda
+              Lihat posisi semua angkot aktif, jarak terdekat, &amp; kirim sinyal tunggu
             </div>
           </div>
         </button>
@@ -171,7 +214,7 @@ export function RolePreviewWorkspace() {
           role="tab"
           aria-selected={role === "supir"}
           onClick={() => setRole("supir")}
-          className={`min-h-[64px] text-left px-5 py-4 rounded-[10px] border transition-colors cursor-pointer flex items-start gap-3.5 ${
+          className={`min-h-[68px] text-left px-5 py-4 rounded-[10px] border transition-colors cursor-pointer flex items-start gap-3.5 ${
             role === "supir"
               ? "border-2 border-[var(--accent-primary)] bg-[var(--bg-surface)]"
               : "border border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:border-[var(--border-strong)]"
@@ -196,36 +239,33 @@ export function RolePreviewWorkspace() {
           </svg>
           <div>
             <div className="font-bold text-base text-[var(--text-primary)]">
-              Saya Supir Angkot
+              Mode Supir — Siar GPS &amp; Cluster Penumpang
             </div>
             <div className="text-sm text-[var(--text-secondary)]">
-              Siarkan GPS kendaraan &amp; pantau cluster penumpang menunggu
+              Bagikan posisi angkot &amp; pantau zona keramaian penumpang menunggu
             </div>
           </div>
         </button>
       </div>
 
-      {/* Panel Pratinjau Interaktif */}
-      {role === "pelajar" ? (
-        <section
-          aria-label="Pratinjau radar angkot pelajar"
-          className="rounded-[10px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden"
-        >
-          <div className="px-5 py-4 border-b border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h2 className="text-lg font-bold text-[var(--text-primary)]">
-                Radar Angkot Beroperasi
-              </h2>
-              <p className="text-sm text-[var(--text-secondary)]">
-                Simulasi pratinjau tampilan pelajar · diurutkan dari titik terdekat
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
+      {/* Workspace Split: Peta Koridor Interaktif + Daftar Operasional */}
+      <div className="rounded-[10px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden">
+        {/* Top Control Bar */}
+        <div className="px-5 py-4 border-b border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          {role === "pelajar" ? (
+            <>
+              <div>
+                <h3 className="text-lg font-bold text-[var(--text-primary)]">
+                  Peta &amp; Daftar Angkot Beroperasi
+                </h3>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  Klik titik angkot di peta atau pilih dari daftar · data simulasi
+                </p>
+              </div>
               <div
                 role="group"
-                aria-label="Filter tampilan angkot"
-                className="inline-flex rounded-[6px] border border-[var(--border-subtle)] p-0.5 bg-[var(--bg-canvas)]"
+                aria-label="Filter urutan angkot"
+                className="inline-flex rounded-[6px] border border-[var(--border-subtle)] p-0.5 bg-[var(--bg-canvas)] self-start sm:self-auto"
               >
                 <button
                   type="button"
@@ -247,128 +287,364 @@ export function RolePreviewWorkspace() {
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >
-                  Semua (4)
+                  Semua ({SAMPLE_ANGKOT.length})
                 </button>
               </div>
-            </div>
-          </div>
-
-          <div className="divide-y divide-[var(--border-subtle)]">
-            {displayedAngkot.map((item) => (
-              <div
-                key={item.code}
-                className="px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
-              >
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-2.5">
-                    <span
-                      className="text-xs font-medium px-2 py-0.5 rounded-[6px] border border-[var(--border-subtle)] text-[var(--text-primary)]"
-                      style={{ fontFamily: "var(--font-mono)" }}
-                    >
-                      {item.code}
-                    </span>
-                    <span className="font-bold text-[var(--text-primary)]">
-                      {item.route}
-                    </span>
-                  </div>
-                  <p className="text-sm text-[var(--text-secondary)]">
-                    Posisi terakhir: {item.area} · Diperbarui {item.updatedAgo}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-4 sm:text-right">
-                  <div>
-                    <div className="text-base font-bold text-[var(--accent-primary)] tabular-nums-data">
-                      {formatDistance(item.distanceMeters)}
-                    </div>
-                    <div className="text-xs text-[var(--text-muted)]">
-                      {item.status}
-                    </div>
-                  </div>
-                </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <h3 className="text-lg font-bold text-[var(--text-primary)]">
+                  Panel Supir · ANG-01A (Trayek 01)
+                </h3>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  {driverBroadcasting
+                    ? "GPS aktif · menyiarkan koordinat setiap 5 detik (akurasi ±8 m)"
+                    : "GPS dijeda · tekan Mulai Beroperasi untuk tampil di radar pelajar"}
+                </p>
               </div>
-            ))}
-          </div>
+              <button
+                type="button"
+                onClick={() => setDriverBroadcasting((v) => !v)}
+                className="min-h-[44px] px-5 py-2.5 rounded-[6px] font-medium text-sm bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-on-primary)] transition-colors cursor-pointer shrink-0 self-start sm:self-auto"
+              >
+                {driverBroadcasting ? "Berhenti Beroperasi" : "Mulai Beroperasi"}
+              </button>
+            </>
+          )}
+        </div>
 
-          <div className="px-5 py-4 border-t border-[var(--border-subtle)] bg-[var(--bg-warm)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="text-sm text-[var(--text-secondary)]">
-              {waitingActive ? (
-                <span className="font-medium text-[var(--status-success-fg)] bg-[var(--status-success-bg)] px-2.5 py-1 rounded-[6px] inline-block">
-                  Sinyal tunggu aktif (anonim · berlaku 15 menit)
+        {/* Grid 2 Kolom: Peta Koridor + Daftar */}
+        <div className="grid grid-cols-1 lg:grid-cols-12">
+          {/* Peta SVG Interaktif */}
+          <div className="lg:col-span-6 p-5 border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] bg-[var(--bg-canvas)] flex flex-col justify-between gap-4">
+            <svg
+              viewBox="0 0 440 270"
+              className="w-full h-auto rounded-[6px] border border-[var(--border-subtle)] bg-[var(--bg-warm)]"
+              role="img"
+              aria-label={
+                role === "pelajar"
+                  ? "Peta koridor angkot menampilkan lokasi pelajar dan armada aktif"
+                  : "Peta cluster penumpang menunggu untuk supir angkot"
+              }
+            >
+              {/* Grid Jalan Kota */}
+              <path
+                d="M0 92H440 M0 175H440 M120 0V270 M265 0V270 M365 0V270"
+                stroke="var(--border-subtle)"
+                strokeWidth="1.5"
+              />
+              {/* Koridor Trayek Utama */}
+              <path
+                d="M40 224 L120 224 L165 132 L255 92 L356 96"
+                fill="none"
+                stroke="var(--accent-primary)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeOpacity="0.45"
+              />
+              <path
+                d="M98 188 L195 156 L285 168 L332 192"
+                fill="none"
+                stroke="var(--accent-secondary)"
+                strokeWidth="2.5"
+                strokeDasharray="6 5"
+                strokeLinecap="round"
+                strokeOpacity="0.55"
+              />
+
+              {/* Landmark Sekolah */}
+              <g fontSize="10" fontFamily="Inter, sans-serif" fill="var(--text-muted)">
+                <text x="255" y="54" textAnchor="middle" fontWeight="600">
+                  SMAN 1
+                </text>
+                <text x="332" y="232" textAnchor="middle" fontWeight="600">
+                  SMPN 3
+                </text>
+                <text x="98" y="246" textAnchor="middle" fontWeight="600">
+                  SDN 01
+                </text>
+                <text x="48" y="84" textAnchor="start" fontWeight="600">
+                  Terminal Induk
+                </text>
+              </g>
+
+              {role === "pelajar" ? (
+                <>
+                  {/* Titik Lokasi Pelajar ("Anda") */}
+                  <circle
+                    cx="195"
+                    cy="156"
+                    r="16"
+                    fill="var(--accent-secondary)"
+                    fillOpacity="0.16"
+                  />
+                  <circle
+                    cx="195"
+                    cy="156"
+                    r="6"
+                    fill="var(--accent-secondary)"
+                    stroke="var(--bg-surface)"
+                    strokeWidth="2"
+                  />
+                  <text
+                    x="195"
+                    y="182"
+                    textAnchor="middle"
+                    fontSize="10"
+                    fontWeight="700"
+                    fill="var(--accent-secondary)"
+                    fontFamily="Inter, sans-serif"
+                  >
+                    Lokasi Anda
+                  </text>
+
+                  {/* Marker Angkot Aktif */}
+                  {SAMPLE_ANGKOT.map((bus) => {
+                    const isSelected = bus.code === activeAngkotObj.code;
+                    return (
+                      <g
+                        key={bus.code}
+                        onClick={() => setSelectedAngkot(bus.code)}
+                        className="cursor-pointer"
+                      >
+                        <circle
+                          cx={bus.mapX}
+                          cy={bus.mapY}
+                          r={isSelected ? 18 : 13}
+                          fill={
+                            isSelected
+                              ? "var(--accent-primary)"
+                              : "var(--bg-surface)"
+                          }
+                          stroke="var(--accent-primary)"
+                          strokeWidth="2"
+                        />
+                        <text
+                          x={bus.mapX}
+                          y={bus.mapY + 3.5}
+                          textAnchor="middle"
+                          fontSize="9"
+                          fontWeight="700"
+                          fontFamily="JetBrains Mono, monospace"
+                          fill={
+                            isSelected
+                              ? "var(--accent-on-primary)"
+                              : "var(--text-primary)"
+                          }
+                        >
+                          {bus.routeCode}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  {/* Posisi Angkot Supir */}
+                  {driverBroadcasting && (
+                    <g>
+                      <circle
+                        cx="165"
+                        cy="132"
+                        r="14"
+                        fill="var(--accent-primary)"
+                        stroke="var(--bg-surface)"
+                        strokeWidth="2"
+                      />
+                      <text
+                        x="165"
+                        y="135.5"
+                        textAnchor="middle"
+                        fontSize="8.5"
+                        fontWeight="700"
+                        fontFamily="JetBrains Mono, monospace"
+                        fill="var(--accent-on-primary)"
+                      >
+                        ANDA
+                      </text>
+                    </g>
+                  )}
+
+                  {/* Cluster Penumpang Menunggu */}
+                  {SAMPLE_CLUSTERS.map((cl) => {
+                    const isSelected = cl.id === activeClusterObj.id;
+                    return (
+                      <g
+                        key={cl.id}
+                        onClick={() => setSelectedCluster(cl.id)}
+                        className="cursor-pointer"
+                      >
+                        <circle
+                          cx={cl.mapX}
+                          cy={cl.mapY}
+                          r={cl.radiusPx}
+                          fill="var(--accent-secondary)"
+                          fillOpacity={isSelected ? 0.28 : 0.16}
+                          stroke="var(--accent-secondary)"
+                          strokeWidth={isSelected ? 2.5 : 1.5}
+                        />
+                        <text
+                          x={cl.mapX}
+                          y={cl.mapY + 4}
+                          textAnchor="middle"
+                          fontSize="12"
+                          fontWeight="700"
+                          fontFamily="JetBrains Mono, monospace"
+                          fill="var(--text-primary)"
+                        >
+                          {cl.waitingCount}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </>
+              )}
+            </svg>
+
+            {/* Caption Peta Aktif */}
+            <div className="flex items-center justify-between gap-3 text-xs text-[var(--text-secondary)]">
+              {role === "pelajar" ? (
+                <span>
+                  Terpilih:{" "}
+                  <strong className="text-[var(--text-primary)]">
+                    {activeAngkotObj.code} ({activeAngkotObj.routeName})
+                  </strong>{" "}
+                  · estimasi {activeAngkotObj.etaMinutes} menit
                 </span>
               ) : (
                 <span>
-                  Sedang menunggu di halte/pinggir jalan? Kirim sinyal anonim agar supir melihat keramaian.
+                  Cluster terpilih:{" "}
+                  <strong className="text-[var(--text-primary)]">
+                    {activeClusterObj.area}
+                  </strong>{" "}
+                  · ~{activeClusterObj.waitingCount} penumpang menunggu
                 </span>
               )}
+              <span className="text-[var(--text-muted)] shrink-0">
+                Peta simulasi koridor
+              </span>
             </div>
-            <button
-              type="button"
-              onClick={() => setWaitingActive((v) => !v)}
-              className="min-h-[44px] px-5 py-2.5 rounded-[6px] font-medium text-sm bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-on-primary)] transition-colors cursor-pointer shrink-0"
-            >
-              {waitingActive ? "Batalkan Sinyal Tunggu" : "Saya Sedang Menunggu Angkot"}
-            </button>
-          </div>
-        </section>
-      ) : (
-        <section
-          aria-label="Pratinjau panel supir angkot"
-          className="rounded-[10px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden"
-        >
-          <div className="px-5 py-4 border-b border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h2 className="text-lg font-bold text-[var(--text-primary)]">
-                Panel Supir: Siaran GPS &amp; Cluster Penumpang
-              </h2>
-              <p className="text-sm text-[var(--text-secondary)]">
-                {driverBroadcasting
-                  ? "GPS aktif menyiarkan posisi ANG-01A tiap 5 detik"
-                  : "Siapkan GPS perangkat sebelum memulai trayek"}
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setDriverBroadcasting((v) => !v)}
-              className="min-h-[44px] px-5 py-2.5 rounded-[6px] font-medium text-sm bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-on-primary)] transition-colors cursor-pointer shrink-0"
-            >
-              {driverBroadcasting ? "Berhenti Beroperasi" : "Mulai Beroperasi"}
-            </button>
           </div>
 
-          <div className="divide-y divide-[var(--border-subtle)]">
-            {SAMPLE_CLUSTERS.map((cluster) => (
-              <div
-                key={cluster.id}
-                className="px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
-              >
-                <div className="space-y-0.5">
-                  <div className="font-bold text-[var(--text-primary)]">
-                    {cluster.area}
+          {/* Daftar Angkot / Cluster */}
+          <div className="lg:col-span-6 flex flex-col justify-between">
+            {role === "pelajar" ? (
+              <>
+                <div className="divide-y divide-[var(--border-subtle)]">
+                  {displayedAngkot.map((item) => {
+                    const isSelected = item.code === activeAngkotObj.code;
+                    return (
+                      <button
+                        key={item.code}
+                        type="button"
+                        onClick={() => setSelectedAngkot(item.code)}
+                        className={`w-full text-left px-5 py-3.5 flex items-center justify-between gap-3 transition-colors cursor-pointer ${
+                          isSelected
+                            ? "bg-[var(--bg-warm)]"
+                            : "hover:bg-[var(--bg-canvas)]"
+                        }`}
+                      >
+                        <div className="space-y-0.5 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className="text-xs font-medium px-2 py-0.5 rounded-[6px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] shrink-0"
+                              style={{ fontFamily: "var(--font-mono)" }}
+                            >
+                              {item.code}
+                            </span>
+                            <span className="font-bold text-sm text-[var(--text-primary)] truncate">
+                              {item.routeName}
+                            </span>
+                          </div>
+                          <div className="text-xs text-[var(--text-secondary)] truncate">
+                            {item.area} · {item.updatedAgo}
+                          </div>
+                        </div>
+
+                        <div className="text-right shrink-0">
+                          <div className="text-sm font-bold text-[var(--accent-primary)] tabular-nums-data">
+                            {formatDistance(item.distanceMeters)}
+                          </div>
+                          <div className="text-xs text-[var(--text-muted)] tabular-nums-data">
+                            ~{item.etaMinutes} mnt · {item.status}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="px-5 py-4 border-t border-[var(--border-subtle)] bg-[var(--bg-warm)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="text-xs text-[var(--text-secondary)]">
+                    {waitingActive ? (
+                      <span className="font-medium text-[var(--status-success-fg)] bg-[var(--status-success-bg)] px-2.5 py-1 rounded-[6px] inline-block">
+                        Sinyal tunggu aktif (anonim · berlaku 15 menit)
+                      </span>
+                    ) : (
+                      <span>
+                        Tandai Anda sedang menunggu agar masuk ke cluster supir.
+                      </span>
+                    )}
                   </div>
-                  <p className="text-sm text-[var(--text-secondary)]">
-                    Rute dominan: {cluster.routeHint} · Jarak dari angkot:{" "}
-                    <span className="tabular-nums-data font-medium">
-                      {formatDistance(cluster.distanceMeters)}
-                    </span>
-                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setWaitingActive((v) => !v)}
+                    className="min-h-[44px] px-4 py-2 rounded-[6px] font-medium text-sm bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-on-primary)] transition-colors cursor-pointer shrink-0"
+                  >
+                    {waitingActive
+                      ? "Batalkan Sinyal Tunggu"
+                      : "Saya Sedang Menunggu"}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="divide-y divide-[var(--border-subtle)]">
+                  {SAMPLE_CLUSTERS.map((cluster) => {
+                    const isSelected = cluster.id === activeClusterObj.id;
+                    return (
+                      <button
+                        key={cluster.id}
+                        type="button"
+                        onClick={() => setSelectedCluster(cluster.id)}
+                        className={`w-full text-left px-5 py-4 flex items-center justify-between gap-3 transition-colors cursor-pointer ${
+                          isSelected
+                            ? "bg-[var(--bg-warm)]"
+                            : "hover:bg-[var(--bg-canvas)]"
+                        }`}
+                      >
+                        <div className="space-y-0.5 min-w-0">
+                          <div className="font-bold text-sm text-[var(--text-primary)]">
+                            {cluster.area}
+                          </div>
+                          <div className="text-xs text-[var(--text-secondary)]">
+                            {cluster.schoolLandmark} · {cluster.routeHint}
+                          </div>
+                          <div className="text-xs text-[var(--text-muted)] tabular-nums-data">
+                            Jarak dari angkot: {formatDistance(cluster.distanceMeters)}
+                          </div>
+                        </div>
+
+                        <div className="shrink-0">
+                          <span className="inline-block px-3 py-1 rounded-[6px] text-xs font-bold bg-[var(--status-warning-bg)] text-[var(--status-warning-fg)] tabular-nums-data">
+                            ~{cluster.waitingCount} menunggu
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
 
-                <div className="shrink-0">
-                  <span className="inline-block px-3 py-1 rounded-[6px] text-sm font-bold bg-[var(--status-warning-bg)] text-[var(--status-warning-fg)] tabular-nums-data">
-                    ~{cluster.waitingCount} penumpang menunggu
-                  </span>
+                <div className="px-5 py-4 border-t border-[var(--border-subtle)] bg-[var(--bg-warm)] text-xs text-[var(--text-muted)]">
+                  Privasi UU PDP: Cluster hanya menampilkan jumlah agregat per radius 200 m. Titik GPS &amp; identitas individu pelajar tidak pernah dibagikan.
                 </div>
-              </div>
-            ))}
+              </>
+            )}
           </div>
-
-          <div className="px-5 py-3.5 border-t border-[var(--border-subtle)] bg-[var(--bg-warm)] text-xs text-[var(--text-muted)]">
-            Privasi UU PDP: Supir hanya melihat agregat jumlah penumpang per cluster radius 200 m, tanpa titik GPS atau identitas individu pelajar.
-          </div>
-        </section>
-      )}
+        </div>
+      </div>
     </div>
   );
 }
