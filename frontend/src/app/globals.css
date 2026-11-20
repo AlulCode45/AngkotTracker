@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* Self-hosted WOFF2 fonts (Zero CDN, SIL OFL-1.1) */
+@font-face {
+  font-family: "Figtree";
+  src: url("/fonts/figtree-latin-wght-normal.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-canvas: #FCFBF8;
+  --bg-warm: #F2EDE4;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+
+  --text-primary: #162328;
+  --text-secondary: #374950;
+  --text-muted: #4B5D64;
+
+  --border-subtle: #D5CFC4;
+  --border-strong: #4B5D64;
+
+  --accent-primary: #0F5E63;
+  --accent-primary-hover: #0B474B;
+  --accent-on-primary: #FFFFFF;
+  --accent-secondary: #9A3F16;
+
+  --focus-ring: #B45309;
+
+  --status-info-bg: #EFF6FF;
+  --status-info-fg: #1E3A5F;
+  --status-success-bg: #ECFDF5;
+  --status-success-fg: #14532D;
+  --status-warning-bg: #FFF7ED;
+  --status-warning-fg: #7C2D12;
+  --status-danger-bg: #FFF1F2;
+  --status-danger-fg: #881337;
+
+  --font-display: "Figtree", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-control: 6px;
+  --radius-container: 10px;
+}
+
+[data-theme="dark"] {
+  --bg-canvas: #0D1619;
+  --bg-warm: #142126;
+  --bg-surface: #111C20;
+  --bg-elevated: #162429;
+
+  --text-primary: #F4F7F6;
+  --text-secondary: #C7D6DA;
+  --text-muted: #9BB0B6;
+
+  --border-subtle: #24383F;
+  --border-strong: #8CA5AC;
+
+  --accent-primary: #4FD1C5;
+  --accent-primary-hover: #7DE0D6;
+  --accent-on-primary: #091E20;
+  --accent-secondary: #F5A67E;
+
+  --focus-ring: #FBBF24;
+
+  --status-info-bg: #172554;
+  --status-info-fg: #DBEAFE;
+  --status-success-bg: #052E16;
+  --status-success-fg: #BBF7D0;
+  --status-warning-bg: #431407;
+  --status-warning-fg: #FED7AA;
+  --status-danger-bg: #4C0519;
+  --status-danger-fg: #FECDD3;
+}
+
+@layer base {
+  html {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.tabular-nums-data {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
