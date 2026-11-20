@@ -54,7 +54,6 @@ npm run build
 
 ## Dokumen Terkait
 
-- Konfigurasi Project: [`.agents/project.md`](.agents/project.md)
 - Spesifikasi Desain Visual: [`DESIGN.md`](DESIGN.md)
 - Rencana Produk & Arsitektur (PRP): [`docs/prp/mvp-ekosistem-angkutan-pelajar.md`](docs/prp/mvp-ekosistem-angkutan-pelajar.md)
 - Catatan Progres: [`docs/WORKLOG.md`](docs/WORKLOG.md)
