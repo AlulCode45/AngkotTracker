@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 type LoginRole = "pelajar" | "supir";
 
@@ -10,6 +11,7 @@ interface FieldErrors {
 }
 
 export function LoginForm() {
+  const router = useRouter();
   const [role, setRole] = useState<LoginRole>("pelajar");
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -60,8 +62,13 @@ export function LoginForm() {
       const apiBase = process.env.NEXT_PUBLIC_API_URL;
       if (!apiBase) {
         await new Promise((resolve) => setTimeout(resolve, 450));
+        if (role === "pelajar") {
+          setFormSuccess("Berhasil masuk. Mengalihkan ke Dashboard Pelajar...");
+          router.push("/dashboard/pelajar");
+          return;
+        }
         setFormSuccess(
-          `Validasi formulir ${role === "pelajar" ? "Pelajar" : "Supir Angkot"} berhasil. Siap disambungkan ke endpoint Laravel Sanctum.`
+          "Validasi formulir Supir Angkot berhasil. Dashboard Supir akan segera disambungkan."
         );
         return;
       }
