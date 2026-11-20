@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ThemeToggle } from "@/components/LandingInteractive";
 
 const CORRIDORS = [
@@ -116,6 +117,12 @@ export default function HomePage() {
             >
               FAQ
             </a>
+            <Link
+              href="/login"
+              className="min-h-[44px] px-4 py-2 inline-flex items-center justify-center rounded-[6px] text-sm font-medium bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-on-primary)] transition-colors no-underline"
+            >
+              Masuk
+            </Link>
             <ThemeToggle />
           </nav>
         </div>
@@ -136,17 +143,17 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href="#cara-kerja"
+                <Link
+                  href="/login"
                   className="min-h-[44px] px-5 py-2.5 inline-flex items-center justify-center rounded-[6px] font-medium text-sm bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-on-primary)] transition-colors no-underline"
                 >
-                  Pelajari Cara Kerja
-                </a>
+                  Masuk ke Dashboard
+                </Link>
                 <a
-                  href="#fitur"
+                  href="#cara-kerja"
                   className="min-h-[44px] px-5 py-2.5 inline-flex items-center justify-center rounded-[6px] font-medium text-sm border border-[var(--border-strong)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:bg-[var(--bg-canvas)] transition-colors no-underline"
                 >
-                  Lihat Manfaat Pelajar &amp; Supir
+                  Pelajari Cara Kerja
                 </a>
               </div>
 
