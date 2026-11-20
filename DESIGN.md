@@ -1,8 +1,8 @@
-# DESIGN.md — `BusTracking` (Ekosistem Angkutan Pelajar Gratis)
+# DESIGN.md — `BusTracking` (Pelacakan Angkot Real-Time & Cluster Penumpang)
 
 - **Arketipe Sumber**: `professional/gov-civic-warm`
 - **Jalur**: `Profesional (GOV V2)`
-- **Dial Ekspresivitas**: `4.5 / 10` — *Ramah, sabar, dan jelas untuk pelajar (SD–SMA), pengemudi di lapangan, serta operator Dinas Perhubungan.*
+- **Dial Ekspresivitas**: `4.5 / 10` — *Ramah, lugas, dan jelas untuk pelajar (SD–SMA), supir angkot di lapangan, serta operator armada.*
 - **Parameter Stitch (`stitch-design-taste`)**: `Density: 5 | Variance: 4 | Motion: 3`
 - **Tingkat Kerumitan**: `Standar (Self-Hosted WOFF2, Zero CDN, Zero PII Tracking)`
 - **Overlay Wajib**: Gabungkan dengan [`.agents/design-library/professional/overlays/id-gov.md`](.agents/design-library/professional/overlays/id-gov.md) saat diterapkan pada domain pemerintah resmi (`.go.id`).
@@ -12,22 +12,22 @@
 ## 1. Identitas, Niat, Dial Ekspresivitas, Big Idea & Uji Kaku
 
 ### Identitas & Niat
-Ekosistem angkutan pelajar gratis melayani tiga pengguna yang sangat berbeda dalam satu alur harian: pelajar SD–SMA (dan orang tua) yang menunjukkan Kartu QR untuk naik angkutan, pengemudi angkutan umum yang memindai QR di kondisi pencahayaan lapangan untuk mengklaim perjalanan gratis, serta operator dinas yang memantau armada dan validasi subsidi. `BusTracking` mengadaptasi `gov-civic-warm` — ketenangan kertas krem hangat (`#FCFBF8`), pita gandum (`#F2EDE4`), teal terpercaya (`#0F5E63`), dan aksen terakota (`#9A3F16`) — agar terasa seperti layanan publik yang ramah bagi pelajar sekaligus cepat, tegas, dan berketepatan tinggi bagi pengemudi.
+`BusTracking` melayani dua kebutuhan utama di jalan secara bersamaan: pelajar yang ingin melihat daftar seluruh angkot aktif atau mencari angkot terdekat secara cepat, dan supir angkot yang menyiarkan lokasi GPS kendaraannya sekaligus memantau cluster titik tunggu penumpang yang ramai. Mengadaptasi `gov-civic-warm` — ketenangan kertas krem hangat (`#FCFBF8`), pita gandum (`#F2EDE4`), teal terpercaya (`#0F5E63`), dan aksen terakota (`#9A3F16`) — antarmuka dibuat mudah dipindai sekilas di bawah sinar matahari maupun di layar ponsel pelajar.
 
-- **Alasan Dial Ekspresivitas (`4.5 / 10`)**: Pelajar SD–SMA dan pengemudi di jalan membutuhkan kejelasan seketika tanpa gangguan dekorasi, namun tetap terasa hangat dan bersahabat sebagai layanan pendidikan/transportasi daerah.
-- **Big Idea**: **"Kartu QR Pelajar & Klaim Seketika"** — layanan transportasi publik yang ramah seperti petugas sekolah yang membimbing pelajar naik bus, dipadukan dengan pemindai QR pengemudi berkecepatan tinggi dan pelacak posisi bus bebas PII.
+- **Alasan Dial Ekspresivitas (`4.5 / 10`)**: Pelajar dan supir angkot membutuhkan informasi lokasi, jarak, dan kepadatan cluster secara instan tanpa gangguan ornamen berlebihan, namun tetap terasa ramah sebagai layanan publik daerah.
+- **Big Idea**: **"Radar Angkot Terdekat & Peta Cluster Penumpang"** — menghubungkan posisi angkot dan kebutuhan penumpang dalam satu tampilan ringkas tanpa membocorkan data pribadi pelajar.
 
 ### Uji Kaku (5 Pertanyaan Wajib Dijawab Tertulis dengan Bukti)
 1. **Apa gagasan besarnya dalam satu kalimat?**  
-   *Naik angkutan sekolah gratis semudah menunjukkan Kartu QR, dipindai pengemudi dalam satu ketukan, dan dipantau tanpa mengekspos data pribadi pelajar* — diwujudkan lewat pemilih tugas berbasis peran (`Kartu QR Pelajar`, `Scanner Pengemudi`, `Pantau Armada`), kartu QR bertanda tangan dinamis, dan pelacak rute Zero-PII.
+   *Pelajar langsung menemukan angkot terdekat dan supir langsung melihat titik keramaian penumpang menunggu tanpa mengekspos lokasi individu* — diwujudkan lewat pemilih peran (`Radar Pelajar` & `Mode Supir`), daftar angkot berjarak, dan peta cluster agregat.
 2. **Apa yang membuat halaman ini tidak bisa tertukar dengan template?**  
-   Beranda langsung membuka pemilih tugas ekosistem pelajar + alur 3 langkah (`Daftar/Aktivasi Pelajar` → `Tunjukkan QR Saat Naik` → `Pengemudi Scan & Klaim`), bukan hero pemasaran generik.
+   Beranda langsung membuka pemilih tugas ekosistem angkot + status ringkas armada aktif & cluster ramai, bukan hero pemasaran generik.
 3. **Di mana mata pertama mendarat dan kenapa?**  
-   Mata pertama mendarat pada judul `Figtree` (`48px` desktop, bobot `700`, `#162328` di atas pita hangat `#F2EDE4`), lalu langsung ke pemilih peran utama dan kartu QR / status armada.
+   Mata pertama mendarat pada judul `Figtree` (`48px` desktop, bobot `700`, `#162328` di atas pita hangat `#F2EDE4`), lalu langsung ke pemilih peran utama dan daftar angkot / cluster.
 4. **Di mana desain terasa hangat atau manusiawi?**  
-   Pada kanvas kertas krem (`#FCFBF8`) dan pita gandum (`#F2EDE4`), bahasa Indonesia yang sabar dan mudah dicerna pelajar SD–SMA maupun pengemudi, serta ilustrasi garis `2px` alur naik angkutan gratis.
+   Pada kanvas kertas krem (`#FCFBF8`) dan pita gandum (`#F2EDE4`), label jarak dan waktu pembaruan yang lugas (*"350 m dari lokasi Anda · Diperbarui 10 detik lalu"*), serta ilustrasi garis `2px` alur pelacakan.
 5. **Di mana ia menolak godaan untuk dihias?**  
-   Pada layar **Kartu QR Pelajar** (latar bersih `#FFFFFF` berbatas `#D5CFC4` agar kamera pengemudi mudah membaca QR tanpa silau), **Hasil Scan Klaim Pengemudi** (hanya status besar kontras tinggi `VALID / DITOLAK` + jenjang/rute tanpa membocorkan NIK/alamat), dan **Pelacak Armada Zero-PII**.
+   Pada **Daftar Angkot Terdekat** dan **Peta Cluster Supir**: kartu/baris dibuat bersih berbatas `1px` `#D5CFC4`, angka jarak & jumlah penumpang memakai `tabular-nums`, dan kontrol GPS supir hanya menampilkan 1 tombol aksi utama yang jelas.
 
 ---
 

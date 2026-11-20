@@ -2,4 +2,4 @@
 
 | Tanggal | Fitur / PRP | Status | Ringkasan & Catatan Konteks |
 | :--- | :--- | :--- | :--- |
-| `2026-11-21` | [MVP Ekosistem Angkutan Pelajar Gratis](prp/mvp-ekosistem-angkutan-pelajar.md) | `DRAFT` | PRP disusun (arsitektur monorepo `frontend/` Next.js + `backend/` Laravel SOLID, QR bertanda tangan anti-replay, Zero-PII tracking). Menunggu review & persetujuan pengguna sebelum scaffolding. |
+| `2026-11-21` | [MVP Pelacakan Angkot & Cluster Penumpang](prp/mvp-ekosistem-angkutan-pelajar.md) | `DRAFT` | Scope difokuskan ke pelacakan GPS supir angkot, daftar & radar angkot terdekat untuk pelajar, serta cluster agregat penumpang menunggu (Zero-PII). Menunggu review & persetujuan pengguna sebelum eksekusi. |
